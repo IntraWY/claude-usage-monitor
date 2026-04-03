@@ -72,6 +72,8 @@
     const raw = document.cookie.match(/lastActiveOrg=([^;]+)/)?.[1];
     if (!raw) return;
     const org = decodeURIComponent(raw);
+    // [M5] validate orgId (consistent กับ background.js)
+    if (!/^[0-9a-f-]{8,}$/i.test(org)) return;
 
     const res = await fetch(`/api/organizations/${org}/usage`, { credentials: 'include' });
     if (!res.ok) return;

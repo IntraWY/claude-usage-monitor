@@ -43,6 +43,16 @@ function getColor(pct, isSession) {
   return isSession ? '#5DCAA5' : '#378ADD';
 }
 
+async function autoResize() {
+  try {
+    const win = await chrome.windows.getCurrent();
+    // วัด window chrome จริง (title bar + border) แทนการ hardcode
+    const chrome_h = window.outerHeight - window.innerHeight;
+    const h = document.body.scrollHeight + (chrome_h > 0 ? chrome_h : 38);
+    chrome.windows.update(win.id, { height: Math.max(160, h) });
+  } catch (_) {}
+}
+
 function render(data) {
   const windows = Object.entries(data).filter(
     ([, v]) => v && typeof v === 'object' && 'utilization' in v
@@ -50,6 +60,7 @@ function render(data) {
 
   if (windows.length === 0) {
     setStatus('ไม่พบข้อมูล usage');
+    autoResize();
     return;
   }
 
@@ -73,6 +84,9 @@ function render(data) {
         ${resetText ? `<div class="reset-time">${resetText}</div>` : ''}
       </div>`;
   }).join('');
+
+  // resize หลัง render เสร็จ (ต้องรอ 1 frame ให้ DOM paint ก่อน)
+  requestAnimationFrame(autoResize);
 }
 
 function setStatus(msg) {
@@ -107,14 +121,15 @@ function applyTheme(light) {
   themeBtn.textContent = light ? '🌙' : '☀️';
 }
 
-// โหลด preference จาก localStorage
-const savedTheme = localStorage.getItem('theme');
-applyTheme(savedTheme === 'light');
+// โหลด preference จาก localStorage — guard กรณี storage ถูก block
+try {
+  applyTheme(localStorage.getItem('theme') === 'light');
+} catch (_) { applyTheme(false); }
 
 themeBtn.addEventListener('click', () => {
-  const isLight = document.body.classList.toggle('light');
-  themeBtn.textContent = isLight ? '🌙' : '☀️';
-  localStorage.setItem('theme', isLight ? 'light' : 'dark');
+  const isLight = !document.body.classList.contains('light');
+  applyTheme(isLight); // [M3] ใช้ applyTheme เดียว ไม่ duplicate textContent
+  try { localStorage.setItem('theme', isLight ? 'light' : 'dark'); } catch (_) {}
 });
 
 document.getElementById('refresh').addEventListener('click', load);

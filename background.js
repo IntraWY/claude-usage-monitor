@@ -4,7 +4,7 @@ chrome.action.onClicked.addListener(async () => {
   // ถ้าเปิดอยู่แล้วให้ปิดแทน (toggle)
   for (const w of existingWindows) {
     const tabs = await chrome.tabs.query({ windowId: w.id });
-    if (tabs.some(t => t.url && t.url.includes('popup.html'))) {
+    if (tabs.some(t => t.url === chrome.runtime.getURL('popup.html'))) {
       chrome.windows.remove(w.id);
       return;
     }
@@ -20,7 +20,7 @@ chrome.action.onClicked.addListener(async () => {
     url: chrome.runtime.getURL('popup.html'),
     type: 'popup',
     width: 320,
-    height: 260,
+    height: 160, // initial loading height — auto-resize หลัง content โหลด
     top: 60,
     left,
   });
