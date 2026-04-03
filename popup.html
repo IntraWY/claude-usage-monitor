@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body { height: 100%; overflow: hidden; }
+
+    body {
+      width: 100%;
+      background: #1a1a1a;
+      color: #fff;
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 14px;
+      padding: 18px 20px 12px;
+    }
+
+    #status {
+      opacity: .5;
+      font-size: 13px;
+      text-align: center;
+      padding: 12px 0;
+    }
+
+    .row { margin-bottom: 16px; }
+
+    .row-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 5px;
+    }
+
+    .label { opacity: .55; font-size: 12px; }
+
+    .pct { font-weight: 700; font-size: 20px; }
+
+    .track {
+      height: 6px;
+      background: rgba(255,255,255,.12);
+      border-radius: 3px;
+    }
+
+    .fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width .3s ease;
+    }
+
+    .reset-time {
+      opacity: .38;
+      font-size: 11px;
+      text-align: right;
+      margin-top: 3px;
+    }
+
+    #refresh {
+      display: block;
+      width: 100%;
+      margin-top: 4px;
+      padding: 7px;
+      background: rgba(255,255,255,.07);
+      border: none;
+      border-radius: 8px;
+      color: rgba(255,255,255,.5);
+      font-size: 12px;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    #refresh:hover { background: rgba(255,255,255,.13); }
+  </style>
+</head>
+<body>
+  <div id="content"><div id="status">กำลังโหลด...</div></div>
+  <button id="refresh">⟳ รีเฟรช</button>
+  <script src="popup.js"></script>
+</body>
+</html>
