@@ -94,7 +94,10 @@ function setStatus(msg) {
   document.getElementById('content').innerHTML = `<div id="status">${esc(msg)}</div>`;
 }
 
+let loading = false;
 async function load() {
+  if (loading) return; // กัน concurrent fetch ซ้อนกัน
+  loading = true;
   setStatus('กำลังโหลด...');
   const res = await chrome.runtime.sendMessage({ type: 'fetch_usage' });
 
@@ -111,6 +114,7 @@ async function load() {
   } else {
     render(res.data);
   }
+  loading = false;
 }
 
 // === Theme toggle ===
@@ -146,10 +150,12 @@ function getInterval() {
   return parseInt(intervalSelect.value, 10) || 0;
 }
 
-// โหลด interval จาก localStorage
+// โหลด interval จาก localStorage — validate ว่า value ยังมีอยู่ใน <select>
 try {
   const saved = localStorage.getItem('refreshInterval');
-  if (saved !== null) intervalSelect.value = saved;
+  if (saved !== null && [...intervalSelect.options].some(o => o.value === saved)) {
+    intervalSelect.value = saved;
+  }
 } catch (_) {}
 
 intervalSelect.addEventListener('change', () => {
@@ -161,6 +167,11 @@ intervalSelect.addEventListener('change', () => {
 document.getElementById('refresh').addEventListener('click', () => {
   load();
   startAutoRefresh(getInterval()); // reset timer หลังกด manual refresh
+});
+
+// cleanup timer เมื่อปิดหน้าต่าง
+window.addEventListener('beforeunload', () => {
+  if (refreshTimer) clearInterval(refreshTimer);
 });
 
 // initial load + start timer
