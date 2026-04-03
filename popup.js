@@ -132,5 +132,37 @@ themeBtn.addEventListener('click', () => {
   try { localStorage.setItem('theme', isLight ? 'light' : 'dark'); } catch (_) {}
 });
 
-document.getElementById('refresh').addEventListener('click', load);
+// === Auto-refresh ===
+let refreshTimer = null;
+const intervalSelect = document.getElementById('interval');
+
+function startAutoRefresh(ms) {
+  if (refreshTimer) clearInterval(refreshTimer);
+  refreshTimer = null;
+  if (ms > 0) refreshTimer = setInterval(load, ms);
+}
+
+function getInterval() {
+  return parseInt(intervalSelect.value, 10) || 0;
+}
+
+// โหลด interval จาก localStorage
+try {
+  const saved = localStorage.getItem('refreshInterval');
+  if (saved !== null) intervalSelect.value = saved;
+} catch (_) {}
+
+intervalSelect.addEventListener('change', () => {
+  const ms = getInterval();
+  startAutoRefresh(ms);
+  try { localStorage.setItem('refreshInterval', String(ms)); } catch (_) {}
+});
+
+document.getElementById('refresh').addEventListener('click', () => {
+  load();
+  startAutoRefresh(getInterval()); // reset timer หลังกด manual refresh
+});
+
+// initial load + start timer
 load();
+startAutoRefresh(getInterval());
