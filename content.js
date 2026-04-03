@@ -25,12 +25,20 @@
   }
 
   function timeUntil(iso) {
-    const diff = new Date(iso) - new Date();
-    if (diff <= 0) return 'now';
-    const h = Math.floor(diff / 3600000);
-    const m = Math.floor((diff % 3600000) / 60000);
-    if (h >= 24) return `${Math.floor(h / 24)}d ${h % 24}h`;
-    return `${h}h ${m}m`;
+    const target = new Date(iso);
+    if (isNaN(target)) return '?';
+    if (target <= new Date()) return 'แล้ว';
+
+    const fmt = (opts) => new Intl.DateTimeFormat('th-TH', { timeZone: 'Asia/Bangkok', ...opts }).format;
+    const timeStr = fmt({ hour: '2-digit', minute: '2-digit', hour12: false })(target);
+
+    const dayFmt = fmt({ year: 'numeric', month: 'numeric', day: 'numeric' });
+    const sameDay = dayFmt(target) === dayFmt(new Date());
+
+    if (sameDay) return `${timeStr} น.`;
+
+    const dateStr = fmt({ day: 'numeric', month: 'short' })(target);
+    return `${dateStr} ${timeStr} น.`;
   }
 
   function getColor(pct, isSession) {

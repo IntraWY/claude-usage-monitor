@@ -20,12 +20,21 @@ function toLabel(key) {
 }
 
 function timeUntil(iso) {
-  const diff = new Date(iso) - new Date();
-  if (diff <= 0) return 'now';
-  const h = Math.floor(diff / 3600000);
-  const m = Math.floor((diff % 3600000) / 60000);
-  if (h >= 24) return `${Math.floor(h / 24)}d ${h % 24}h`;
-  return `${h}h ${m}m`;
+  const target = new Date(iso);
+  if (isNaN(target)) return '?';
+  if (target <= new Date()) return 'แล้ว';
+
+  const fmt = (opts) => new Intl.DateTimeFormat('th-TH', { timeZone: 'Asia/Bangkok', ...opts }).format;
+  const timeStr = fmt({ hour: '2-digit', minute: '2-digit', hour12: false })(target);
+
+  // เปรียบเทียบวันในโซน Asia/Bangkok
+  const dayFmt = fmt({ year: 'numeric', month: 'numeric', day: 'numeric' });
+  const sameDay = dayFmt(target) === dayFmt(new Date());
+
+  if (sameDay) return `${timeStr} น.`;
+
+  const dateStr = fmt({ day: 'numeric', month: 'short' })(target);
+  return `${dateStr} ${timeStr} น.`;
 }
 
 function getColor(pct, isSession) {
@@ -89,6 +98,24 @@ async function load() {
     render(res.data);
   }
 }
+
+// === Theme toggle ===
+const themeBtn = document.getElementById('theme-btn');
+
+function applyTheme(light) {
+  document.body.classList.toggle('light', light);
+  themeBtn.textContent = light ? '🌙' : '☀️';
+}
+
+// โหลด preference จาก localStorage
+const savedTheme = localStorage.getItem('theme');
+applyTheme(savedTheme === 'light');
+
+themeBtn.addEventListener('click', () => {
+  const isLight = document.body.classList.toggle('light');
+  themeBtn.textContent = isLight ? '🌙' : '☀️';
+  localStorage.setItem('theme', isLight ? 'light' : 'dark');
+});
 
 document.getElementById('refresh').addEventListener('click', load);
 load();
