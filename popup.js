@@ -106,16 +106,28 @@ function setStatus(msg) {
 
 // === Best Time Section ===
 
-function getStaticScore(hour, isWeekend) {
-  // วันหยุด = off-peak ทั้งวัน (Anthropic ยืนยัน — ได้ usage 2x)
+function getIctToPtOffset() {
+  const now = new Date();
+  const hourIn = (tz) => parseInt(
+    new Intl.DateTimeFormat('en-US', {
+      timeZone: tz, hour: 'numeric', hour12: false, hourCycle: 'h23'
+    }).format(now), 10
+  );
+  return (hourIn('Asia/Bangkok') - hourIn('America/Los_Angeles') + 24) % 24;
+}
+
+function getStaticScore(hour, isWeekend, ictToPtOffset) {
   if (isWeekend) return 10;
 
-  // วันธรรมดา — อ้างอิง Anthropic official peak: 5am–11am PT = 19:00–01:00 ICT (PDT)
-  if (hour >= 19 || hour < 1) return 100;  // Official peak — session limits เร่ง 2x
-  if (hour < 7) return 65;                  // US ยังทำงาน (11am–5pm PT)
-  if (hour < 11) return 30;                 // US เย็น (5pm–9pm PT) — เริ่มว่าง
-  if (hour < 14) return 15;                 // US ดึก (9pm–12am PT) — ว่างมาก
-  return 10;                                // US นอน (12am–5am PT) — ดีที่สุดสำหรับคนไทย
+  // แปลง ICT → PT แบบ dynamic (รองรับ PDT/PST อัตโนมัติ)
+  const ptHour = (hour - ictToPtOffset + 48) % 24;
+
+  // Anthropic official peak: 5am–11am PT
+  if (ptHour >= 5 && ptHour < 11) return 100;  // Official peak — session limits เร่ง
+  if (ptHour >= 11 && ptHour < 17) return 65;   // US ยังทำงาน
+  if (ptHour >= 17 && ptHour < 21) return 30;   // US เย็น — เริ่มว่าง
+  if (ptHour >= 21) return 15;                   // US ดึก — ว่างมาก
+  return 10;                                     // US นอน (0–5am PT) — ดีที่สุดสำหรับคนไทย
 }
 
 function saveResponseTime(ms) {
@@ -148,9 +160,10 @@ function getHourlyScores(utilizationPct) {
     timeZone: 'America/Los_Angeles', weekday: 'short'
   }).format(new Date());
   const isWeekend = usDayStr === 'Sat' || usDayStr === 'Sun';
+  const offset = getIctToPtOffset();
 
   return Array.from({ length: 24 }, (_, h) => {
-    const staticS = getStaticScore(h, isWeekend);
+    const staticS = getStaticScore(h, isWeekend, offset);
     const rtScore = getAvgResponseScore(h, samples);
     const base = rtScore !== null ? staticS * 0.5 + rtScore * 0.5 : staticS;
     return Math.min(100, base + bonus);
@@ -158,15 +171,22 @@ function getHourlyScores(utilizationPct) {
 }
 
 function getNextGoodWindow(scores, currentHour) {
+  // ถ้าตอนนี้ดีอยู่แล้ว → หา end ของช่วงดีปัจจุบัน
+  if (scores[currentHour] < 34) {
+    let len = 1;
+    while (len < 24 && scores[(currentHour + len) % 24] < 34) len++;
+    return { now: true, end: (currentHour + len) % 24 };
+  }
+  // ถ้าตอนนี้ยุ่ง → หาช่วงดีถัดไป
   for (let i = 1; i <= 24; i++) {
     const h = (currentHour + i) % 24;
     if (scores[h] < 34) {
       let len = 1;
       while (len < 12 && scores[(h + len) % 24] < 34) len++;
-      return { start: h, end: (h + len) % 24 };
+      return { now: false, start: h, end: (h + len) % 24 };
     }
   }
-  return null;
+  return null; // ทุกชั่วโมงยุ่ง
 }
 
 function scoreToLevel(score) {
@@ -178,9 +198,14 @@ function scoreToLevel(score) {
 function renderBestTimeSection(scores, currentHour) {
   const level = scoreToLevel(scores[currentHour]);
   const nextGood = getNextGoodWindow(scores, currentHour);
-  const nextGoodText = nextGood
-    ? `${String(nextGood.start).padStart(2, '0')}:00 – ${String(nextGood.end).padStart(2, '0')}:00 น.`
-    : 'ตอนนี้เหมาะสมแล้ว';
+  let nextGoodText;
+  if (!nextGood) {
+    nextGoodText = 'ทุกช่วงค่อนข้างยุ่ง — ลองช่วงวันหยุด';
+  } else if (nextGood.now) {
+    nextGoodText = `ดีอยู่แล้ว — ดีถึง ${String(nextGood.end).padStart(2, '0')}:00 น.`;
+  } else {
+    nextGoodText = `${String(nextGood.start).padStart(2, '0')}:00 – ${String(nextGood.end).padStart(2, '0')}:00 น.`;
+  }
 
   const blocks = scores.map((score, h) => {
     const { color, label } = scoreToLevel(score);
@@ -198,7 +223,7 @@ function renderBestTimeSection(scores, currentHour) {
       <div class="timeline-labels">
         <span>0</span><span>6</span><span>12</span><span>18</span><span>24</span>
       </div>
-      <div class="next-good">ช่วงดีถัดไป: ${esc(nextGoodText)}</div>
+      <div class="next-good">${nextGood?.now ? '' : 'ช่วงดีถัดไป: '}${esc(nextGoodText)}</div>
     </div>`;
 }
 
@@ -207,23 +232,28 @@ async function load() {
   if (loading) return; // กัน concurrent fetch ซ้อนกัน
   loading = true;
   setStatus('กำลังโหลด...');
-  const res = await chrome.runtime.sendMessage({ type: 'fetch_usage' });
+  try {
+    const res = await chrome.runtime.sendMessage({ type: 'fetch_usage' });
 
-  // [M2] guard กรณี service worker ไม่ตอบ (undefined)
-  if (!res) {
+    // [M2] guard กรณี service worker ไม่ตอบ (undefined)
+    if (!res) {
+      setStatus('ไม่สามารถเชื่อมต่อได้ — ลองปิดแล้วเปิด extension ใหม่');
+      return;
+    }
+
+    if (res.error === 'not_logged_in') {
+      setStatus('กรุณา login claude.ai ใน Chrome ก่อน');
+    } else if (res.error) {
+      setStatus(`Error: ${res.error}`);
+    } else {
+      if (typeof res.responseTimeMs === 'number') saveResponseTime(res.responseTimeMs);
+      render(res.data);
+    }
+  } catch (_) {
     setStatus('ไม่สามารถเชื่อมต่อได้ — ลองปิดแล้วเปิด extension ใหม่');
-    return;
+  } finally {
+    loading = false;
   }
-
-  if (res.error === 'not_logged_in') {
-    setStatus('กรุณา login claude.ai ใน Chrome ก่อน');
-  } else if (res.error) {
-    setStatus(`Error: ${res.error}`);
-  } else {
-    if (typeof res.responseTimeMs === 'number') saveResponseTime(res.responseTimeMs);
-    render(res.data);
-  }
-  loading = false;
 }
 
 // === Theme toggle ===
