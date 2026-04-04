@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <title>Claude Usage</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { overflow: hidden; }
+
+    /* === Dark theme (default) === */
+    body {
+      width: 100%;
+      background: #1a1a1a;
+      color: #fff;
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 14px;
+      padding: 14px 20px 12px;
+      transition: background .2s, color .2s;
+    }
+
+    #status { opacity: .5; font-size: 13px; text-align: center; padding: 12px 0; }
+
+    .row { margin-bottom: 16px; }
+    .row-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 5px; }
+    .label { opacity: .55; font-size: 12px; }
+    .pct { font-weight: 700; font-size: 20px; }
+
+    .track {
+      height: 6px;
+      background: rgba(255,255,255,.12);
+      border-radius: 3px;
+      transition: background .2s;
+    }
+    .fill { height: 100%; border-radius: 3px; transition: width .3s ease; }
+
+    .reset-time { opacity: .38; font-size: 11px; text-align: right; margin-top: 3px; }
+
+    #toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    #toolbar span { opacity: .3; font-size: 11px; letter-spacing: .5px; }
+
+    #theme-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 15px;
+      padding: 2px 4px;
+      border-radius: 6px;
+      line-height: 1;
+      transition: background .15s;
+    }
+    #theme-btn:hover { background: rgba(255,255,255,.1); }
+
+    #bottom-bar {
+      display: flex;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    #refresh {
+      flex: 1;
+      padding: 7px;
+      background: rgba(255,255,255,.07);
+      border: none;
+      border-radius: 8px;
+      color: rgba(255,255,255,.5);
+      font-size: 12px;
+      cursor: pointer;
+      transition: background .15s, color .2s;
+    }
+    #refresh:hover { background: rgba(255,255,255,.13); }
+
+    #interval {
+      padding: 4px 6px;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 8px;
+      color: rgba(255,255,255,.5);
+      font-size: 11px;
+      cursor: pointer;
+      transition: background .15s, color .2s;
+    }
+
+    /* === Light theme === */
+    body.light {
+      background: #f7f7f8;
+      color: #111;
+    }
+    body.light .track { background: rgba(0,0,0,.1); }
+    body.light #theme-btn:hover { background: rgba(0,0,0,.07); }
+    body.light #refresh, body.light #interval {
+      background: rgba(0,0,0,.06);
+      color: rgba(0,0,0,.45);
+    }
+    body.light #refresh:hover { background: rgba(0,0,0,.1); }
+    body.light #interval { border-color: rgba(0,0,0,.1); }
+    body.light #toolbar span { opacity: .25; }
+    body.light .label { opacity: .5; }
+    body.light .reset-time { opacity: .35; }
+
+    /* === Best Time Section === */
+    .best-time-section {
+      border-top: 1px solid rgba(255,255,255,.12);
+      margin-top: 8px;
+      padding-top: 10px;
+    }
+    .best-time-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 7px;
+      font-size: 12px;
+    }
+    .best-time-header > span:first-child { opacity: .55; }
+    .status-badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 10px;
+      color: #fff;
+    }
+    .timeline-row {
+      display: flex;
+      gap: 1px;
+      margin-bottom: 3px;
+    }
+    .timeline-block {
+      flex: 1;
+      height: 14px;
+      border-radius: 2px;
+      opacity: .8;
+    }
+    .timeline-block.current {
+      opacity: 1;
+      box-shadow: 0 0 0 1.5px #fff;
+    }
+    .timeline-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 9px;
+      opacity: .35;
+      margin-bottom: 6px;
+    }
+    .next-good {
+      font-size: 11px;
+      opacity: .55;
+      text-align: right;
+    }
+
+    body.light .best-time-section { border-top-color: rgba(0,0,0,.1); }
+    body.light .timeline-block.current { box-shadow: 0 0 0 1.5px #333; }
+  </style>
+</head>
+<body>
+  <div id="toolbar">
+    <span>CLAUDE USAGE</span>
+    <button id="theme-btn" title="สลับธีม">🌙</button>
+  </div>
+  <div id="content"><div id="status">กำลังโหลด...</div></div>
+  <div id="bottom-bar">
+    <button id="refresh">⟳ รีเฟรช</button>
+    <select id="interval">
+      <option value="30000">ทุก 30 วิ</option>
+      <option value="60000" selected>ทุก 1 นาที</option>
+      <option value="120000">ทุก 2 นาที</option>
+      <option value="300000">ทุก 5 นาที</option>
+      <option value="0">ปิด auto</option>
+    </select>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
