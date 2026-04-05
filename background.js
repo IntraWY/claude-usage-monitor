@@ -51,6 +51,10 @@ chrome.windows.onRemoved.addListener((windowId) => {
 chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
   if (msg.type === 'set_always_on_top') {
     alwaysOnTop = msg.value;
+    // restore popupWindowId หลัง service worker restart (sender มี windowId ของ popup window)
+    if (_sender.tab && _sender.tab.windowId != null) {
+      popupWindowId = _sender.tab.windowId;
+    }
     sendResponse({ ok: true });
     return true;
   }
