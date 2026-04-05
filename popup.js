@@ -256,6 +256,25 @@ async function load() {
   }
 }
 
+// === Always on Top (Pin) toggle ===
+const pinBtn = document.getElementById('pin-btn');
+
+function applyPin(active) {
+  pinBtn.classList.toggle('active', active);
+  pinBtn.title = active ? 'Always on top: เปิดอยู่' : 'Always on top: ปิดอยู่';
+  chrome.runtime.sendMessage({ type: 'set_always_on_top', value: active });
+}
+
+let pinActive = false;
+try { pinActive = localStorage.getItem('pinActive') === 'true'; } catch (_) {}
+applyPin(pinActive);
+
+pinBtn.addEventListener('click', () => {
+  pinActive = !pinActive;
+  applyPin(pinActive);
+  try { localStorage.setItem('pinActive', String(pinActive)); } catch (_) {}
+});
+
 // === Theme toggle ===
 const themeBtn = document.getElementById('theme-btn');
 

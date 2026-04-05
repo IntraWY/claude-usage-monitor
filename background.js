@@ -1,3 +1,6 @@
+let popupWindowId = null;
+let alwaysOnTop = false;
+
 // คลิกไอคอน → เปิด floating window (ไม่ปิดเมื่อคลิกที่อื่น)
 chrome.action.onClicked.addListener(async () => {
   const existingWindows = await chrome.windows.getAll({ windowTypes: ['popup'] });
@@ -16,7 +19,7 @@ chrome.action.onClicked.addListener(async () => {
     left = Math.max(0, (fw.left || 0) + (fw.width || 1280) - 340);
   } catch (_) {}
 
-  chrome.windows.create({
+  const win = await chrome.windows.create({
     url: chrome.runtime.getURL('popup.html'),
     type: 'popup',
     width: 320,
@@ -24,10 +27,34 @@ chrome.action.onClicked.addListener(async () => {
     top: 60,
     left,
   });
+  popupWindowId = win.id;
+});
+
+// ดึง focus กลับเมื่อ Chrome window อื่นได้รับ focus (ถ้าเปิด alwaysOnTop)
+chrome.windows.onFocusChanged.addListener((windowId) => {
+  if (!alwaysOnTop || popupWindowId === null) return;
+  // WINDOW_ID_NONE = user ออกจาก Chrome ไป app อื่น — ไม่ดึงกลับ
+  if (windowId !== chrome.windows.WINDOW_ID_NONE && windowId !== popupWindowId) {
+    chrome.windows.update(popupWindowId, { focused: true });
+  }
+});
+
+// reset state เมื่อปิด popup window
+chrome.windows.onRemoved.addListener((windowId) => {
+  if (windowId === popupWindowId) {
+    popupWindowId = null;
+    alwaysOnTop = false;
+  }
 });
 
 // รับ message จาก popup แล้ว fetch จาก claude.ai
 chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
+  if (msg.type === 'set_always_on_top') {
+    alwaysOnTop = msg.value;
+    sendResponse({ ok: true });
+    return true;
+  }
+
   if (msg.type !== 'fetch_usage') return false;
 
   (async () => {

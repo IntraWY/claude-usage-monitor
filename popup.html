@@ -43,7 +43,7 @@
     }
     #toolbar span { opacity: .3; font-size: 11px; letter-spacing: .5px; }
 
-    #theme-btn {
+    #theme-btn, #pin-btn {
       background: none;
       border: none;
       cursor: pointer;
@@ -51,9 +51,12 @@
       padding: 2px 4px;
       border-radius: 6px;
       line-height: 1;
-      transition: background .15s;
+      transition: background .15s, opacity .15s;
     }
     #theme-btn:hover { background: rgba(255,255,255,.1); }
+    #pin-btn { opacity: .35; }
+    #pin-btn:hover { background: rgba(255,255,255,.1); opacity: .7; }
+    #pin-btn.active { opacity: 1; }
 
     #bottom-bar {
       display: flex;
@@ -91,7 +94,7 @@
       color: #111;
     }
     body.light .track { background: rgba(0,0,0,.1); }
-    body.light #theme-btn:hover { background: rgba(0,0,0,.07); }
+    body.light #theme-btn:hover, body.light #pin-btn:hover { background: rgba(0,0,0,.07); }
     body.light #refresh, body.light #interval {
       background: rgba(0,0,0,.06);
       color: rgba(0,0,0,.45);
@@ -158,6 +161,7 @@
 <body>
   <div id="toolbar">
     <span>CLAUDE USAGE</span>
+    <button id="pin-btn" title="Always on top">📌</button>
     <button id="theme-btn" title="สลับธีม">🌙</button>
   </div>
   <div id="content"><div id="status">กำลังโหลด...</div></div>
