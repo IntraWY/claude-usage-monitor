@@ -101,6 +101,58 @@
     body.light #toolbar span { opacity: .25; }
     body.light .label { opacity: .5; }
     body.light .reset-time { opacity: .35; }
+
+    /* === Best Time Section === */
+    .best-time-section {
+      border-top: 1px solid rgba(255,255,255,.12);
+      margin-top: 8px;
+      padding-top: 10px;
+    }
+    .best-time-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 7px;
+      font-size: 12px;
+    }
+    .best-time-header > span:first-child { opacity: .55; }
+    .status-badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 10px;
+      color: #fff;
+    }
+    .timeline-row {
+      display: flex;
+      gap: 1px;
+      margin-bottom: 3px;
+    }
+    .timeline-block {
+      flex: 1;
+      height: 14px;
+      border-radius: 2px;
+      opacity: .8;
+    }
+    .timeline-block.current {
+      opacity: 1;
+      box-shadow: 0 0 0 1.5px #fff;
+    }
+    .timeline-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 9px;
+      opacity: .35;
+      margin-bottom: 6px;
+    }
+    .next-good {
+      font-size: 11px;
+      opacity: .55;
+      text-align: right;
+    }
+
+    body.light .best-time-section { border-top-color: rgba(0,0,0,.1); }
+    body.light .timeline-block.current { box-shadow: 0 0 0 1.5px #333; }
   </style>
 </head>
 <body>

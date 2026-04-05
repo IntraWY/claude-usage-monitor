@@ -45,6 +45,7 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
 
       const cookieHeader = allCookies.map(c => `${c.name}=${c.value}`).join('; ');
 
+      const t0 = Date.now();
       const res = await fetch(`https://claude.ai/api/organizations/${orgId}/usage`, {
         headers: {
           'Cookie': cookieHeader,
@@ -53,10 +54,11 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
           'Origin': 'https://claude.ai',
         }
       });
+      const responseTimeMs = Date.now() - t0;
 
       if (!res.ok) { sendResponse({ error: `HTTP ${res.status}` }); return; }
       const data = await res.json();
-      sendResponse({ data });
+      sendResponse({ data, responseTimeMs });
     } catch (e) {
       sendResponse({ error: e.message });
     }
