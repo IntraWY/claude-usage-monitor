@@ -175,6 +175,8 @@ function getNextGoodWindow(scores, currentHour) {
   if (scores[currentHour] < 34) {
     let len = 1;
     while (len < 24 && scores[(currentHour + len) % 24] < 34) len++;
+    // [C1] ถ้าทุกชั่วโมงดี (len === 24) → return allDay ไม่งั้น end จะกลายเป็น currentHour (ผิด)
+    if (len === 24) return { now: true, allDay: true };
     return { now: true, end: (currentHour + len) % 24 };
   }
   // ถ้าตอนนี้ยุ่ง → หาช่วงดีถัดไป
@@ -201,6 +203,9 @@ function renderBestTimeSection(scores, currentHour) {
   let nextGoodText;
   if (!nextGood) {
     nextGoodText = 'ทุกช่วงค่อนข้างยุ่ง — ลองช่วงวันหยุด';
+  } else if (nextGood.allDay) {
+    // [C1] ทุกชั่วโมงดี (เช่น weekend) — ไม่มี end เพราะไม่มีชั่วโมงยุ่งเลย
+    nextGoodText = 'ดีทั้งวัน 🎉';
   } else if (nextGood.now) {
     nextGoodText = `ดีอยู่แล้ว — ดีถึง ${String(nextGood.end).padStart(2, '0')}:00 น.`;
   } else {
@@ -227,13 +232,31 @@ function renderBestTimeSection(scores, currentHour) {
     </div>`;
 }
 
+// [H4] map error code → ข้อความไทยที่ user เข้าใจและรู้ว่าต้องทำอะไรต่อ
+const ERROR_MESSAGES = {
+  'not_logged_in':      'กรุณา login claude.ai ใน Chrome ก่อน',
+  'invalid_org_id':     'ข้อมูล org ไม่ถูกต้อง — ลอง logout/login claude.ai',
+  'timeout':            'Claude.ai ตอบช้า — ลองใหม่',
+  'unexpected_response':'Claude.ai ตอบกลับไม่ใช่ JSON — อาจต้อง login ใหม่',
+  'HTTP 401':           'Session หมดอายุ — กรุณา login ใหม่',
+  'HTTP 403':           'ไม่มีสิทธิ์เข้าถึง usage API',
+  'HTTP 429':           'เรียก API บ่อยเกินไป — รอสักครู่',
+  'HTTP 500':           'Claude.ai server error — ลองใหม่ภายหลัง',
+  'HTTP 503':           'Claude.ai server ไม่พร้อมให้บริการ',
+};
+
 let loading = false;
-async function load() {
-  if (loading) return; // กัน concurrent fetch ซ้อนกัน
+// [H3] force=true → preempt loading flag กรณีผู้ใช้กด refresh manual
+async function load(force = false) {
+  if (loading && !force) return; // กัน concurrent fetch ซ้อนกัน (เว้นแต่ manual refresh)
   loading = true;
   setStatus('กำลังโหลด...');
   try {
-    const res = await chrome.runtime.sendMessage({ type: 'fetch_usage' });
+    // [H2] race กับ timeout 20s กัน popup ค้างถ้า service worker ตาย/ไม่ตอบ
+    const res = await Promise.race([
+      chrome.runtime.sendMessage({ type: 'fetch_usage' }),
+      new Promise((_, reject) => setTimeout(() => reject(new Error('sw_timeout')), 20000)),
+    ]);
 
     // [M2] guard กรณี service worker ไม่ตอบ (undefined)
     if (!res) {
@@ -241,16 +264,20 @@ async function load() {
       return;
     }
 
-    if (res.error === 'not_logged_in') {
-      setStatus('กรุณา login claude.ai ใน Chrome ก่อน');
-    } else if (res.error) {
-      setStatus(`Error: ${res.error}`);
+    if (res.error) {
+      // [H4] ใช้ map ก่อน ถ้าไม่มี fallback เป็น raw error
+      setStatus(ERROR_MESSAGES[res.error] || `Error: ${res.error}`);
     } else {
       if (typeof res.responseTimeMs === 'number') saveResponseTime(res.responseTimeMs);
       render(res.data);
     }
-  } catch (_) {
-    setStatus('ไม่สามารถเชื่อมต่อได้ — ลองปิดแล้วเปิด extension ใหม่');
+  } catch (e) {
+    // [H2] แยก timeout ออกจาก error ทั่วไป
+    if (e && e.message === 'sw_timeout') {
+      setStatus('Service worker ไม่ตอบ — ลองปิดแล้วเปิด extension ใหม่');
+    } else {
+      setStatus('ไม่สามารถเชื่อมต่อได้ — ลองปิดแล้วเปิด extension ใหม่');
+    }
   } finally {
     loading = false;
   }
@@ -323,7 +350,7 @@ intervalSelect.addEventListener('change', () => {
 });
 
 document.getElementById('refresh').addEventListener('click', () => {
-  load();
+  load(true); // [H3] force = true → preempt loading flag ถ้ามี fetch ค้างอยู่
   startAutoRefresh(getInterval()); // reset timer หลังกด manual refresh
 });
 

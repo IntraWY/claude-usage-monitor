@@ -1,21 +1,14 @@
 {
   "manifest_version": 3,
   "name": "Claude Usage Monitor",
-  "version": "1.2",
-  "description": "ดู Claude.ai usage ได้ทุกที่ — คลิกไอคอนหรือเปิด claude.ai",
-  "permissions": ["cookies", "windows", "tabs"],
+  "version": "1.2.0",
+  "description": "ดู Claude.ai usage แบบ floating popup — คลิกไอคอน extension เพื่อเปิด",
+  "permissions": ["cookies", "windows", "storage"],
   "host_permissions": ["https://claude.ai/*"],
   "action": {
     "default_title": "Claude Usage"
   },
   "background": {
     "service_worker": "background.js"
-  },
-  "content_scripts": [
-    {
-      "matches": ["https://claude.ai/*"],
-      "js": ["content.js"],
-      "run_at": "document_idle"
-    }
-  ]
+  }
 }
