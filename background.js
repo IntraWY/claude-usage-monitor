@@ -3,9 +3,19 @@ let alwaysOnTop = false;
 
 // [H5] restore state หลัง service worker restart — ใช้ storage.session
 // (หายเมื่อปิด browser ซึ่งตรงกับ onRemoved semantics)
-chrome.storage.session.get(['popupWindowId', 'alwaysOnTop']).then((s) => {
+chrome.storage.session.get(['popupWindowId', 'alwaysOnTop']).then(async (s) => {
   if (typeof s.popupWindowId === 'number') popupWindowId = s.popupWindowId;
   if (typeof s.alwaysOnTop === 'boolean') alwaysOnTop = s.alwaysOnTop;
+  // re-apply native alwaysOnTop หลัง SW restart
+  if (popupWindowId !== null && alwaysOnTop) {
+    try {
+      await chrome.windows.update(popupWindowId, { alwaysOnTop: true });
+    } catch (_) {
+      popupWindowId = null;
+      alwaysOnTop = false;
+      persistState();
+    }
+  }
 }).catch(() => {});
 
 function persistState() {
@@ -48,15 +58,6 @@ chrome.action.onClicked.addListener(async () => {
   persistState();
 });
 
-// ดึง focus กลับเมื่อ Chrome window อื่นได้รับ focus (ถ้าเปิด alwaysOnTop)
-chrome.windows.onFocusChanged.addListener((windowId) => {
-  if (!alwaysOnTop || popupWindowId === null) return;
-  // WINDOW_ID_NONE = user ออกจาก Chrome ไป app อื่น — ไม่ดึงกลับ
-  if (windowId !== chrome.windows.WINDOW_ID_NONE && windowId !== popupWindowId) {
-    chrome.windows.update(popupWindowId, { focused: true });
-  }
-});
-
 // reset state เมื่อปิด popup window
 chrome.windows.onRemoved.addListener((windowId) => {
   if (windowId === popupWindowId) {
@@ -73,6 +74,10 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
     // restore popupWindowId หลัง service worker restart (sender มี windowId ของ popup window)
     if (_sender.tab && _sender.tab.windowId != null) {
       popupWindowId = _sender.tab.windowId;
+    }
+    // ใช้ native alwaysOnTop แทน focus-stealing
+    if (popupWindowId !== null) {
+      chrome.windows.update(popupWindowId, { alwaysOnTop: msg.value }).catch(() => {});
     }
     persistState();
     sendResponse({ ok: true });
