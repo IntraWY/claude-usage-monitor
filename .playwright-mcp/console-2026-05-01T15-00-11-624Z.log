@@ -1,0 +1,27 @@
+[     386ms] [LOG] %c
+▲
+
+    ____                               _ __
+   / __ \________  ____ _____ ___     (_) /_
+  / / / / ___/ _ \/ __ `/ __ `__ \   / / __/
+ / /_/ / /  /  __/ /_/ / / / / / /  / / /__
+/_____/_/   \___/\__,_/_/ /_/ /_/  /_/\__( )
+   _____ __    _          _ __           |/
+  / ___// /_  (_)___     (_) /_
+  \__ \/ __ \/ / __ \   / / __/
+ ___/ / / / / / /_/ /  / / /_
+/____/_/ /_/_/ .___/  /_/\__/
+            /_/
+  
+
+Hello!
+
+- Open Source https://vercel.com/oss
+- Careers https://vercel.com/careers
+- Status https://vercel-status.com
+
+ font-family: "Geist Mono", monospace; white-space: pre; line-height: 1; @ https://vercel.com/_next/static/chunks/1l29vw7u8_irq.js?dpl=dpl_8EcxKTTL97yCZgoJ21dgk8BqgwYe:78
+[    2268ms] [WARNING] Deprecated API for given entry type. @ https://vercel.com/_next/static/chunks/24660xudx800e.js?dpl=dpl_8EcxKTTL97yCZgoJ21dgk8BqgwYe:18
+[   21319ms] [WARNING] Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}. @ https://vercel.com/_next/static/chunks/24660xudx800e.js?dpl=dpl_8EcxKTTL97yCZgoJ21dgk8BqgwYe:16
+[  215336ms] [WARNING] The resource https://vercel.com/_next/static/media/caa3a2e1cccd8315.p.400zotvijr2rn.woff2?dpl=dpl_8EcxKTTL97yCZgoJ21dgk8BqgwYe was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ https://vercel.com/intrapeawg01-1703s-projects/claude-session-optimizer/settings/environment-variables:0
+[  215336ms] [WARNING] The resource https://vercel.com/_next/static/media/797e433ab948586e.p.3f30ggp2vw8zj.woff2?dpl=dpl_8EcxKTTL97yCZgoJ21dgk8BqgwYe was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ https://vercel.com/intrapeawg01-1703s-projects/claude-session-optimizer/settings/environment-variables:0

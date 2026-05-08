@@ -1,0 +1,29 @@
+Kimi Code
+Member benefits
+Docs
+Console
+中文
+Log in
+
+K2.6 official version is now updated
+
+Try Now
+
+Kimi Code
+
+A coding-focused perk of the Kimi membership, engineered to drop into any dev workflow, answer faster and more reliably, and get programming tasks done in record time.
+
+Get Kimi Code
+curl -L code.kimi.com/install.sh | bash
+Copy
+One subscription, code anywhere
+Terminal
+IDE
+Kimi CLI
+
+Welcome to Kimi Code CLI!
+
+Send /help for help information.
+
+Model: kimi-for-coding (powered by kimi-k2.6)
+mo

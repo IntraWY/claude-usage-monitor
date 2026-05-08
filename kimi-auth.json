@@ -1,0 +1,189 @@
+{
+  "cookies": [
+    {
+      "name": "_ga",
+      "value": "GA1.1.99984042.1777709996",
+      "domain": ".kimi.com",
+      "path": "/",
+      "expires": 1812269996.12354,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "_gcl_au",
+      "value": "1.1.1083068291.1777709996",
+      "domain": ".kimi.com",
+      "path": "/",
+      "expires": 1785485996,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "HMACCOUNT_BFESS",
+      "value": "4046F7779B2190AA",
+      "domain": ".hm.baidu.com",
+      "path": "/",
+      "expires": 1812269997.212738,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "Hm_lvt_358cae4815e85d48f7e8ab7f3680a74b",
+      "value": "1777709997",
+      "domain": ".www.kimi.com",
+      "path": "/",
+      "expires": 1809245997,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "Hm_lpvt_358cae4815e85d48f7e8ab7f3680a74b",
+      "value": "1777709997",
+      "domain": ".www.kimi.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "HMACCOUNT",
+      "value": "4046F7779B2190AA",
+      "domain": ".www.kimi.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "theme",
+      "value": "light",
+      "domain": "www.kimi.com",
+      "path": "/",
+      "expires": 1809246000,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Strict"
+    },
+    {
+      "name": "kimi-auth",
+      "value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ1c2VyLWNlbnRlciIsImV4cCI6MTc4MDMwMjAwMywiaWF0IjoxNzc3NzEwMDAzLCJqdGkiOiJkN3FyN2N1bjNtazNyNnI1NGRjMCIsInR5cCI6ImFjY2VzcyIsImFwcF9pZCI6ImtpbWkiLCJzc2lkIjoiMTczMTcyODYxNDcyNzY2MjA2MCIsImRldmljZV9pZCI6Ijc2MzUyMDYzMTYwNjcxMzExNDgifQ.Vfmj91eOPUc2i-RvPcbHhmrVi2_mmpq4nW2SUr_rIj5n_equTQwdgsanln41Bj-nk717R5KFd_PgkaheGyWr1A",
+      "domain": "www.kimi.com",
+      "path": "/",
+      "expires": 1809246003.716343,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Strict"
+    },
+    {
+      "name": "__cf_bm",
+      "value": "c5NjkkOYFmBSUe3MBSRIydyHLoU3RMKi4sVNirJqV1o-1777710003.267637-1.0.1.1-pQUV81JiZeVxvHGKPcQudgHGsxHaXSMoaksLI1CvYJDuyUob2w9uK9nnmG2nD7f_eu.v9bI.KOvr9XkHpr9OznLGpbfY59ToSsQBMhuGiwZ6zek8geznkQpT_fdG.qbW",
+      "domain": ".kimi.com",
+      "path": "/",
+      "expires": 1777711803.716433,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "_ga_YXD8W70SZP",
+      "value": "GS2.1.s1777709996$o1$g1$t1777710003$j53$l0$h0",
+      "domain": ".kimi.com",
+      "path": "/",
+      "expires": 1812270003.826009,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "IDE",
+      "value": "AHWqTUn-Dnyj9kDZCsL2DnhCnN2zCaUQ45_jobK5SffsSMMkn56Ljo7Bfwy-mqqa",
+      "domain": ".doubleclick.net",
+      "path": "/",
+      "expires": 1812270003.901044,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    }
+  ],
+  "origins": [
+    {
+      "origin": "https://www.kimi.com",
+      "localStorage": [
+        {
+          "name": "anonymous_access_token",
+          "value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ1c2VyLWNlbnRlciIsImV4cCI6MTc4MDMwMjAwMywiaWF0IjoxNzc3NzEwMDAzLCJqdGkiOiJkN3FyN2N1bjNtazNyNnI1NGRjMCIsInR5cCI6ImFjY2VzcyIsImFwcF9pZCI6ImtpbWkiLCJzc2lkIjoiMTczMTcyODYxNDcyNzY2MjA2MCIsImRldmljZV9pZCI6Ijc2MzUyMDYzMTYwNjcxMzExNDgifQ.Vfmj91eOPUc2i-RvPcbHhmrVi2_mmpq4nW2SUr_rIj5n_equTQwdgsanln41Bj-nk717R5KFd_PgkaheGyWr1A"
+        },
+        {
+          "name": "KIMI_SIDEBAR_COLLAPSE",
+          "value": "false"
+        },
+        {
+          "name": "anonymous_refresh_token",
+          "value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ1c2VyLWNlbnRlciIsImV4cCI6MTc4NTQ4NjAwMywiaWF0IjoxNzc3NzEwMDAzLCJqdGkiOiJkN3FyN2N1bjNtazNyNnI1NGRjZyIsInR5cCI6InJlZnJlc2giLCJhcHBfaWQiOiJraW1pIiwic3NpZCI6IjE3MzE3Mjg2MTQ3Mjc2NjIwNjAiLCJkZXZpY2VfaWQiOiI3NjM1MjA2MzE2MDY3MTMxMTQ4In0.Zme6bUme1A03Np1ShDwPGKl6z7skR0ruAQ5M5_-YTVBh-ICooIng0RuPFX1bwckvfqYgvWdrcrN9EZh8ip2fOA"
+        },
+        {
+          "name": "__tea_cache_tokens_20001731",
+          "value": "{\"web_id\":\"7635206316067131148\",\"user_unique_id\":\"7635206316067131148\",\"timestamp\":1777710001407,\"_type_\":\"default\"}"
+        },
+        {
+          "name": "Hm_lvt_358cae4815e85d48f7e8ab7f3680a74b",
+          "value": "1809245997222|1777709997"
+        },
+        {
+          "name": "_gcl_ls",
+          "value": "{\"schema\":\"gcl\",\"version\":1,\"gcl_ctr\":{\"value\":{\"value\":0,\"timeouts\":0,\"errors\":0,\"eopCount\":0,\"creationTimeMs\":1777709996132},\"expires\":1785485996132}}"
+        },
+        {
+          "name": "selectSearch",
+          "value": "true"
+        },
+        {
+          "name": "kfc_beta_welcome_shown",
+          "value": "false"
+        },
+        {
+          "name": "__tea_sdk_ab_version_20001731",
+          "value": "{\"data\":{\"alipay_first\":{\"val\":\"0\",\"vid\":\"447979\"},\"android_has_kimiclaw\":{\"val\":\"1\",\"vid\":\"427231\"},\"has_claw_group\":{\"val\":\"1\",\"vid\":\"444202\"},\"has_kimiskill\":{\"val\":\"1\",\"vid\":\"448285\"},\"has_oneclick_login\":{\"val\":0,\"vid\":\"430777\"},\"n2s_memory_client\":{\"val\":0,\"vid\":\"324150\"},\"pc_browser_extension\":{\"val\":\"1\",\"vid\":\"447576\"},\"ppt_adaptive_mode\":{\"val\":\"dsl\",\"vid\":\"448431\"},\"web_android_claw\":{\"val\":1,\"vid\":\"439495\"},\"web_has_kimiclaw\":{\"val\":1,\"vid\":\"425997\"}},\"uuid\":\"7635206316067131148\",\"timestamp\":1777710002756,\"ab_version_multilink\":[],\"ab_ext_version\":[],\"ab_version\":[\"447979\",\"427231\",\"444202\",\"448285\",\"430777\",\"324150\",\"447576\",\"448431\",\"439495\",\"425997\"]}"
+        },
+        {
+          "name": "KIMI_VIBE_EDIT_TOOLTIP",
+          "value": "true"
+        },
+        {
+          "name": "hasChangedModel",
+          "value": "true"
+        },
+        {
+          "name": "__tea_cache_refer_20001731",
+          "value": "{\"refer_key\":\"https://www.kimi.com/code\",\"refer_title\":\"Kimi - 会推理解析，能深度思考的AI助手\",\"refer_manual_key\":\"\",\"routeChange\":true}"
+        },
+        {
+          "name": "APMPLUS__cache__server__config__566559",
+          "value": "{\"sample\":{\"sample_rate\":1,\"include_users\":[\"cnngnj2lnl93bcpeh1ug\"],\"sample_granularity\":\"session\",\"rules\":[{\"name\":\"js_error\",\"enable\":true,\"sample_rate\":1,\"conditional_sample_rules\":[{\"sample_rate\":0,\"filter\":{\"type\":\"and\",\"children\":[{\"type\":\"rule\",\"field\":\"payload.error.message\",\"op\":\"regex\",\"groupKey\":\"\",\"values\":[\"Failed to load image\"]}]}},{\"sample_rate\":0,\"filter\":{\"type\":\"and\",\"children\":[{\"type\":\"rule\",\"field\":\"payload.error.message\",\"op\":\"regex\",\"groupKey\":\"\",\"values\":[\"ResizeObserver loop completed with undelivered notifications.\"]}]}},{\"sample_rate\":0,\"filter\":{\"type\":\"and\",\"children\":[{\"type\":\"rule\",\"field\":\"payload.error.message\",\"op\":\"regex\",\"groupKey\":\"\",\"values\":[\"Invalid call to runtime.sendMessage(). Tab not found.\"]}]}},{\"sample_rate\":0,\"filter\":{\"type\":\"and\",\"children\":[{\"type\":\"rule\",\"field\":\"payload.error.message\",\"op\":\"regex\",\"groupKey\":\"\",\"values\":[\"The user aborted a request.\"]}]}},{\"sample_rate\":0,\"filter\":{\"type\":\"and\",\"children\":[{\"type\":\"rule\",\"field\":\"payload.error.message\",\"op\":\"regex\",\"groupKey\":\"\",\"values\":[\"The operation was aborted.\"]}]}},{\"sample_rate\":0,\"filter\":{\"type\":\"and\",\"children\":[{\"type\":\"rule\",\"field\":\"payload.error.stack\",\"op\":\"regex\",\"groupKey\":\"\",\"values\":[\"chrome-extension://\"]}]}},{\"sample_rate\":0.01,\"filter\":{\"type\":\"and\",\"children\":[{\"type\":\"rule\",\"field\":\"common.context.membershiplevel\",\"op\":\"eq\",\"groupKey\":\"\",\"values\":[\"10\"]}]}},{\"sample_rate\":1,\"filter\":{\"type\":\"and\",\"children\":[{\"type\":\"rule\",\"field\":\"payload.error.name\",\"op\":\"eq\",\"groupKey\":\"\",\"values\":[\"NotFoundError\"]}]}},{\"sample_rate\":1,\"filter\":{\"type\":\"and\",\"children\":[{\"type\":\"rule\",\"field\":\"common.context.membershiplevel\",\"op\":\"neq\",\"groupKey\":\"\",\"values\":[\"10\"]}]}},{\"sample_rate\":1,\"filter\":{\"type\":\"and\",\"children\":[{\"type\":\"rule\",\"field\":\"common.url\",\"op\":\"regex\",\"groupKey\":\"\",\"values\":[\"ppt\"]}]}},{\"sample_rate\":1,\"filter\":{\"type\":\"and\",\"children\":[{\"type\":\"rule\",\"field\":\"common.pid\",\"op\":\"regex\",\"groupKey\":\"\",\"values\":[\"ppt\"]}]}}]},{\"name\":\"http\",\"enable\":true,\"sample_rate\":0.0001,\"conditional_sample_rules\":[]},{\"name\":\"performance\",\"enable\":true,\"sample_rate\":0.0001,\"conditional_sample_rules\":[]},{\"name\":\"resource_error\",\"enable\":true,\"sample_rate\":0.0001,\"conditional_sample_rules\":[]},{\"name\":\"resource\",\"enable\":true,\"sample_rate\":0.0001,\"conditional_sample_rules\":[]},{\"name\":\"custom\",\"enable\":true,\"sample_rate\":1,\"conditional_sample_rules\":[]},{\"name\":\"performance_timing\",\"enable\":true,\"sample_rate\":0.0001,\"conditional_sample_rules\":[]},{\"name\":\"performance_longtask\",\"enable\":true,\"sample_rate\":0.0001,\"conditional_sample_rules\":[]},{\"name\":\"pageview\",\"enable\":true,\"sample_rate\":1,\"conditional_sample_rules\":[]},{\"name\":\"action\",\"enable\":true,\"sample_rate\":0.0001,\"conditional_sample_rules\":[]},{\"name\":\"blank_screen\",\"enable\":true,\"sample_rate\":0.0001,\"conditional_sample_rules\":[]}]},\"status\":0,\"timestamp\":1777710002420}"
+        },
+        {
+          "name": "APMPLUS566559",
+          "value": "JTdCJTIydXNlcklkJTIyOiUyMjc3ZmExMDhiLTA1ZmEtNGFjMS1iMmY0LTBhMTk1ZmZjNjgwNiUyMiwlMjJkZXZpY2VJZCUyMjolMjJhMDdiYmYxYy1lZmU4LTQ1OWUtOTAxYi1lMWQ5NzdmZjEwZmYlMjIsJTIyciUyMjowLjMxOTUwMjU1MjgwOTg1NDczLCUyMmV4cGlyZXMlMjI6MTc4NTQ4NjAwMjU2NCU3RA=="
+        },
+        {
+          "name": "BLACK_FRIDAY_SHARED_CHAT_SET",
+          "value": "[]"
+        },
+        {
+          "name": "__tea_cache_first_20001731",
+          "value": "1"
+        },
+        {
+          "name": "selectModel",
+          "value": "{\"scenario\":9,\"thinking\":false}"
+        }
+      ]
+    }
+  ]
+}

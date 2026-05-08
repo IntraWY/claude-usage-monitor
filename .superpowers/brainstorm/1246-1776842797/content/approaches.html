@@ -1,0 +1,42 @@
+<h2>3 แนวทาง Redesign</h2>
+<p class="subtitle">เลือกแนวทางที่ตรงกับที่ต้องการ — คลิกเพื่อเลือก</p>
+
+<div class="options">
+
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Essential Only — 2 การ์ดเท่านั้น</h3>
+      <p>ตัดให้เหลือ 2 ส่วน: (1) ตั้งค่าเร็ว — กรอกเวลาแล้วกดคำนวณ (2) Live Panel — countdown + schedule รวมกันในหน้าเดียว ไม่มี header ยาว ไม่มี tips box ไม่มี copy message</p>
+      <div class="pros-cons" style="margin-top:12px">
+        <div class="pros"><h4>ข้อดี</h4><ul><li>ใช้งานได้ทันที</li><li>ลด scroll มาก</li></ul></div>
+        <div class="cons"><h4>ข้อเสีย</h4><ul><li>ต้องย้าย settings ไปซ่อน</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Single Card — ทุกอย่างในการ์ดเดียว</h3>
+      <p>countdown ขนาดใหญ่ด้านบน → ping ถัดไป → reset time — ทั้งหมดใน 1 การ์ด ฟอร์มตั้งค่าอยู่ด้านล่างพับได้ ไม่มีการ์ดแยก ไม่มี tab</p>
+      <div class="pros-cons" style="margin-top:12px">
+        <div class="pros"><h4>ข้อดี</h4><ul><li>เห็นทุกอย่างในที่เดียว</li><li>ไม่ต้อง scroll เลย</li></ul></div>
+        <div class="cons"><h4>ข้อเสีย</h4><ul><li>schedule list ต้องกดขยาย</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Input → Output — แยกบทบาทชัดเจน</h3>
+      <p>Web page = "Planner" เท่านั้น กรอกข้อมูล → ดูแผน Extension = "Live Tracker" มี countdown + notification ทั้ง 2 ไฟล์ทำงานร่วมกัน แต่ไม่ซ้ำซ้อน</p>
+      <div class="pros-cons" style="margin-top:12px">
+        <div class="pros"><h4>ข้อดี</h4><ul><li>แต่ละส่วนเบาและชัดเจน</li><li>ไม่มี redundant UI</li></ul></div>
+        <div class="cons"><h4>ข้อเสีย</h4><ul><li>ต้องเปิดทั้งสองเพื่อใช้ครบ</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+</div>

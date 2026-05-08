@@ -1,0 +1,41 @@
+[     522ms] [LOG] %c
+▲
+
+__  __                                     _            __
+\ \/ /___  __  __   _________ _____       (_)_  _______/ /_
+ \  / __ \/ / / /  / ___/ __ `/ __ \     / / / / / ___/ __/
+ / / /_/ / /_/ /  / /__/ /_/ / / / /    / / /_/ (__  ) /_
+/_/\____/\__,_/   \___/\__,_/_/ /_/  __/ /\__,_/____/\__/
+         __    _          __  __    /___/
+   _____/ /_  (_)___     / /_/ /_  (_)___  ____ ______
+  / ___/ __ \/ / __ \   / __/ __ \/ / __ \/ __ `/ ___/
+ (__  ) / / / / /_/ /  / /_/ / / / / / / / /_/ (__  )
+/____/_/ /_/_/ .___/   \__/_/ /_/_/_/ /_/\__, /____/
+            /_/                         /____/
+  
+
+Hello!
+
+- Open Source https://vercel.com/oss
+- Careers https://vercel.com/careers
+- Status https://vercel-status.com
+
+ font-family: "Geist Mono", monospace; white-space: pre; line-height: 1; @ https://vercel.com/_next/static/chunks/1l29vw7u8_irq.js?dpl=dpl_2wPzT6WCffgZdo4LK7PjWhfRpPzx:78
+[    2895ms] Error: Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.
+    at r1 (https://vercel.com/_next/static/chunks/1l29vw7u8_irq.js?dpl=dpl_2wPzT6WCffgZdo4LK7PjWhfRpPzx:79:44368)
+    at iE (https://vercel.com/_next/static/chunks/1l29vw7u8_irq.js?dpl=dpl_2wPzT6WCffgZdo4LK7PjWhfRpPzx:79:98380)
+    at sV (https://vercel.com/_next/static/chunks/1l29vw7u8_irq.js?dpl=dpl_2wPzT6WCffgZdo4LK7PjWhfRpPzx:79:139311)
+    at https://vercel.com/_next/static/chunks/1l29vw7u8_irq.js?dpl=dpl_2wPzT6WCffgZdo4LK7PjWhfRpPzx:79:139156
+    at sB (https://vercel.com/_next/static/chunks/1l29vw7u8_irq.js?dpl=dpl_2wPzT6WCffgZdo4LK7PjWhfRpPzx:79:139164)
+    at sO (https://vercel.com/_next/static/chunks/1l29vw7u8_irq.js?dpl=dpl_2wPzT6WCffgZdo4LK7PjWhfRpPzx:79:134221)
+    at cm (https://vercel.com/_next/static/chunks/1l29vw7u8_irq.js?dpl=dpl_2wPzT6WCffgZdo4LK7PjWhfRpPzx:79:168945)
+    at cs (https://vercel.com/_next/static/chunks/1l29vw7u8_irq.js?dpl=dpl_2wPzT6WCffgZdo4LK7PjWhfRpPzx:79:166848)
+    at cf (https://vercel.com/_next/static/chunks/1l29vw7u8_irq.js?dpl=dpl_2wPzT6WCffgZdo4LK7PjWhfRpPzx:79:167205)
+    at https://vercel.com/_next/static/chunks/1l29vw7u8_irq.js?dpl=dpl_2wPzT6WCffgZdo4LK7PjWhfRpPzx:79:169004
+[    3418ms] [WARNING] Deprecated API for given entry type. @ https://vercel.com/_next/static/chunks/24660xudx800e.js?dpl=dpl_2wPzT6WCffgZdo4LK7PjWhfRpPzx:18
+[    6646ms] [ERROR] Failed to load resource: the server responded with a status of 429 () @ https://o205439.ingest.sentry.io/api/1323670/envelope/?sentry_key=d00780d432ac4ccf882f60dd02062e14&sentry_version=7&sentry_client=sentry.javascript.browser%2F7.111.0:0
+[   14221ms] [WARNING] The resource https://vercel.com/_next/static/chunks/3d792zqltro0t.css?dpl=dpl_2wPzT6WCffgZdo4LK7PjWhfRpPzx was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ https://vercel.com/intrapeawg01-1703s-projects/claude-session-optimizer:0
+[   14222ms] [WARNING] The resource https://vercel.com/_next/static/chunks/3_ievhbgysuv-.css?dpl=dpl_2wPzT6WCffgZdo4LK7PjWhfRpPzx was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ https://vercel.com/intrapeawg01-1703s-projects/claude-session-optimizer:0
+[   14222ms] [WARNING] The resource https://vercel.com/_next/static/chunks/08cd0i4vtwexf.css?dpl=dpl_2wPzT6WCffgZdo4LK7PjWhfRpPzx was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ https://vercel.com/intrapeawg01-1703s-projects/claude-session-optimizer:0
+[   14222ms] [WARNING] The resource https://vercel.com/_next/static/chunks/2qt-3kadz85xn.css?dpl=dpl_2wPzT6WCffgZdo4LK7PjWhfRpPzx was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ https://vercel.com/intrapeawg01-1703s-projects/claude-session-optimizer:0
+[   14222ms] [WARNING] The resource https://vercel.com/_next/static/chunks/0ld0e81xyg1qc.css?dpl=dpl_2wPzT6WCffgZdo4LK7PjWhfRpPzx was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ https://vercel.com/intrapeawg01-1703s-projects/claude-session-optimizer:0

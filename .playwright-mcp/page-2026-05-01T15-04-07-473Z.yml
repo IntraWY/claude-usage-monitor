@@ -1,0 +1,130 @@
+- generic [active] [ref=e1]:
+  - link "Skip to content":
+    - /url: "#geist-skip-nav"
+  - main [ref=e3]:
+    - generic [ref=e5]:
+      - generic [ref=e6]:
+        - generic [ref=e7]:
+          - button "Open sidebar" [ref=e9] [cursor=pointer]:
+            - img [ref=e11]
+          - generic [ref=e15]:
+            - link "Other claude-session-optimizer" [ref=e16] [cursor=pointer]:
+              - /url: /intrapeawg01-1703s-projects/claude-session-optimizer
+              - img "Other" [ref=e17]:
+                - img "Other" [ref=e18]
+              - generic [ref=e20]: claude-session-optimizer
+            - button [ref=e21] [cursor=pointer]:
+              - img [ref=e23]
+            - link "Back to team view" [ref=e27] [cursor=pointer]:
+              - /url: /intrapeawg01-1703s-projects
+              - img [ref=e29]
+        - generic [ref=e33]: Overview
+        - button "Open page actions menu" [ref=e35] [cursor=pointer]:
+          - img [ref=e37]
+      - generic [ref=e41]:
+        - generic [ref=e46]:
+          - heading "Production Deployment" [level=3] [ref=e48]
+          - generic [ref=e62]:
+            - generic [ref=e65]:
+              - term [ref=e66]: Deployment
+              - definition [ref=e67]
+            - generic [ref=e72]:
+              - term [ref=e73]:
+                - generic [ref=e75]:
+                  - text: Domains
+                  - link [ref=e76] [cursor=pointer]:
+                    - /url: /intrapeawg01-1703s-projects/claude-session-optimizer/settings/domains
+                    - img [ref=e77]
+              - definition [ref=e79]
+            - generic [ref=e81]:
+              - generic [ref=e82]:
+                - term [ref=e83]: Status
+                - definition [ref=e84]
+              - generic [ref=e87]:
+                - term [ref=e88]: Created
+                - definition [ref=e89]
+            - generic [ref=e92]:
+              - term [ref=e93]: Source
+              - definition [ref=e94]
+          - button "Deployment Settings" [ref=e100] [cursor=pointer]:
+            - generic [ref=e101]:
+              - img [ref=e102]
+              - generic [ref=e105]: Deployment Settings
+        - generic [ref=e114]:
+          - generic [ref=e115]:
+            - generic [ref=e116]:
+              - generic [ref=e117]:
+                - paragraph [ref=e118]:
+                  - strong [ref=e119]: Production Checklist
+                - generic [ref=e121]: 0/5
+              - button "Go to page" [ref=e122] [cursor=pointer]:
+                - img [ref=e124]
+              - button [ref=e126] [cursor=pointer]
+            - generic [ref=e130]:
+              - button "Connect Git Repository" [ref=e131] [cursor=pointer]:
+                - img [ref=e132]
+                - generic [ref=e134]: Connect Git Repository
+              - button "Add Custom Domain" [ref=e135] [cursor=pointer]:
+                - img [ref=e136]
+                - generic [ref=e138]: Add Custom Domain
+              - button "Preview Deployment" [ref=e139] [cursor=pointer]:
+                - img [ref=e140]
+                - generic [ref=e142]: Preview Deployment
+              - button "Enable Web Analytics" [ref=e143] [cursor=pointer]:
+                - img [ref=e144]
+                - generic [ref=e146]: Enable Web Analytics
+              - button "Enable Speed Insights" [ref=e147] [cursor=pointer]:
+                - img [ref=e148]
+                - generic [ref=e150]: Enable Speed Insights
+          - generic [ref=e151]:
+            - generic [ref=e152]:
+              - generic [ref=e153]:
+                - paragraph [ref=e154]:
+                  - strong [ref=e155]: Observability
+                - time [ref=e156]: 6h
+              - link "Go to page" [ref=e157] [cursor=pointer]:
+                - /url: /intrapeawg01-1703s-projects/claude-session-optimizer/observability?period=6h
+                - img [ref=e159]
+              - link [ref=e161] [cursor=pointer]:
+                - /url: /intrapeawg01-1703s-projects/claude-session-optimizer/observability?period=6h
+            - generic [ref=e163]:
+              - generic [ref=e165]: Edge Requests
+              - img [ref=e172]
+              - generic [ref=e174]: Function Invocations
+              - img [ref=e181]
+              - generic [ref=e183]: Error Rate
+              - img [ref=e190]
+          - generic [ref=e191]:
+            - generic [ref=e192]:
+              - paragraph [ref=e194]:
+                - strong [ref=e195]: Analytics
+              - link "Go to page" [ref=e196] [cursor=pointer]:
+                - /url: /intrapeawg01-1703s-projects/claude-session-optimizer/analytics
+                - img [ref=e198]
+              - link [ref=e200] [cursor=pointer]:
+                - /url: /intrapeawg01-1703s-projects/claude-session-optimizer/analytics
+            - generic [ref=e202]:
+              - generic [ref=e203]:
+                - img [ref=e204]
+                - paragraph [ref=e206]: Track visitors and page views
+              - link "Enable" [ref=e207] [cursor=pointer]:
+                - /url: /intrapeawg01-1703s-projects/claude-session-optimizer/analytics?enable=1&source=project-overview-analytics-card
+                - generic [ref=e208]: Enable
+        - generic [ref=e216]:
+          - img [ref=e219]
+          - img [ref=e230]
+          - img [ref=e241]
+          - img [ref=e252]
+          - generic [ref=e261]:
+            - img [ref=e264]
+            - img [ref=e275]
+            - img [ref=e286]
+            - img [ref=e297]
+            - img [ref=e308]
+            - img [ref=e319]
+  - alert [ref=e328]
+  - generic:
+    - generic:
+      - generic:
+        - generic:
+          - img

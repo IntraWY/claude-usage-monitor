@@ -1,0 +1,309 @@
+- generic [active] [ref=e1]:
+  - link "Skip to content":
+    - /url: "#geist-skip-nav"
+  - main [ref=e3]:
+    - generic [ref=e5]:
+      - generic [ref=e6]:
+        - generic [ref=e7]:
+          - button "Open sidebar" [ref=e9] [cursor=pointer]:
+            - img [ref=e11]
+          - generic [ref=e15]:
+            - link "Other claude-session-optimizer" [ref=e108] [cursor=pointer]:
+              - /url: /intrapeawg01-1703s-projects/claude-session-optimizer
+              - img "Other" [ref=e109]:
+                - img "Other" [ref=e110]
+              - generic [ref=e20]: claude-session-optimizer
+            - button [ref=e21] [cursor=pointer]:
+              - img [ref=e23]
+            - link "Back to team view" [ref=e27] [cursor=pointer]:
+              - /url: /intrapeawg01-1703s-projects/~/settings/environment-variables
+              - img [ref=e29]
+        - generic [ref=e33]: Environment Variables
+        - button "Open page actions menu" [ref=e35] [cursor=pointer]:
+          - img [ref=e37]
+      - generic [ref=e46]:
+        - generic [ref=e48]:
+          - generic [ref=e49]:
+            - heading "Environment Variables" [level=2] [ref=e50]
+            - paragraph [ref=e51]:
+              - text: Store API keys, tokens, and config securely.
+              - link "Learn more" [ref=e52] [cursor=pointer]:
+                - /url: /docs/environment-variables
+                - text: Learn more
+                - img [ref=e53]
+          - generic [ref=e55]:
+            - button "Link Shared Variable" [ref=e57] [cursor=pointer]:
+              - generic [ref=e58]: Link Shared Variable
+            - button "Add Environment Variable" [ref=e59] [cursor=pointer]:
+              - generic [ref=e60]: Add Environment Variable
+        - tablist [ref=e61]:
+          - tab "Project" [selected] [ref=e62] [cursor=pointer]
+          - tab "Shared" [ref=e63] [cursor=pointer]
+        - generic [ref=e64]:
+          - generic [ref=e66]:
+            - searchbox "Search" [ref=e67]
+            - img [ref=e69]
+          - combobox [ref=e72]:
+            - generic [ref=e112]:
+              - searchbox [ref=e113]: All Environments
+              - button "Open menu" [ref=e114] [cursor=pointer]:
+                - img [ref=e115]
+          - combobox [ref=e74]:
+            - generic [ref=e75]:
+              - generic:
+                - img
+              - searchbox "All Editors…" [ref=e76]
+              - button "Open menu" [ref=e77] [cursor=pointer]:
+                - img [ref=e78]
+          - generic [ref=e80]:
+            - generic [ref=e82]:
+              - combobox "Filter variables by status" [ref=e83] [cursor=pointer]:
+                - option "All Variables" [selected]
+                - option "Needs Attention"
+              - generic:
+                - img
+            - generic [ref=e85]:
+              - generic:
+                - img
+              - combobox [ref=e86] [cursor=pointer]:
+                - option "Sort by…" [disabled]
+                - option "Last Updated" [selected]
+                - option "Name"
+                - option "Type"
+              - generic:
+                - img
+        - generic [ref=e87]:
+          - generic [ref=e456]:
+            - generic [ref=e458]:
+              - generic [ref=e459]:
+                - img [ref=e462]
+                - generic [ref=e464]:
+                  - generic [ref=e466]:
+                    - button "VAPID_PUBLIC_KEY" [ref=e468] [cursor=pointer]:
+                      - generic "VAPID_PUBLIC_KEY" [ref=e469]:
+                        - generic [ref=e471]: VAPID_PUBLIC_KEY
+                    - generic [ref=e473]: Sensitive
+                  - generic [ref=e477]: Production and Preview
+              - generic [ref=e479]:
+                - generic [ref=e481]:
+                  - generic [ref=e483] [cursor=pointer]:
+                    - generic [ref=e484]: Added
+                    - text: just now
+                  - img [ref=e487]
+                - button "Menu" [ref=e490] [cursor=pointer]:
+                  - img [ref=e494]
+            - generic [ref=e497]:
+              - generic [ref=e498]:
+                - img [ref=e501]
+                - generic [ref=e503]:
+                  - generic [ref=e505]:
+                    - button "VAPID_PRIVATE_KEY" [ref=e507] [cursor=pointer]:
+                      - generic "VAPID_PRIVATE_KEY" [ref=e508]:
+                        - generic [ref=e510]: VAPID_PRIVATE_KEY
+                    - generic [ref=e512]: Sensitive
+                  - generic [ref=e516]: Production and Preview
+              - generic [ref=e518]:
+                - generic [ref=e520]:
+                  - generic [ref=e522] [cursor=pointer]:
+                    - generic [ref=e523]: Added
+                    - text: just now
+                  - img [ref=e526]
+                - button "Menu" [ref=e529] [cursor=pointer]:
+                  - img [ref=e533]
+            - generic [ref=e536]:
+              - generic [ref=e537]:
+                - img [ref=e540]
+                - generic [ref=e542]:
+                  - generic [ref=e544]:
+                    - button "VAPID_SUBJECT" [ref=e546] [cursor=pointer]:
+                      - generic "VAPID_SUBJECT" [ref=e547]:
+                        - generic [ref=e549]: VAPID_SUBJECT
+                    - generic [ref=e551]: Sensitive
+                  - generic [ref=e555]: Production and Preview
+              - generic [ref=e557]:
+                - generic [ref=e559]:
+                  - generic [ref=e561] [cursor=pointer]:
+                    - generic [ref=e562]: Added
+                    - text: just now
+                  - img [ref=e565]
+                - button "Menu" [ref=e568] [cursor=pointer]:
+                  - img [ref=e572]
+            - generic [ref=e575]:
+              - generic [ref=e576]:
+                - img [ref=e579]
+                - generic [ref=e581]:
+                  - generic [ref=e583]:
+                    - button "UPSTASH_REDIS_REST_URL" [ref=e585] [cursor=pointer]:
+                      - generic "UPSTASH_REDIS_REST_URL" [ref=e586]:
+                        - generic [ref=e588]: UPSTASH_REDIS_REST_URL
+                    - generic [ref=e590]: Sensitive
+                  - generic [ref=e594]: Production and Preview
+              - generic [ref=e596]:
+                - generic [ref=e598]:
+                  - generic [ref=e600] [cursor=pointer]:
+                    - generic [ref=e601]: Added
+                    - text: just now
+                  - img [ref=e604]
+                - button "Menu" [ref=e607] [cursor=pointer]:
+                  - img [ref=e611]
+            - generic [ref=e614]:
+              - generic [ref=e615]:
+                - img [ref=e618]
+                - generic [ref=e620]:
+                  - generic [ref=e622]:
+                    - button "UPSTASH_REDIS_REST_TOKEN" [ref=e624] [cursor=pointer]:
+                      - generic "UPSTASH_REDIS_REST_TOKEN" [ref=e625]:
+                        - generic [ref=e627]: UPSTASH_REDIS_REST_TOKEN
+                    - generic [ref=e629]: Sensitive
+                  - generic [ref=e633]: Production and Preview
+              - generic [ref=e635]:
+                - generic [ref=e637]:
+                  - generic [ref=e639] [cursor=pointer]:
+                    - generic [ref=e640]: Added
+                    - text: just now
+                  - img [ref=e643]
+                - button "Menu" [ref=e646] [cursor=pointer]:
+                  - img [ref=e650]
+            - generic [ref=e653]:
+              - generic [ref=e654]:
+                - img [ref=e657]
+                - generic [ref=e659]:
+                  - generic [ref=e661]:
+                    - button "QSTASH_TOKEN" [ref=e663] [cursor=pointer]:
+                      - generic "QSTASH_TOKEN" [ref=e664]:
+                        - generic [ref=e666]: QSTASH_TOKEN
+                    - generic [ref=e668]: Sensitive
+                  - generic [ref=e672]: Production and Preview
+              - generic [ref=e674]:
+                - generic [ref=e676]:
+                  - generic [ref=e678] [cursor=pointer]:
+                    - generic [ref=e679]: Added
+                    - text: just now
+                  - img [ref=e682]
+                - button "Menu" [ref=e685] [cursor=pointer]:
+                  - img [ref=e689]
+            - generic [ref=e692]:
+              - generic [ref=e693]:
+                - img [ref=e696]
+                - generic [ref=e698]:
+                  - generic [ref=e700]:
+                    - button "QSTASH_CURRENT_SIGNING_KEY" [ref=e702] [cursor=pointer]:
+                      - generic "QSTASH_CURRENT_SIGNING_KEY" [ref=e703]:
+                        - generic "QSTASH_CURRENT_SIGNING_KEY" [ref=e704]:
+                          - generic [ref=e705]: QSTASH_CURRENT_SIGNING_KEY
+                          - generic [ref=e706]: QSTASH_CURR...SIGNING_KEY
+                    - generic [ref=e708]: Sensitive
+                  - generic [ref=e712]: Production and Preview
+              - generic [ref=e714]:
+                - generic [ref=e716]:
+                  - generic [ref=e718] [cursor=pointer]:
+                    - generic [ref=e719]: Added
+                    - text: just now
+                  - img [ref=e722]
+                - button "Menu" [ref=e725] [cursor=pointer]:
+                  - img [ref=e729]
+            - generic [ref=e732]:
+              - generic [ref=e733]:
+                - img [ref=e736]
+                - generic [ref=e738]:
+                  - generic [ref=e740]:
+                    - button "QSTASH_NEXT_SIGNING_KEY" [ref=e742] [cursor=pointer]:
+                      - generic "QSTASH_NEXT_SIGNING_KEY" [ref=e743]:
+                        - generic [ref=e745]: QSTASH_NEXT_SIGNING_KEY
+                    - generic [ref=e747]: Sensitive
+                  - generic [ref=e751]: Production and Preview
+              - generic [ref=e753]:
+                - generic [ref=e755]:
+                  - generic [ref=e757] [cursor=pointer]:
+                    - generic [ref=e758]: Added
+                    - text: just now
+                  - img [ref=e761]
+                - button "Menu" [ref=e764] [cursor=pointer]:
+                  - img [ref=e768]
+            - generic [ref=e771]:
+              - generic [ref=e772]:
+                - img [ref=e775]
+                - generic [ref=e777]:
+                  - generic [ref=e779]:
+                    - button "SITE_URL" [ref=e781] [cursor=pointer]:
+                      - generic "SITE_URL" [ref=e782]:
+                        - generic [ref=e784]: SITE_URL
+                    - generic [ref=e786]: Sensitive
+                  - generic [ref=e790]: Production and Preview
+              - generic [ref=e792]:
+                - generic [ref=e794]:
+                  - generic [ref=e796] [cursor=pointer]:
+                    - generic [ref=e797]: Added
+                    - text: just now
+                  - img [ref=e800]
+                - button "Menu" [ref=e803] [cursor=pointer]:
+                  - img [ref=e807]
+          - generic [ref=e96]:
+            - generic [ref=e98] [cursor=pointer]:
+              - checkbox [checked] [ref=e99]
+              - img [ref=e101]
+            - generic [ref=e103]:
+              - text: Enable access to
+              - link "System Environment Variables" [ref=e104] [cursor=pointer]:
+                - /url: /docs/environment-variables/system-environment-variables
+                - text: System Environment Variables
+                - img [ref=e105]
+  - alert [ref=e107]
+  - generic:
+    - generic:
+      - generic:
+        - generic:
+          - img
+  - dialog [ref=e821]:
+    - generic [ref=e823]:
+      - banner [ref=e824]:
+        - heading "Redeploy" [level=3] [ref=e825]
+      - generic [ref=e826]:
+        - paragraph [ref=e827]: You are about to create a new Deployment with the latest configuration from your Project Settings.
+        - generic [ref=e829]:
+          - generic [ref=e830]: Choose Environment
+          - generic [ref=e832]:
+            - generic:
+              - img
+            - combobox "Environments" [ref=e833] [cursor=pointer]:
+              - option "Production" [selected]
+              - option "Preview"
+              - option "Your project has no custom environments" [disabled]
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - generic: Production
+                - img
+        - radiogroup [ref=e834]:
+          - generic [ref=e836] [cursor=pointer]:
+            - radio "claude-session-optimizer-rmgg2zot4-intrapeawg01-1703s-projects.vercel.app Current 7 days ago" [checked] [ref=e838]
+            - generic [ref=e841]:
+              - generic [ref=e842]: claude-session-optimizer-rmgg2zot4-intrapeawg01-1703s-projects.vercel.app
+              - generic [ref=e844]: Current
+              - img [ref=e846]
+              - img [ref=e849]
+              - generic [ref=e851]:
+                - img [ref=e852]
+                - text: 7 days ago
+        - generic [ref=e854]:
+          - paragraph [ref=e855]: "Assigned domains:"
+          - generic [ref=e857]:
+            - img [ref=e859]
+            - link "claude-session-optimizer.vercel.app" [ref=e861] [cursor=pointer]:
+              - /url: https://claude-session-optimizer.vercel.app
+        - generic [ref=e862]:
+          - generic [ref=e863] [cursor=pointer]:
+            - generic [ref=e864]:
+              - checkbox "Use existing Build Cache." [ref=e865]
+              - img [ref=e867]
+            - generic [ref=e868]: Use existing Build Cache.
+          - link "Learn about Build Cache" [ref=e869] [cursor=pointer]:
+            - /url: /docs/deployments/troubleshoot-a-build#understanding-build-cache
+            - text: Learn about Build Cache
+            - img [ref=e870]
+    - contentinfo [ref=e872]:
+      - button "Cancel" [ref=e873] [cursor=pointer]:
+        - generic [ref=e874]: Cancel
+      - button "Redeploy" [ref=e875] [cursor=pointer]:
+        - generic [ref=e876]: Redeploy

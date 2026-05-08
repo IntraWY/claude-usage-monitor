@@ -1,0 +1,2 @@
+[     470ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://claude-session-optimizer.vercel.app/api/vapid-key:0
+[     888ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://claude-session-optimizer.vercel.app/favicon.ico:0

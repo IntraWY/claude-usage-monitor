@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Session Optimizer</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+    <div class="logo">🤖</div>
+    <div class="header-center">
+        <div class="clock" id="clock">--:--:--</div>
+        <div class="date-str" id="dateStr">--</div>
+    </div>
+    <button class="gear-btn" id="gear-btn" title="ตั้งค่า / Settings">⚙️</button>
+</div>
+
+<!-- Settings Panel (hidden by default, toggled by gear button) -->
+<div id="settings-panel" class="settings-panel hidden">
+    <div class="field">
+        <label>🕐 เริ่ม Session เวลา (24h)</label>
+        <div class="time-row">
+            <select id="startH"></select>
+            <span class="colon">:</span>
+            <select id="startMin"></select>
+        </div>
+    </div>
+    <div class="row2">
+        <div class="field">
+            <label>⏱ Interval</label>
+            <div style="display:flex;gap:4px;align-items:center;flex-wrap:wrap">
+                <select id="pingIntervalH">
+                    <option value="0">0 ชม.</option>
+                    <option value="1">1 ชม.</option>
+                    <option value="2">2 ชม.</option>
+                    <option value="3">3 ชม.</option>
+                    <option value="4" selected>4 ชม.</option>
+                    <option value="5">5 ชม.</option>
+                    <option value="6">6 ชม.</option>
+                </select>
+                <select id="pingIntervalM">
+                    <option value="0" selected>00 น.</option>
+                    <option value="5">05 น.</option>
+                    <option value="10">10 น.</option>
+                    <option value="15">15 น.</option>
+                    <option value="20">20 น.</option>
+                    <option value="25">25 น.</option>
+                    <option value="30">30 น.</option>
+                    <option value="35">35 น.</option>
+                    <option value="40">40 น.</option>
+                    <option value="45">45 น.</option>
+                    <option value="50">50 น.</option>
+                    <option value="55">55 น.</option>
+                </select>
+            </div>
+        </div>
+        <div class="field">
+            <label>📅 Duration</label>
+            <select id="sessionDuration">
+                <option value="12">12h</option>
+                <option value="24" selected>24h ✓</option>
+                <option value="48">48h</option>
+            </select>
+        </div>
+    </div>
+    <div class="field">
+        <label>⚡ แจ้งล่วงหน้า</label>
+        <select id="alertBefore">
+            <option value="5">5 นาที</option>
+            <option value="10" selected>10 นาที ✓</option>
+            <option value="15">15 นาที</option>
+            <option value="20">20 นาที</option>
+        </select>
+    </div>
+    <button class="btn-primary" id="btn-save">💾 บันทึก &amp; คำนวณ</button>
+    <div class="notif-status" id="notif-status">
+        <span id="notif-icon">🔔</span>
+        <span id="notif-text">กำลังตรวจสอบ Notifications...</span>
+        <button class="btn-notif" id="btn-notif">เปิดใช้</button>
+    </div>
+</div>
+
+<!-- Tabs -->
+<div class="tabs">
+    <button class="tab active" data-tab="reset">🔄 Reset Calc</button>
+    <button class="tab" data-tab="schedule">📅 Schedule</button>
+</div>
+
+<!-- ───────── TAB: RESET CALC ───────── -->
+<div class="tab-panel active" id="panel-reset">
+
+    <p class="hint">เห็น <strong>"resets in X hours"</strong> ใน Claude? กรอกได้เลย</p>
+
+    <div class="sub-tabs">
+        <button class="stab active" id="stab-remain">⏳ เหลืออีก</button>
+        <button class="stab" id="stab-exact">🕐 Reset เวลา</button>
+    </div>
+
+    <div id="mode-remain">
+        <div class="row2">
+            <div class="field">
+                <label>ชั่วโมง</label>
+                <select id="remH"></select>
+            </div>
+            <div class="field">
+                <label>นาที</label>
+                <select id="remM"></select>
+            </div>
+        </div>
+    </div>
+
+    <div id="mode-exact" class="hidden">
+        <div class="field">
+            <label>🕐 Reset เวลา (24h)</label>
+            <div class="time-row">
+                <select id="resetH"></select>
+                <span class="colon">:</span>
+                <select id="resetMin"></select>
+            </div>
+        </div>
+    </div>
+
+    <button class="btn-primary" id="btn-calc-reset">🔄 คำนวณ Reset Schedule</button>
+
+    <div id="reset-result" class="hidden">
+        <div class="divider"></div>
+        <div class="reset-banner">
+            <div>
+                <div class="rb-lbl">Reset เวลา</div>
+                <div class="rb-time" id="rb-time">--:--</div>
+            </div>
+            <div style="text-align:right">
+                <div class="rb-lbl">นับถอยหลัง</div>
+                <div class="rb-cd" id="rb-cd">--:--:--</div>
+            </div>
+        </div>
+        <div class="plan-list" id="plan-list"></div>
+    </div>
+</div>
+
+<!-- ───────── TAB: SCHEDULE ───────── -->
+<div class="tab-panel hidden" id="panel-schedule">
+
+    <div class="mini-cd-card">
+        <div class="mini-cd-label" id="cd-label">เวลาที่เหลือ / Next ping in</div>
+        <div class="mini-cd" id="cd-digits">--:--:--</div>
+        <div class="mini-next">ถัดไป: <span id="cd-next-time" class="purple-text">--:--</span>
+            &nbsp;Ping <span id="cd-next-num" class="purple-text">#-</span></div>
+        <div class="prog-bar">
+            <div class="prog-fill" id="prog-fill" style="width:0%"></div>
+            <div id="prog-dots"></div>
+        </div>
+        <div class="prog-ends">
+            <span id="prog-start">--:--</span>
+            <span id="prog-end">--:--</span>
+        </div>
+    </div>
+
+    <div id="sched-list">
+        <div class="empty-hint">ตั้งค่าใน ⚙️ แล้วกดบันทึกก่อนครับ</div>
+    </div>
+
+    <div class="copy-card">
+        <div class="copy-msg" id="copy-msg">สวัสดีครับ ช่วย ping เพื่อรักษา session ไว้หน่อยนะครับ (Hi Claude! Quick check-in to keep my session active. Using Haiku.)</div>
+        <button class="btn-copy" id="btn-copy">📋 คัดลอก / Copy</button>
+    </div>
+</div>
+
+<script src="popup.js"></script>
+</body>
+</html>

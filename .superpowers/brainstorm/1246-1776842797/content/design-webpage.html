@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mockup: Web Page Redesign</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: -apple-system, 'Segoe UI', 'Noto Sans Thai', sans-serif; background:#e8e8f0; padding:24px 16px; color:#1e1b4b; }
+
+  .frame-label {
+    text-align:center; margin-bottom:16px;
+    font-size:12px; letter-spacing:2px; text-transform:uppercase; color:#9ca3af; font-weight:600;
+  }
+
+  .phone-frame {
+    max-width:680px; margin:0 auto;
+    background:#f4f4f8;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  }
+
+  /* Top bar */
+  .topbar {
+    height:4px;
+    background: linear-gradient(90deg, #7c3aed, #a855f7, #ec4899);
+  }
+
+  .page-content { padding:16px 16px 32px; }
+
+  /* Tiny header */
+  .mini-header {
+    display:flex; align-items:center; justify-content:space-between;
+    margin-bottom:16px;
+  }
+  .mini-title {
+    font-size:14px; font-weight:800; color:#7c3aed;
+    display:flex; align-items:center; gap:6px;
+  }
+  .mini-clock {
+    font-size:13px; font-weight:700; color:#6b7280;
+    font-variant-numeric: tabular-nums;
+    background:#fff; border:1px solid #e5e7eb; border-radius:8px; padding:4px 10px;
+  }
+
+  /* Cards */
+  .card {
+    background:#fff;
+    border:1px solid rgba(124,58,237,0.12);
+    border-radius:18px;
+    padding:18px 20px;
+    margin-bottom:12px;
+    box-shadow:0 2px 12px rgba(124,58,237,0.07);
+  }
+
+  .card-title {
+    font-size:12px; font-weight:700; color:#9ca3af;
+    letter-spacing:1.5px; text-transform:uppercase;
+    margin-bottom:14px;
+  }
+
+  /* ── CARD 1: QUICK SETUP ── */
+  .setup-grid {
+    display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;
+  }
+  .field-label { font-size:11px; color:#9ca3af; font-weight:600; margin-bottom:4px; }
+  .field-mock {
+    background:#f9f9fc; border:1.5px solid #e5e7eb; border-radius:10px;
+    padding:9px 12px; font-size:13px; color:#1e1b4b; font-weight:600;
+  }
+  .field-mock.accent { border-color:#d8b4fe; background:#f3e8ff; color:#7c3aed; }
+
+  .subtab-row { display:flex; gap:6px; margin-bottom:10px; }
+  .stab-mock {
+    flex:1; padding:7px; border-radius:9px; font-size:11.5px; font-weight:700;
+    text-align:center; border:1.5px solid #e5e7eb; color:#9ca3af; background:#f9fafb;
+  }
+  .stab-mock.on { background:#f3e8ff; border-color:#d8b4fe; color:#7c3aed; }
+
+  .btn-calc {
+    width:100%; padding:12px; background:linear-gradient(135deg,#7c3aed,#a855f7);
+    color:#fff; border:none; border-radius:12px; font-size:14px; font-weight:700;
+    cursor:pointer; box-shadow:0 4px 14px rgba(124,58,237,0.25);
+  }
+
+  /* ── CARD 2: LIVE PANEL ── */
+  .live-header {
+    display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;
+  }
+  .status-pill {
+    display:inline-flex; align-items:center; gap:6px;
+    padding:5px 12px; border-radius:100px;
+    font-size:11.5px; font-weight:600;
+    background:#ecfdf5; color:#059669; border:1.5px solid #a7f3d0;
+  }
+  .dot { width:6px; height:6px; border-radius:50%; background:currentColor; }
+
+  /* Big countdown */
+  .countdown-center { text-align:center; padding:4px 0 16px; }
+  .cd-label { font-size:10px; letter-spacing:2px; text-transform:uppercase; color:#9ca3af; margin-bottom:8px; }
+  .cd-big {
+    font-size:60px; font-weight:900; line-height:1; letter-spacing:-2px;
+    font-variant-numeric:tabular-nums;
+    background:linear-gradient(135deg,#7c3aed,#a855f7,#ec4899);
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  }
+  .cd-sub { font-size:13px; color:#9ca3af; margin-top:8px; }
+  .cd-sub span { color:#7c3aed; font-weight:700; font-size:15px; }
+
+  /* Progress bar */
+  .prog { height:6px; background:#f3f4f6; border-radius:100px; border:1px solid #e5e7eb; margin-bottom:16px; position:relative; }
+  .prog-fill { height:100%; width:38%; background:linear-gradient(90deg,#7c3aed,#a855f7); border-radius:100px; }
+
+  /* Mini schedule */
+  .sched-title-row {
+    display:flex; justify-content:space-between; align-items:center;
+    font-size:11px; color:#9ca3af; font-weight:700; letter-spacing:1px;
+    text-transform:uppercase; margin-bottom:10px;
+  }
+  .sched-mini-item {
+    display:flex; align-items:center; gap:10px; padding:8px 0;
+    border-bottom:1px solid #f3f4f6;
+  }
+  .sched-mini-item:last-child { border-bottom:none; }
+  .s-time { font-size:13px; font-weight:700; font-variant-numeric:tabular-nums; color:#d1d5db; min-width:48px; }
+  .s-time.next-t { color:#7c3aed; }
+  .s-bar { flex:1; height:3px; background:#f3f4f6; border-radius:10px; }
+  .s-bar-fill { height:100%; border-radius:10px; }
+  .s-bar-fill.done { width:100%; background:#d1d5db; }
+  .s-bar-fill.next-b { width:0%; background:#7c3aed; }
+  .s-bar-fill.future { width:0%; background:#e9d5ff; }
+  .s-tag { font-size:10.5px; font-weight:700; padding:3px 8px; border-radius:100px; white-space:nowrap; }
+  .tag-d { background:#f9fafb; color:#d1d5db; }
+  .tag-n { background:#f3e8ff; color:#7c3aed; }
+  .tag-f { background:#f9fafb; color:#9ca3af; }
+
+  /* Reset inline */
+  .reset-inline {
+    margin-top:14px; padding-top:14px; border-top:1px solid #f3f4f6;
+    display:flex; justify-content:space-between; align-items:center;
+  }
+  .rl { font-size:11px; color:#9ca3af; font-weight:600; }
+  .rv { font-size:22px; font-weight:900; color:#7c3aed; font-variant-numeric:tabular-nums; }
+  .rc { font-size:18px; font-weight:800; font-variant-numeric:tabular-nums;
+        background:linear-gradient(135deg,#7c3aed,#ec4899);
+        -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+
+  /* Removed label */
+  .removed-list {
+    margin-top:16px; padding:14px 16px;
+    background:#fafafa; border:1px dashed #e5e7eb; border-radius:12px;
+  }
+  .removed-list h4 { font-size:11px; color:#9ca3af; font-weight:700; letter-spacing:1px; text-transform:uppercase; margin-bottom:8px; }
+  .removed-list ul { list-style:none; display:flex; flex-wrap:wrap; gap:6px; }
+  .removed-list li {
+    font-size:11px; padding:3px 10px; border-radius:100px;
+    background:#fee2e2; color:#dc2626; font-weight:600; text-decoration:line-through;
+  }
+
+  .annotation { margin-top:20px; }
+  .annotation h3 { font-size:13px; font-weight:700; color:#374151; margin-bottom:8px; }
+  .annotation ul { list-style:none; }
+  .annotation li { font-size:12px; color:#6b7280; line-height:1.8; padding-left:16px; position:relative; }
+  .annotation li::before { content:"→"; position:absolute; left:0; color:#7c3aed; }
+</style>
+</head>
+<body>
+
+<div class="frame-label">Web Page — Essential Only (Approach A)</div>
+
+<div class="phone-frame">
+  <div class="topbar"></div>
+  <div class="page-content">
+
+    <!-- Tiny header -->
+    <div class="mini-header">
+      <div class="mini-title">🤖 Claude Session Optimizer</div>
+      <div class="mini-clock">14:23:07</div>
+    </div>
+
+    <!-- CARD 1: QUICK SETUP -->
+    <div class="card">
+      <div class="card-title">⚙️ ตั้งค่า</div>
+
+      <div class="subtab-row">
+        <div class="stab-mock on">⏳ เหลืออีก</div>
+        <div class="stab-mock">🕐 Reset เวลา</div>
+        <div class="stab-mock">📅 เริ่ม Session</div>
+      </div>
+
+      <div class="setup-grid">
+        <div>
+          <div class="field-label">ชั่วโมง</div>
+          <div class="field-mock accent">1 ชม.</div>
+        </div>
+        <div>
+          <div class="field-label">นาที</div>
+          <div class="field-mock">30 นาที</div>
+        </div>
+        <div>
+          <div class="field-label">Interval</div>
+          <div class="field-mock">ทุก 4 ชม.</div>
+        </div>
+        <div>
+          <div class="field-label">แจ้งล่วงหน้า</div>
+          <div class="field-mock">10 นาที</div>
+        </div>
+      </div>
+
+      <button class="btn-calc">✨ คำนวณ</button>
+    </div>
+
+    <!-- CARD 2: LIVE PANEL -->
+    <div class="card">
+      <div class="live-header">
+        <div class="card-title" style="margin-bottom:0">⏱ Live</div>
+        <div class="status-pill"><div class="dot"></div>Session Active</div>
+      </div>
+
+      <!-- Countdown -->
+      <div class="countdown-center">
+        <div class="cd-label">NEXT PING IN</div>
+        <div class="cd-big">02:14:33</div>
+        <div class="cd-sub">Ping ถัดไป <span>16:00</span> &nbsp;•&nbsp; <span>#2</span></div>
+      </div>
+
+      <!-- Progress -->
+      <div class="prog"><div class="prog-fill"></div></div>
+
+      <!-- Mini schedule -->
+      <div class="sched-title-row">
+        <span>📅 Schedule</span>
+        <span style="color:#d1d5db">13:45 → 13:45+24h</span>
+      </div>
+
+      <div class="sched-mini-item">
+        <div class="s-time">13:45</div>
+        <div class="s-bar"><div class="s-bar-fill done"></div></div>
+        <div class="s-tag tag-d">✓ แล้ว</div>
+      </div>
+      <div class="sched-mini-item">
+        <div class="s-time next-t">16:00</div>
+        <div class="s-bar"><div class="s-bar-fill next-b"></div></div>
+        <div class="s-tag tag-n">→ ถัดไป</div>
+      </div>
+      <div class="sched-mini-item">
+        <div class="s-time">20:00</div>
+        <div class="s-bar"><div class="s-bar-fill future"></div></div>
+        <div class="s-tag tag-f">○ มา</div>
+      </div>
+      <div class="sched-mini-item">
+        <div class="s-time">00:00</div>
+        <div class="s-bar"><div class="s-bar-fill future"></div></div>
+        <div class="s-tag tag-f">○ มา</div>
+      </div>
+
+      <!-- Reset inline -->
+      <div class="reset-inline">
+        <div>
+          <div class="rl">Session Reset</div>
+          <div class="rv">15:30</div>
+        </div>
+        <div style="text-align:right">
+          <div class="rl">นับถอยหลัง</div>
+          <div class="rc">01:06:22</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- What was removed -->
+    <div class="removed-list">
+      <h4>ตัดออก</h4>
+      <ul>
+        <li>Header ยาว + โลโก้ใหญ่</li>
+        <li>Notification Banner</li>
+        <li>Tips / How-to Box</li>
+        <li>Copy Message Card</li>
+        <li>Footer</li>
+        <li>Section titles ทั้งหมด</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<div class="annotation">
+  <h3>สิ่งที่เปลี่ยน</h3>
+  <ul>
+    <li>Header เล็กลง — แค่ชื่อ + นาฬิกา</li>
+    <li>Reset Calc ถูกรวมเข้า Card 1 เป็น sub-tab ไม่ใช่การ์ดแยก</li>
+    <li>Schedule list อยู่ใน Live Panel เดียวกับ countdown</li>
+    <li>Reset countdown แสดงด้านล่าง Live Panel แทนการ์ดแยก</li>
+    <li>Copy message ย้ายเป็น icon เล็กๆ (ถ้ายังต้องการ)</li>
+    <li>7 sections → 2 cards</li>
+  </ul>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,513 @@
+- generic [ref=e1]:
+  - generic [ref=e368]:
+    - banner [ref=e369]:
+      - generic [ref=e371]:
+        - generic [ref=e372]:
+          - link [ref=e373] [cursor=pointer]:
+            - /url: /redis
+            - img [ref=e374]
+          - button "Personal" [ref=e381] [cursor=pointer]:
+            - generic [ref=e382]: Personal
+            - img [ref=e384]
+        - generic [ref=e388]:
+          - link "Redis" [ref=e389] [cursor=pointer]:
+            - /url: /redis
+            - generic [ref=e391]: Redis
+          - link "QStash" [ref=e392] [cursor=pointer]:
+            - /url: /qstash
+            - generic [ref=e393]: QStash
+          - link "Workflow" [ref=e394] [cursor=pointer]:
+            - /url: /workflow
+            - generic [ref=e395]: Workflow
+          - link "Vector" [ref=e396] [cursor=pointer]:
+            - /url: /vector
+            - generic [ref=e397]: Vector
+          - link "Box" [ref=e398] [cursor=pointer]:
+            - /url: /box
+            - generic [ref=e399]: Box
+          - generic [ref=e400] [cursor=pointer]:
+            - button [ref=e401]:
+              - img [ref=e402]
+            - generic [ref=e407]: "5"
+        - generic [ref=e408]:
+          - button [ref=e409] [cursor=pointer]:
+            - img [ref=e411]
+          - button [ref=e414] [cursor=pointer]:
+            - img [ref=e416]
+    - generic [ref=e420]:
+      - generic [ref=e421]:
+        - button "Redis" [ref=e422] [cursor=pointer]:
+          - img [ref=e423]
+          - generic [ref=e427]: Redis
+        - generic [ref=e428]: /
+        - generic [ref=e429]: claude-session-optimizer
+        - button [ref=e430] [cursor=pointer]:
+          - img [ref=e431]
+        - img [ref=e434] [cursor=pointer]
+      - generic [ref=e438]:
+        - generic [ref=e439]:
+          - generic [ref=e440]:
+            - img [ref=e441]
+            - generic [ref=e444]: Free Tier
+          - generic [ref=e445]:
+            - img [ref=e446]
+            - generic [ref=e448]: AWS
+          - generic [ref=e449]:
+            - img [ref=e450]
+            - generic [ref=e454]: Singaporeap-southeast-1
+          - generic [ref=e455]:
+            - img [ref=e456]
+            - generic [ref=e460]: global
+        - generic [ref=e461]:
+          - link "Docs" [ref=e462] [cursor=pointer]:
+            - /url: https://docs.upstash.com/redis
+            - generic [ref=e463]:
+              - img [ref=e465]
+              - generic [ref=e469]: Docs
+          - generic [ref=e470] [cursor=pointer]:
+            - img [ref=e472]
+            - generic [ref=e476]: SDK
+            - img [ref=e477]
+    - generic [ref=e480]:
+      - tablist [ref=e481]:
+        - generic [ref=e483]:
+          - tab "Details" [selected] [ref=e485] [cursor=pointer]
+          - tab "Usage" [ref=e487] [cursor=pointer]
+          - tab "CLI" [ref=e489] [cursor=pointer]
+          - tab "Data Browser" [ref=e491] [cursor=pointer]
+          - tab "Search" [ref=e493] [cursor=pointer]:
+            - generic [ref=e495]: Search
+          - tab "Monitor" [ref=e497] [cursor=pointer]
+          - tab "Backups" [ref=e499] [cursor=pointer]
+          - tab "ACL" [ref=e501] [cursor=pointer]
+      - tabpanel "Details" [ref=e504]:
+        - generic [ref=e505]:
+          - generic [ref=e1116]:
+            - generic [ref=e1117]:
+              - heading "COMMANDS" [level=5] [ref=e1118]
+              - generic [ref=e1119]:
+                - generic [ref=e1120]: "0"
+                - generic [ref=e1121]: / 500k per month
+              - generic [ref=e1122]:
+                - generic [ref=e1124]:
+                  - generic [ref=e1125]:
+                    - generic [ref=e1127]: Writes
+                    - generic [ref=e1129]: "0"
+                  - generic [ref=e1130]:
+                    - generic [ref=e1132]: Reads
+                    - generic [ref=e1134]: "0"
+                - generic [ref=e1135] [cursor=pointer]:
+                  - img [ref=e1136]
+                  - text: Upgrade
+            - generic [ref=e1140]:
+              - heading "BANDWIDTH" [level=5] [ref=e1141]
+              - generic [ref=e1142]:
+                - generic [ref=e1143]: 0 B
+                - generic [ref=e1144]: / 50 GB
+              - generic [ref=e1145]:
+                - generic [ref=e1148]: It's all right.
+                - generic [ref=e1149] [cursor=pointer]:
+                  - img [ref=e1150]
+                  - text: Upgrade
+            - generic [ref=e1154]:
+              - heading "STORAGE" [level=5] [ref=e1155]
+              - generic [ref=e1156]:
+                - generic [ref=e1157]: 0 B
+                - generic [ref=e1158]: / 256 MB
+              - generic [ref=e1159]:
+                - generic [ref=e1162]: It's all right.
+                - generic [ref=e1163] [cursor=pointer]:
+                  - img [ref=e1164]
+                  - text: Upgrade
+            - generic [ref=e1168]:
+              - heading "COST" [level=5] [ref=e1169]
+              - generic [ref=e1171]: $0.00
+          - generic [ref=e551]:
+            - generic [ref=e552]:
+              - generic [ref=e553]:
+                - generic [ref=e554]: Endpoint
+                - generic [ref=e555]:
+                  - generic [ref=e556]:
+                    - generic [ref=e557]: prime-bream-112187.upstash.io
+                    - button "Copy" [ref=e558] [cursor=pointer]:
+                      - img [ref=e559]
+                  - generic [ref=e562]:
+                    - button "TCP" [ref=e563] [cursor=pointer]:
+                      - img [ref=e564]
+                      - generic [ref=e567]: TCP
+                    - button "HTTPS" [ref=e568] [cursor=pointer]:
+                      - img [ref=e569]
+                      - generic [ref=e572]: HTTPS
+              - generic [ref=e573]:
+                - generic [ref=e574]: Token / Readonly Token
+                - generic [ref=e575]:
+                  - generic [ref=e576]:
+                    - generic [ref=e577]: •••••••••
+                    - button "Copy" [ref=e578] [cursor=pointer]:
+                      - img [ref=e579]
+                  - generic [ref=e582]:
+                    - button "TOKEN" [ref=e583] [cursor=pointer]:
+                      - img [ref=e584]
+                      - generic [ref=e587]: TOKEN
+                    - button "READONLY TOKEN" [ref=e588] [cursor=pointer]:
+                      - img [ref=e589]
+                      - generic [ref=e592]: READONLY TOKEN
+              - generic [ref=e593]:
+                - generic [ref=e594]: Port
+                - generic [ref=e596]:
+                  - generic [ref=e597]: "6379"
+                  - button "Copy" [ref=e598] [cursor=pointer]:
+                    - img [ref=e599]
+              - generic [ref=e602]:
+                - generic [ref=e603]: TLS/SSL
+                - generic [ref=e605]:
+                  - generic [ref=e606]: Enabled
+                  - button "Copy" [ref=e607] [cursor=pointer]:
+                    - img [ref=e608]
+            - generic [ref=e611]:
+              - generic [ref=e612]: redis-cli --tls -u redis://default:********@prime-bream-112187.upstash.io:6379
+              - button [ref=e613] [cursor=pointer]:
+                - img [ref=e614]
+          - generic [ref=e617]:
+            - generic [ref=e619]:
+              - heading "Connect" [level=3] [ref=e620]
+              - text: Connect to your Redis database from anywhere
+            - generic [ref=e623]:
+              - generic [ref=e626]:
+                - tablist [ref=e627]:
+                  - generic [ref=e629]:
+                    - tab "REST" [selected] [ref=e631] [cursor=pointer]:
+                      - generic [ref=e632]: REST
+                    - tab "TCP" [ref=e634] [cursor=pointer]:
+                      - generic [ref=e635]: TCP
+                - tabpanel "REST" [ref=e638]:
+                  - generic [ref=e639]:
+                    - generic [ref=e640]:
+                      - generic [ref=e641] [cursor=pointer]:
+                        - checkbox "Read-Only Token" [ref=e643]
+                        - generic [ref=e645]: Read-Only Token
+                      - button [active] [ref=e646] [cursor=pointer]:
+                        - img [ref=e1188]
+                      - button [ref=e650] [cursor=pointer]:
+                        - img [ref=e651]
+                    - code [ref=e656]:
+                      - generic [ref=e657]:
+                        - textbox "Editor content" [ref=e658]
+                        - textbox [ref=e659]
+                        - generic [ref=e661]:
+                          - generic [ref=e1194]: "1"
+                          - generic [ref=e1196]: "2"
+                        - generic [ref=e670]:
+                          - generic [ref=e1200]: UPSTASH_REDIS_REST_URL="https://prime-bream-112187.upstash.io"
+                          - generic [ref=e1202]: UPSTASH_REDIS_REST_TOKEN="gQAAAAAAAbY7AAIgcDJmNzUyZGZkZWEzMDU0ZTE2OGQ5ODRjNWUwZTIwYmEzMQ"
+              - generic [ref=e676]:
+                - generic [ref=e678]:
+                  - generic [ref=e680]: "1"
+                  - generic [ref=e681]:
+                    - generic [ref=e683]: Language Pick a language to get started
+                    - generic [ref=e686]:
+                      - generic [ref=e687] [cursor=pointer]:
+                        - generic [ref=e688]:
+                          - radio "JavaScript" [checked]
+                        - text: JavaScript
+                      - generic [ref=e689] [cursor=pointer]:
+                        - generic [ref=e690]:
+                          - radio "Python"
+                        - text: Python
+                      - generic [ref=e691] [cursor=pointer]:
+                        - generic [ref=e692]:
+                          - radio "PHP"
+                        - text: PHP
+                      - generic [ref=e693] [cursor=pointer]:
+                        - generic [ref=e694]:
+                          - radio "Java"
+                        - text: Java
+                      - generic [ref=e695] [cursor=pointer]:
+                        - generic [ref=e696]:
+                          - radio "Go"
+                        - text: Go
+                      - generic [ref=e697] [cursor=pointer]:
+                        - generic [ref=e698]:
+                          - radio "Rust"
+                        - text: Rust
+                      - generic [ref=e699] [cursor=pointer]:
+                        - generic [ref=e700]:
+                          - radio "cURL"
+                        - text: cURL
+                - generic [ref=e702]:
+                  - generic [ref=e703]: "2"
+                  - generic [ref=e704]:
+                    - generic [ref=e706]:
+                      - text: Example
+                      - generic [ref=e707]: Quick setup with JavaScript
+                    - generic [ref=e709]:
+                      - generic [ref=e711] [cursor=pointer]:
+                        - checkbox "Read from env variables" [ref=e713]
+                        - generic [ref=e715]: Read from env variables
+                      - generic [ref=e718]:
+                        - tablist [ref=e719]:
+                          - generic [ref=e721]:
+                            - tab "@upstash/redis" [selected] [ref=e723] [cursor=pointer]:
+                              - generic [ref=e724]: "@upstash/redis"
+                            - tab "ioredis" [ref=e726] [cursor=pointer]:
+                              - generic [ref=e727]: ioredis
+                            - tab "node-redis" [ref=e729] [cursor=pointer]:
+                              - generic [ref=e730]: node-redis
+                            - tab "Cloudflare" [ref=e732] [cursor=pointer]:
+                              - generic [ref=e733]: Cloudflare
+                        - tabpanel "@upstash/redis" [ref=e736]:
+                          - generic [ref=e737]:
+                            - generic [ref=e738]:
+                              - button [ref=e739] [cursor=pointer]:
+                                - img [ref=e740]
+                              - button [ref=e743] [cursor=pointer]:
+                                - img [ref=e744]
+                            - code [ref=e749]:
+                              - generic [ref=e750]:
+                                - textbox "Editor content" [ref=e751]
+                                - textbox [ref=e752]
+                                - generic [ref=e754]:
+                                  - generic [ref=e757]: "1"
+                                  - generic [ref=e758]:
+                                    - generic [ref=e759] [cursor=pointer]: 
+                                    - generic [ref=e760]: "2"
+                                  - generic [ref=e762]: "3"
+                                  - generic [ref=e764]: "4"
+                                  - generic [ref=e766]: "5"
+                                  - generic [ref=e768]: "6"
+                                  - generic [ref=e770]: "7"
+                                  - generic [ref=e772]: "8"
+                                - generic [ref=e784]:
+                                  - generic [ref=e1177]: "import { Redis } from '@upstash/redis'"
+                                  - generic [ref=e1179]: "const redis = new Redis({"
+                                  - generic [ref=e1181]: "url: 'https://prime-bream-112187.upstash.io',"
+                                  - generic [ref=e1183]: "token: '********',"
+                                  - generic [ref=e794]: "})"
+                                  - generic [ref=e1185]: await redis.set("foo", "bar");
+                                  - generic [ref=e1187]: await redis.get("foo");
+          - generic [ref=e800]:
+            - heading "Configuration" [level=4] [ref=e802]
+            - generic [ref=e805]:
+              - generic [ref=e806]:
+                - img [ref=e808]
+                - generic [ref=e812]:
+                  - heading "Manage Regions" [level=4] [ref=e813]
+                  - generic [ref=e815]:
+                    - generic [ref=e816]: Add/remove read regions.
+                    - generic [ref=e820]:
+                      - generic [ref=e821]: "Primary:"
+                      - generic [ref=e822]: Singapore
+                      - generic [ref=e823]: (ap-southeast-1)
+                - button "Manage" [ref=e825] [cursor=pointer]:
+                  - generic [ref=e826]: Manage
+              - generic [ref=e828]:
+                - img [ref=e830]
+                - generic [ref=e833]:
+                  - heading "Eviction" [level=4] [ref=e834]
+                  - generic [ref=e835]:
+                    - text: Enable eviction, to evict keys when your database reaches the max size
+                    - link [ref=e836] [cursor=pointer]:
+                      - /url: https://upstash.com/docs/redis/features/eviction
+                      - img [ref=e837]
+                - switch [ref=e842] [cursor=pointer]
+              - generic [ref=e846]:
+                - img [ref=e848]
+                - generic [ref=e852]:
+                  - heading "Prometheus PROD" [level=4] [ref=e853]:
+                    - text: Prometheus
+                    - generic [ref=e854]: PROD
+                  - generic [ref=e856]:
+                    - text: Enable to collect metrics data with Prometheus
+                    - link [ref=e857] [cursor=pointer]:
+                      - /url: https://upstash.com/docs/redis/integrations/prometheus
+                      - img [ref=e858]
+                - button "Activate" [ref=e864] [cursor=pointer]:
+                  - generic [ref=e865]: Activate
+              - generic [ref=e867]:
+                - img [ref=e869]
+                - generic [ref=e874]:
+                  - heading "Datadog PROD" [level=4] [ref=e875]:
+                    - text: Datadog
+                    - generic [ref=e876]: PROD
+                  - generic [ref=e878]:
+                    - text: Enable to collect metrics data with Datadog
+                    - link [ref=e879] [cursor=pointer]:
+                      - /url: https://upstash.com/docs/redis/howto/datadog
+                      - img [ref=e880]
+                - button "Activate" [ref=e888] [cursor=pointer]:
+                  - generic [ref=e889]: Activate
+              - generic [ref=e891]:
+                - img [ref=e893]
+                - generic [ref=e897]:
+                  - heading "Protect Credentials PROD" [level=4] [ref=e898]:
+                    - generic [ref=e899]: Protect Credentials
+                    - generic [ref=e900]: PROD
+                  - generic [ref=e902]:
+                    - text: When enabled, your credentials will no longer be stored, and hence cannot be displayed in the console.
+                    - link [ref=e903] [cursor=pointer]:
+                      - /url: https://upstash.com/docs/redis/features/security#database-credentials
+                      - img [ref=e904]
+                - button "Activate" [ref=e910] [cursor=pointer]:
+                  - generic [ref=e911]: Activate
+              - generic [ref=e913]:
+                - img [ref=e915]
+                - generic [ref=e918]:
+                  - heading "HIPAA ENTERPRISE" [level=4] [ref=e919]:
+                    - text: HIPAA
+                    - generic [ref=e920]: ENTERPRISE
+                  - generic [ref=e922]:
+                    - text: When enabled, database will follow HIPAA compliance standards for handling sensitive healthcare data.
+                    - link [ref=e923] [cursor=pointer]:
+                      - /url: https://upstash.com/docs/redis/overall/enterprise#hipaa-compliance
+                      - img [ref=e924]
+                - button "Request" [ref=e929] [cursor=pointer]:
+                  - generic [ref=e930]: Request
+              - generic [ref=e932]:
+                - img [ref=e934]
+                - generic [ref=e937]:
+                  - heading "VPC Peering ENTERPRISE" [level=4] [ref=e938]:
+                    - text: VPC Peering
+                    - generic [ref=e939]: ENTERPRISE
+                  - generic [ref=e940]: When enabled, this database will be accessible via a private VPC peering connection.
+                - button "Request" [ref=e942] [cursor=pointer]:
+                  - generic [ref=e943]: Request
+          - generic [ref=e944]:
+            - paragraph [ref=e945]: Prod Pack
+            - paragraph [ref=e946]:
+              - text: Recommended for production use.
+              - link "Learn more" [ref=e947] [cursor=pointer]:
+                - /url: https://upstash.com/docs/redis/overall/enterprise#prod-pack-features
+                - generic [ref=e948]: Learn more
+                - img [ref=e949]
+            - generic [ref=e953]:
+              - generic [ref=e954]:
+                - generic [ref=e955]:
+                  - img [ref=e956]
+                  - text: Uptime SLA
+                - generic [ref=e958]:
+                  - img [ref=e959]
+                  - text: SOC-2
+                - generic [ref=e961]:
+                  - img [ref=e962]
+                  - text: Prometheus and Datadog
+                - generic [ref=e964]:
+                  - img [ref=e965]
+                  - text: ACL
+                - generic [ref=e967]:
+                  - img [ref=e968]
+                  - text: Encryption at Rest
+              - generic [ref=e973] [cursor=pointer]: Review and Activate
+          - generic [ref=e974]:
+            - paragraph [ref=e975]: Enterprise
+            - paragraph [ref=e976]: Recommended for mission-critical workloads.
+            - generic [ref=e977]:
+              - generic [ref=e978]:
+                - generic [ref=e979]:
+                  - img [ref=e980]
+                  - text: HIPAA
+                - generic [ref=e982]:
+                  - img [ref=e983]
+                  - text: VPC Peering
+                - generic [ref=e985]:
+                  - img [ref=e986]
+                  - text: + Includes Prod Pack
+              - button "Request" [ref=e988] [cursor=pointer]:
+                - generic [ref=e989]: Request
+          - generic [ref=e990]:
+            - generic [ref=e991]:
+              - heading "Subscription" [level=4] [ref=e992]
+              - paragraph [ref=e994]:
+                - link "Learn more" [ref=e995] [cursor=pointer]:
+                  - /url: https://docs.upstash.com/redis/overall/enterprise
+                - text: about Fixed and Enterprise plans.
+                - link "Contact us" [ref=e996] [cursor=pointer]:
+                  - /url: mailto:support@upstash.com
+                - text: for advanced needs.
+            - generic [ref=e998]:
+              - generic [ref=e999]:
+                - generic [ref=e1000]:
+                  - generic [ref=e1002]:
+                    - text: Commands
+                    - generic [ref=e1003]: (per second)
+                  - generic [ref=e1004]: Request Size
+                  - generic [ref=e1005]: Record Size
+                  - generic [ref=e1006]: Data Size
+                  - generic [ref=e1007]: Monthly Bandwidth
+                  - generic [ref=e1009]: Price
+                - generic [ref=e1012]:
+                  - heading "Free" [level=5] [ref=e1015]
+                  - paragraph [ref=e1017]: 10,000
+                  - paragraph [ref=e1019]: 10 MB
+                  - paragraph [ref=e1021]: 100 MB
+                  - paragraph [ref=e1023]: 256 MB
+                  - paragraph [ref=e1025]: 50 GB
+                  - paragraph [ref=e1028]: Free
+                - generic [ref=e1032]:
+                  - heading "Pay as You Go" [level=5] [ref=e1035]
+                  - paragraph [ref=e1037]: 10,000
+                  - paragraph [ref=e1039]: 10 MB
+                  - paragraph [ref=e1041]: 100 MB
+                  - paragraph [ref=e1043]: 100 GB
+                  - generic [ref=e1045]:
+                    - paragraph [ref=e1046]: Unlimited
+                    - img [ref=e1047]
+                  - paragraph [ref=e1052]: $0.2 / 100K com
+                  - button "Choose Plan" [disabled] [ref=e1056]:
+                    - generic: Choose Plan
+                - generic [ref=e1058]:
+                  - generic [ref=e1060]:
+                    - heading "Fixed" [level=5] [ref=e1061]
+                    - generic [ref=e1062] [cursor=pointer]:
+                      - generic [ref=e1064]:
+                        - combobox [ref=e1066]
+                        - generic "1GB" [ref=e1067]
+                      - generic:
+                        - img:
+                          - img
+                  - paragraph [ref=e1069]: 10,000
+                  - paragraph [ref=e1071]: 10 MB
+                  - paragraph [ref=e1073]: 200 MB
+                  - paragraph [ref=e1075]: 1 GB
+                  - paragraph [ref=e1077]: 100 GB
+                  - paragraph [ref=e1080]: $20 / month
+                  - button "Choose Plan" [disabled] [ref=e1084]:
+                    - generic: Choose Plan
+              - generic [ref=e1086]:
+                - img [ref=e1087]
+                - generic [ref=e1089]:
+                  - link "Add a payment method" [ref=e1090] [cursor=pointer]:
+                    - /url: /account/billing?openAddCard=
+                  - text: for paid plans.
+          - generic [ref=e1091]:
+            - generic [ref=e1092]:
+              - heading "Reset Credentials" [level=4] [ref=e1093]
+              - paragraph [ref=e1094]: This operation will generate new credentials for the Redis database.
+            - button "Reset..." [ref=e1095] [cursor=pointer]:
+              - generic [ref=e1096]: Reset...
+          - generic [ref=e1097]:
+            - generic [ref=e1098]:
+              - heading "Transfer Database" [level=4] [ref=e1099]
+              - paragraph [ref=e1100]: Move your database to a different team with zero downtime.
+            - button "Transfer..." [ref=e1101] [cursor=pointer]:
+              - generic [ref=e1102]: Transfer...
+          - generic [ref=e1103]:
+            - generic [ref=e1104]:
+              - heading "Delete Database" [level=4] [ref=e1105]
+              - paragraph [ref=e1106]: Once you delete a database, there is no going back. Please be certain.
+            - button "Delete..." [ref=e1107] [cursor=pointer]:
+              - generic [ref=e1108]: Delete...
+    - contentinfo [ref=e1109]:
+      - generic [ref=e1110]: © 2026 Upstash, Inc. Based in California.
+  - region "Notifications (F8)":
+    - list
+  - region "Notifications alt+T"
+  - alert [ref=e113]: Upstash Redis
+  - iframe [ref=e114]:
+    
+  - button "Open Intercom Messenger" [ref=e1111] [cursor=pointer]:
+    - img [ref=e1113]
+    - generic:
+      - img
+  - generic [ref=e1115]:
+    - alert
+    - alert

@@ -1,0 +1,90 @@
+- generic [active] [ref=e1]:
+  - link "Skip to content":
+    - /url: "#geist-skip-nav"
+  - main [ref=e3]:
+    - generic [ref=e5]:
+      - generic [ref=e6]:
+        - generic [ref=e7]:
+          - button "Open sidebar" [ref=e9] [cursor=pointer]:
+            - img [ref=e11]
+          - generic [ref=e15]:
+            - link "logo claude-session-optimizer" [ref=e16] [cursor=pointer]:
+              - /url: /intrapeawg01-1703s-projects/claude-session-optimizer
+              - img "logo" [ref=e17]:
+                - img "logo" [ref=e18]
+              - generic [ref=e20]: claude-session-optimizer
+            - button [ref=e21] [cursor=pointer]:
+              - img [ref=e23]
+            - link "Back to team view" [ref=e27] [cursor=pointer]:
+              - /url: /intrapeawg01-1703s-projects/~/settings/environment-variables
+              - img [ref=e29]
+        - generic [ref=e33]: Environment Variables
+        - button "Open page actions menu" [ref=e35] [cursor=pointer]:
+          - img [ref=e37]
+      - generic [ref=e46]:
+        - generic [ref=e48]:
+          - generic [ref=e49]:
+            - heading "Environment Variables" [level=2] [ref=e50]
+            - paragraph [ref=e51]:
+              - text: Store API keys, tokens, and config securely.
+              - link "Learn more" [ref=e52] [cursor=pointer]:
+                - /url: /docs/environment-variables
+                - text: Learn more
+                - img [ref=e53]
+          - generic [ref=e55]:
+            - button "Link Shared Variable" [ref=e57] [cursor=pointer]:
+              - generic [ref=e58]: Link Shared Variable
+            - button "Add Environment Variable" [ref=e59] [cursor=pointer]:
+              - generic [ref=e60]: Add Environment Variable
+        - tablist [ref=e61]:
+          - tab "Project" [selected] [ref=e62] [cursor=pointer]
+          - tab "Shared" [ref=e63] [cursor=pointer]
+        - generic [ref=e64]:
+          - generic [ref=e66]:
+            - searchbox "Search" [ref=e67]
+            - img [ref=e69]
+          - combobox [ref=e72]
+          - combobox [ref=e74]:
+            - generic [ref=e75]:
+              - generic:
+                - img
+              - searchbox "All Editors…" [ref=e76]
+              - button "Open menu" [ref=e77] [cursor=pointer]:
+                - img [ref=e78]
+          - generic [ref=e80]:
+            - generic [ref=e82]:
+              - combobox "Filter variables by status" [ref=e83] [cursor=pointer]:
+                - option "All Variables" [selected]
+                - option "Needs Attention"
+              - generic:
+                - img
+            - generic [ref=e85]:
+              - generic:
+                - img
+              - combobox [ref=e86] [cursor=pointer]:
+                - option "Sort by…" [disabled]
+                - option "Last Updated" [selected]
+                - option "Name"
+                - option "Type"
+              - generic:
+                - img
+        - generic [ref=e87]:
+          - generic [ref=e91]:
+            - generic [ref=e92]: No Environment Variables Added
+            - generic [ref=e93]: Add Environment Variables to Production, Preview, and Development environments, including branches in Preview.
+          - generic [ref=e96]:
+            - generic [ref=e98] [cursor=pointer]:
+              - checkbox [checked] [ref=e99]
+              - img [ref=e101]
+            - generic [ref=e103]:
+              - text: Enable access to
+              - link "System Environment Variables" [ref=e104] [cursor=pointer]:
+                - /url: /docs/environment-variables/system-environment-variables
+                - text: System Environment Variables
+                - img [ref=e105]
+  - alert [ref=e107]
+  - generic:
+    - generic:
+      - generic:
+        - generic:
+          - img

@@ -1,0 +1,175 @@
+- generic:
+  - link:
+    - /url: "#geist-skip-nav"
+    - text: Skip to content
+  - generic:
+    - main:
+      - generic:
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - button:
+                  - generic:
+                    - img
+              - generic:
+                - generic:
+                  - link:
+                    - /url: /intrapeawg01-1703s-projects/claude-session-optimizer
+                    - img:
+                      - img
+                    - generic:
+                      - generic: claude-session-optimizer
+                  - button:
+                    - generic:
+                      - img
+                  - generic:
+                    - link:
+                      - /url: /intrapeawg01-1703s-projects/~/settings/environment-variables
+                      - generic:
+                        - img
+            - generic:
+              - generic:
+                - generic: Environment Variables
+            - generic:
+              - button:
+                - generic:
+                  - img
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - heading [level=2]: Environment Variables
+                                - paragraph:
+                                  - text: Store API keys, tokens, and config securely.
+                                  - link:
+                                    - /url: /docs/environment-variables
+                                    - text: Learn more
+                                    - img
+                              - generic:
+                                - generic:
+                                  - button:
+                                    - generic: Link Shared Variable
+                                - button:
+                                  - generic: Add Environment Variable
+                          - tablist:
+                            - tab [selected]: Project
+                            - tab: Shared
+                          - generic:
+                            - generic:
+                              - generic:
+                                - searchbox
+                                - generic:
+                                  - img
+                            - generic:
+                              - combobox:
+                                - generic:
+                                  - generic:
+                                    - searchbox: All Environments
+                                    - button:
+                                      - img
+                            - generic:
+                              - combobox:
+                                - generic:
+                                  - generic:
+                                    - img
+                                  - searchbox
+                                  - button:
+                                    - img
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - combobox
+                                  - generic:
+                                    - img
+                              - generic:
+                                - generic:
+                                  - generic:
+                                    - img
+                                  - combobox
+                                  - generic:
+                                    - img
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic:
+                                    - generic: No Environment Variables Added
+                                    - generic: Add Environment Variables to Production, Preview, and Development environments, including branches in Preview.
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic:
+                                    - generic:
+                                      - checkbox [checked]
+                                      - generic:
+                                        - img
+                                  - generic:
+                                    - text: Enable access to
+                                    - link:
+                                      - /url: /docs/environment-variables/system-environment-variables
+                                      - text: System Environment Variables
+                                      - img
+  - alert
+  - generic:
+    - generic:
+      - img
+  - dialog "Add Environment Variable" [ref=e118]:
+    - generic [ref=e119]:
+      - heading "Add Environment Variable" [level=2] [ref=e120]
+      - button "Close" [ref=e121] [cursor=pointer]:
+        - img [ref=e123]
+    - generic [ref=e127]:
+      - generic [ref=e128]:
+        - generic [ref=e129]:
+          - generic [ref=e132]:
+            - generic [ref=e135]:
+              - generic [ref=e136]: key
+              - textbox "environment variable key" [active] [ref=e138]
+            - generic [ref=e139]:
+              - generic [ref=e140]: value
+              - generic [ref=e142]:
+                - textbox "shared environment variable value" [ref=e143]
+                - button "Show value" [ref=e144] [cursor=pointer]:
+                  - img [ref=e146]
+            - generic [ref=e150]:
+              - generic [ref=e151]: Note (Optional)
+              - textbox "shared environment variable comment" [ref=e153]:
+                - /placeholder: Where to rotate, or who to contact
+          - button "Add Another" [ref=e155] [cursor=pointer]:
+            - img [ref=e157]
+            - generic [ref=e159]: Add Another
+        - separator [ref=e162]
+        - generic [ref=e163]:
+          - generic [ref=e164]:
+            - generic [ref=e166]: Environments
+            - generic [ref=e167]:
+              - button "Production and Preview" [ref=e168] [cursor=pointer]:
+                - generic [ref=e170]:
+                  - img [ref=e172]
+                  - generic [ref=e174]: Production and Preview
+                - img [ref=e176]
+              - generic [ref=e178]:
+                - generic [ref=e180]: Branch
+                - button "Select a Custom Preview Branch" [ref=e182] [cursor=pointer]:
+                  - generic [ref=e183]: Select a Custom Preview Branch
+          - generic [ref=e185]:
+            - generic "Sensitive" [ref=e186]:
+              - generic [ref=e187]: Sensitive
+              - checkbox "Sensitive" [checked] [ref=e188]
+            - img [ref=e193]
+      - generic [ref=e196]:
+        - generic [ref=e198]:
+          - button "Import .env" [ref=e200] [cursor=pointer]:
+            - img [ref=e202]
+            - generic [ref=e204]: Import .env
+          - paragraph [ref=e205]: or paste .env contents in Key input
+        - button "Save" [ref=e208] [cursor=pointer]:
+          - generic [ref=e209]: Save
