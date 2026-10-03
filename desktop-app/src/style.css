@@ -1,0 +1,195 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: #fafbfc;
+  color: #30343b;
+  font:
+    14px system-ui,
+    sans-serif;
+}
+button,
+input {
+  font: inherit;
+}
+button {
+  cursor: pointer;
+  background: white;
+  border: 1px solid #dddfe4;
+  border-radius: 10px;
+  padding: 8px 10px;
+  color: inherit;
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid #aebfe9;
+}
+button[aria-pressed="true"] {
+  background: #e9eef9;
+  border-color: #b0bee1;
+}
+header,
+nav,
+footer {
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+header {
+  background: white;
+  border-bottom: 1px solid #eaecf0;
+}
+header strong,
+.spacer {
+  flex: 1;
+}
+nav {
+  padding-top: 12px;
+  padding-bottom: 6px;
+}
+#cards {
+  padding: 10px 20px;
+  display: grid;
+  gap: 12px;
+}
+.card {
+  border: 1px solid #e0e4e9;
+  border-radius: 16px;
+  background: white;
+  padding: 16px;
+}
+.account {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+.brand {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: #eef0f4;
+  display: grid;
+  place-items: center;
+  font-weight: bold;
+}
+.identity {
+  flex: 1;
+  min-width: 0;
+}
+.identity b,
+.identity small {
+  display: block;
+  overflow-wrap: anywhere;
+}
+small,
+.note {
+  color: #77808e;
+  font-size: 11px;
+}
+.mascot {
+  width: 37px;
+  height: 32px;
+  background: #e5eee9;
+  border-radius: 14px 14px 10px 10px;
+  display: grid;
+  place-items: center;
+  color: #53715f;
+  font-size: 12px;
+}
+.claude .mascot {
+  background: #f5e8df;
+  color: #957058;
+}
+.quota {
+  margin: 13px 0;
+}
+.quota-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 5px;
+}
+progress {
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border: 0;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #eff1f4;
+}
+progress::-webkit-progress-bar {
+  background: #eff1f4;
+}
+progress::-webkit-progress-value {
+  background: #96b5a6;
+}
+.claude progress::-webkit-progress-value {
+  background: #d6ae92;
+}
+.reset {
+  font-size: 11px;
+  color: #79808c;
+  margin-top: 4px;
+}
+.details {
+  margin-top: 14px;
+  padding-top: 10px;
+  border-top: 1px dashed #e1e4e8;
+}
+.compact .details {
+  display: none;
+}
+label {
+  display: block;
+  margin: 8px 0;
+  font-size: 12px;
+}
+input[type="number"] {
+  width: 66px;
+  border: 1px solid #dce0e6;
+  border-radius: 7px;
+  padding: 5px;
+  background: white;
+}
+.error {
+  background: #fff7ed;
+  color: #956c39;
+  border-radius: 9px;
+  padding: 10px;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+.error button {
+  margin-top: 8px;
+}
+footer {
+  font-size: 12px;
+  color: #737b88;
+  border-top: 1px solid #e6e9ed;
+}
+#notice,
+.note {
+  padding: 0 20px 16px;
+  font-size: 12px;
+}
+#notice {
+  color: #665a92;
+}
+.model {
+  display: inline-block;
+  background: #f2f4f6;
+  border-radius: 7px;
+  padding: 5px 8px;
+  margin: 3px;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
