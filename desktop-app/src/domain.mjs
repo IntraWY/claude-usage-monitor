@@ -40,16 +40,28 @@ export function codexQuotas(response) {
   );
 }
 export function claudeQuotas(data) {
-  return Object.entries(data).flatMap(([key, v]) =>
+  const labels = {
+    five_hour: "5h",
+    seven_day: "Weekly",
+    seven_day_sonnet: "Sonnet",
+    seven_day_opus: "Opus",
+    extra_usage: "Extra usage",
+  };
+  const flat = Object.entries(data || {}).flatMap(([key, v]) =>
     v && typeof v === "object" && Object.hasOwn(v, "utilization")
       ? [
           {
             id: key,
-            label:
-              key === "five_hour" ? "5h" : key === "seven_day" ? "Weekly" : key,
+            label: labels[key] || key,
             product: "Claude",
-            model: null,
+            model:
+              key === "seven_day_sonnet"
+                ? "Sonnet"
+                : key === "seven_day_opus"
+                  ? "Opus"
+                  : null,
             used: percent(v.utilization),
+            active: v.is_enabled !== false,
             resetAt: Number.isFinite(Date.parse(v.resets_at))
               ? Date.parse(v.resets_at)
               : null,
@@ -57,6 +69,41 @@ export function claudeQuotas(data) {
         ]
       : [],
   );
+  const seen = new Set();
+  const scoped = (Array.isArray(data?.limits) ? data.limits : []).flatMap(
+    (v) => {
+      const model = v.scope?.model,
+        name = model?.display_name?.trim();
+      if (
+        v.group !== "weekly" ||
+        v.kind !== "weekly_scoped" ||
+        !name ||
+        name.toLowerCase() === "all models" ||
+        model?.id?.endsWith("all-models")
+      )
+        return [];
+      const id = "scoped:" + String(model.id || name);
+      if (seen.has(id)) return [];
+      seen.add(id);
+      return [
+        {
+          id,
+          label: name,
+          product: "Claude",
+          model: name,
+          used: percent(v.percent),
+          active: v.is_active !== false,
+          resetAt: Number.isFinite(Date.parse(v.resets_at))
+            ? Date.parse(v.resets_at)
+            : null,
+        },
+      ];
+    },
+  );
+  return [
+    ...flat.filter((q) => !q.model || !scoped.some((x) => x.model === q.model)),
+    ...scoped,
+  ];
 }
 export function validSettings(s) {
   return {
@@ -96,6 +143,7 @@ export class AlertEngine {
     if (account.state !== "connected") return [];
     const events = [];
     for (const q of account.quotas) {
+      if (q.active === false) continue;
       const key = `${account.id}/${q.id}`,
         cfg = settings.alerts[key],
         prev = this.previous.get(key);

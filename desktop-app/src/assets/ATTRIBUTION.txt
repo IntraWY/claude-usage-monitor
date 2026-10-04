@@ -1,0 +1,5 @@
+Brand icons: Simple Icons (https://simpleicons.org). License: CC0-1.0
+OpenAI icon: simple-icons 12.0.0/icons/openai.svg
+Anthropic icon: simple-icons develop/icons/anthropic.svg
+Brand names and logos remain trademarks of their respective owners.
+Mascot faces are original UI artwork.

@@ -1,42 +1,38 @@
-# AI Usage Monitor for Windows (development build)
+# AI Usage Monitor — Windows 11 development beta
 
-This is a real Electron application, separate from the original extension/PWA. It never shows mock usage. Brand letters and mascot faces remain design placeholders; official artwork is not bundled.
+Electron application with Compact/Detail, multiple account cards, brand logos and mascots, used/remaining switch, configurable refresh and per-quota alerts. Closing exits immediately; no background tray service or autostart.
 
-## Windows development / packaging
-
-Prerequisites: Node.js 22+ and the official Codex CLI on PATH for Codex accounts. Claude web profiles do not require the Codex CLI.
+## Run / build
 
 ```powershell
 cd desktop-app
 npm ci
 npm test
 npm start
-npm run package:win
+npm run portable:win
 ```
 
-The portable Windows ZIP is written to `dist`; extract it and run `AI Usage Monitor.exe`. To build an NSIS installer on Windows, run `npm run installer:win`. This development build is unsigned and uses Electron’s default executable icon. A Windows build must be tested on Windows before release. Closing the main window exits all app windows, stops refresh/alerts and terminates app-owned Codex processes. There is no tray background process or autostart.
+The single-file executable is `dist/AI Usage Monitor 0.2.0.exe`. For an installer built on Windows use `npm run installer:win`; ZIP packaging remains available with `npm run package:win`. The development executable is unsigned. Codex accounts require a current official Codex CLI in PATH. Claude web profiles work independently of that CLI.
 
-## Connections
+## Accounts and quotas
 
-- On startup the app asks the installed Codex CLI's app-server to read its current account. It does not read/copy the CLI credential file. Additional Codex accounts get separate app-owned CODEX_HOME profiles; Sign in uses the CLI's account/login/start browser flow. CLI must be recent enough to expose account/read, account/rateLimits/read and model/list.
-- Primary/secondary windows are labelled 5h/Weekly only when the provider supplies 300/10080 minutes. All metered buckets are preserved; the legacy aggregate is not counted twice. Model catalog pagination is supported. Accounts with matching provider account IDs merge; emails alone are never used to merge identities.
-- Claude opens an app-owned, persistent Chromium session per added account. Close its login window when done to refresh. The connector uses the same organization usage path as the existing extension and its own session's lastActiveOrg cookie. This is an undocumented web route, not a guaranteed public API. Existing external Chrome/Claude CLI accounts cannot currently be auto-imported. No browser credential extraction is implemented.
-- Claude's usage response does not establish the signed-in email or complete model catalog. Those fields show unavailable rather than an invented identity. Organization ID identifies the quota workspace, not the individual person; separate Claude profiles are intentionally not merged until a provider-issued user identity can be verified.
-- Fable remains an unverified requirement. Unknown provider quota keys are shown verbatim. No other model is relabelled Fable, and no fictitious Fable percentage is shown.
+- Codex: detect the CLI account with app-server; add separate app-owned login profiles; read all metered buckets and paginated model catalog. 5h/Weekly labels are used only for provider-reported 300/10080-minute windows. Shared legacy aggregates are not counted twice.
+- Claude web: each added account has its own app-owned session; open https://claude.ai/chats#settings/usage for login and source comparison. Read usage via the organization route and email/user metadata via `/api/account`. If metadata is unavailable, display unknown; the organization ID is never used as a person ID.
+- Claude CLI: detect the standard `.claude/.credentials.json` (or `CLAUDE_CONFIG_DIR`) and use its existing OAuth access token only for `https://api.anthropic.com/api/oauth/usage` and `/profile`. No refresh token is copied or written, no credentials are sent to the renderer, and redirects are disabled. If expired, instruct the user to run `claude auth login`. Profile-scope failure does not discard a valid usage response.
+- Claude scoped models: preserve `limits` with `kind: weekly_scoped`, `group: weekly`, and `scope.model.display_name`, including Fable when returned. Fable has a separate card row and alert setting from Weekly. Deduplicate repeated model IDs; preserve invalid percentages as unknown and inactive limits as unavailable. Older Sonnet/Opus fields are supported without relabelling them Fable.
+- Merge web/CLI only when provider user ID and workspace identity are verified. Email alone never establishes identity. No quota summing across sources.
+- Claude models displayed are those exposed in quota scope data; this is not a guarantee of a complete model catalog. Existing external Chrome sessions cannot currently be imported automatically; no browser credential decryption is attempted.
 
-## Settings and alerts
+## Validation
 
-Preferences and non-secret profile descriptors live in Electron userData. Codex manages credentials in each profile; Claude browser sessions are managed by Electron. The app does not put credentials in preferences, renderer IPC or logs. Credentials retained by provider/Chromium storage have not yet undergone Windows security review; do not treat this build as production ready.
+Ten domain/connector tests pass on the cloud machine. Renderer checks pass for both modes, percentage conversion, per-quota preferences, escaped labels and pin/exit IPC. OAuth tests use artificial credentials and injected transports, never personal accounts. An isolated real Codex app-server startup/account-read check passed.
 
-Compact/Detail, used/remaining, always-on-top and refresh minutes are persisted. Threshold/reset alert preferences are per verified account/quota. Alerts are off until enabled in Detail; thresholds use percent used even when the display shows remaining. Reset alerts require a fresh new provider reset cycle; elapsed time alone never fabricates usage. Unreadable data produces no alerts.
+`.github/workflows/windows-desktop.yml` runs on Windows: dependency install, domain tests, native Electron window/pin/preferences-restart/exit test, portable build and artifact upload. Native Windows and real account sign-in checks cannot be claimed as passed until the runner/user reports results.
 
-## Validation status
+## Source evidence and remaining limits
 
-Domain tests cover multi-bucket quotas, absent/invalid data, per-account alerts, deduplication and reset confirmation. A real Codex app-server protocol check using an empty isolated profile verifies initialization and signed-out handling without using a personal account. Windows sign-in, live account quotas, Claude endpoint accessibility, native notifications/pinning and Windows credential storage require on-device validation.
+Claude schema evidence: public CodexBar `ClaudeOAuthUsageFetcher`, `ClaudeScopedWeeklyLimitMapper` and `ClaudeWebAPIFetcher` sources, including the Fable model display-name example. These are implementation evidence, not a promise that Claude's undocumented routes remain stable. Keep HTTP 429 backoff and show unreadable state on failures.
 
-## Remaining release gates
+Brand icons are Simple Icons CC0 assets with attribution in `src/assets/ATTRIBUTION.txt`; brand marks remain trademarks. Mascot icon/face artwork is original.
 
-- Validate login/usage and native notifications on Windows with real accounts. The portable build is a development beta, not a verified release.
-- Establish a supported Claude identity/model source, Fable mapping and external browser/CLI detection before claiming all requested integrations work.
-- Replace clearly labelled brand/mascot placeholders with user-approved artwork.
-- Review Windows credential retention and sign the distribution before public release.
+Remaining validation: live sign-in/quotas, Windows notifications and credential retention. Missing data is never replaced with fake numbers. Complete Claude model catalog, arbitrary external-browser auto-detection and a signed public distribution remain unsupported.

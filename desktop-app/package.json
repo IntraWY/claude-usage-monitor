@@ -1,6 +1,6 @@
 {
   "name": "ai-usage-monitor-desktop",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "main": "src/main.mjs",
@@ -8,11 +8,13 @@
     "start": "electron .",
     "test": "node --test test/*.test.mjs",
     "package:win": "electron-builder --win zip --x64",
-    "installer:win": "electron-builder --win nsis --x64"
+    "installer:win": "electron-builder --win nsis --x64",
+    "portable:win": "electron-builder --win portable --x64"
   },
   "devDependencies": {
     "electron": "^44.5.1",
-    "electron-builder": "^26.0.0"
+    "electron-builder": "^26.0.0",
+    "playwright": "1.59.1"
   },
   "build": {
     "appId": "com.intrawy.aiusagemonitor",
@@ -23,7 +25,8 @@
     ],
     "win": {
       "target": "zip",
-      "signAndEditExecutable": false
+      "signAndEditExecutable": false,
+      "icon": "src/assets/app.ico"
     },
     "nsis": {
       "oneClick": false,

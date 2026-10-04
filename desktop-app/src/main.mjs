@@ -10,6 +10,11 @@ import { readFile, writeFile, mkdir, rename } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { randomUUID } from "node:crypto";
+import {
+  readCLIAccount,
+  profileMetadata,
+  CLAUDE_USAGE_PAGE,
+} from "./claude.mjs";
 import { CodexClient } from "./codex.mjs";
 import {
   codexQuotas,
@@ -18,6 +23,8 @@ import {
   AlertEngine,
 } from "./domain.mjs";
 const dir = path.dirname(fileURLToPath(import.meta.url));
+if (process.env.AI_USAGE_USER_DATA_DIR)
+  app.setPath("userData", path.resolve(process.env.AI_USAGE_USER_DATA_DIR));
 let win,
   timer,
   store,
@@ -34,10 +41,12 @@ let settings = validSettings({}),
 const snapshot = () => ({ settings, accounts: [...accounts.values()], busy });
 async function persist() {
   const contents = JSON.stringify({ settings, profiles }, null, 2);
-  writes = writes.catch(() => {}).then(async () => {
-    await writeFile(store + ".tmp", contents);
-    await rename(store + ".tmp", store);
-  });
+  writes = writes
+    .catch(() => {})
+    .then(async () => {
+      await writeFile(store + ".tmp", contents);
+      await rename(store + ".tmp", store);
+    });
   await writes;
 }
 function broadcast() {
@@ -76,7 +85,7 @@ async function loadAccount(p) {
     provider: p.provider,
     channels: p.home
       ? ["Sign in ผ่านเว็บ (โปรไฟล์แอป)"]
-      : p.provider === "Codex"
+      : p.provider === "Codex" || p.kind === "cli"
         ? ["CLI"]
         : ["เว็บ (โปรไฟล์แอป)"],
     state: "unreadable",
@@ -86,7 +95,8 @@ async function loadAccount(p) {
     observedAt: null,
   };
   try {
-    if ((retries.get(p.id) || 0) > Date.now()) throw new Error("บริการจำกัดคำขอ — รอช่วงเวลาที่กำหนดก่อนลองใหม่");
+    if ((retries.get(p.id) || 0) > Date.now())
+      throw new Error("บริการจำกัดคำขอ — รอช่วงเวลาที่กำหนดก่อนลองใหม่");
     if (p.provider === "Codex") {
       const c = await codex(p);
       const result = await c.request("account/read", { refreshToken: false });
@@ -104,7 +114,8 @@ async function loadAccount(p) {
         let cursor = null;
         const cursors = new Set();
         do {
-          if (cursors.has(cursor)) throw new Error("รายการโมเดลแบ่งหน้าไม่ถูกต้อง");
+          if (cursors.has(cursor))
+            throw new Error("รายการโมเดลแบ่งหน้าไม่ถูกต้อง");
           cursors.add(cursor);
           const list = await c.request("model/list", {
             cursor,
@@ -121,6 +132,21 @@ async function loadAccount(p) {
       } catch {
         a.catalogError = true;
       }
+    } else if (p.kind === "cli") {
+      const cli = await readCLIAccount();
+      if (!cli) {
+        a.state = "signed-out";
+        a.message = "ยังไม่พบบัญชี Claude CLI — ใช้ claude auth login";
+        return a;
+      }
+      a.email = cli.metadata.email;
+      a.identity = cli.metadata.userId;
+      a.workspace = cli.metadata.orgId;
+      a.quotas = claudeQuotas(cli.usage);
+      a.models = [...new Set(a.quotas.map((q) => q.model).filter(Boolean))].map(
+        (name) => ({ id: name, name }),
+      );
+      a.message = "โมเดลที่แสดงมาจากข้อมูลโควตา ไม่ใช่ catalogue ทั้งหมด";
     } else {
       const s = session.fromPartition(p.partition);
       const cookies = await s.cookies.get({ url: "https://claude.ai" });
@@ -138,8 +164,14 @@ async function loadAccount(p) {
       );
       if (response.status === 429) {
         const value = response.headers.get("retry-after");
-        const delay = value && Number.isFinite(Number(value)) ? Number(value) * 1000 : Date.parse(value) - Date.now();
-        retries.set(p.id, Date.now() + Math.max(60000, Number.isFinite(delay) ? delay : 300000));
+        const delay =
+          value && Number.isFinite(Number(value))
+            ? Number(value) * 1000
+            : Date.parse(value) - Date.now();
+        retries.set(
+          p.id,
+          Date.now() + Math.max(60000, Number.isFinite(delay) ? delay : 300000),
+        );
       }
       if (!response.ok)
         throw new Error(
@@ -148,15 +180,37 @@ async function loadAccount(p) {
             : "Claude ไม่อนุญาตให้อ่านข้อมูล — เชื่อมต่อใหม่",
         );
       a.quotas = claudeQuotas(await response.json());
-      a.identity = org.value;
-      a.message = "แหล่ง usage ไม่ให้อีเมล/รายการโมเดล — ยังยืนยันไม่ได้";
-      a.catalogError = true;
+      a.workspace = org.value;
+      try {
+        const r = await s.fetch("https://claude.ai/api/account", {
+          credentials: "include",
+          signal: AbortSignal.timeout(15000),
+        });
+        if (r.ok) {
+          const meta = profileMetadata(await r.json(), org.value);
+          a.email = meta.email;
+          a.identity = meta.userId;
+          a.plan = meta.plan;
+        }
+      } catch {}
+      a.models = [...new Set(a.quotas.map((q) => q.model).filter(Boolean))].map(
+        (name) => ({ id: name, name }),
+      );
+      a.message = "โมเดลที่แสดงมาจากข้อมูลโควตา ไม่ใช่ catalogue ทั้งหมด";
     }
     a.state = a.quotas.length ? "connected" : "unreadable";
     a.observedAt = Date.now();
     if (!a.quotas.length) a.message = "อ่านข้อมูลไม่ได้ — ไม่พบโควตาที่รองรับ";
   } catch (e) {
     a.message = e.message;
+    if (e.status === 429) {
+      const wait = Number(e.retryAfter);
+      retries.set(
+        p.id,
+        Date.now() +
+          Math.max(60000, Number.isFinite(wait) ? wait * 1000 : 300000),
+      );
+    }
     a.state = "unreadable";
   }
   return a;
@@ -171,8 +225,11 @@ async function refresh() {
       if (closing) break;
       const a = await loadAccount(p);
       a.sourceProfiles = [p.id];
-      if (a.identity && a.provider === "Codex") {
-        a.id = `${a.provider}:${a.identity}`;
+      if (a.identity) {
+        a.id =
+          a.provider === "Codex"
+            ? `${a.provider}:${a.identity}`
+            : `${a.provider}:${a.identity}:${a.workspace || ""}`;
         const previous = next.get(a.id);
         if (previous) {
           a.channels = [...new Set([...previous.channels, ...a.channels])];
@@ -200,6 +257,8 @@ async function signIn(p) {
       throw new Error("URL เข้าสู่ระบบไม่อยู่ในโดเมนที่อนุญาต");
     await shell.openExternal(u.href);
   } else {
+    if (p.kind === "cli")
+      throw new Error("ใช้ claude auth login ใน terminal แล้วกดรีเฟรช");
     const w = new BrowserWindow({
       width: 1000,
       height: 800,
@@ -214,17 +273,33 @@ async function signIn(p) {
     w.webContents.setWindowOpenHandler(({ url }) => {
       try {
         if (new URL(url).protocol !== "https:") return { action: "deny" };
-      } catch { return { action: "deny" }; }
-      return { action: "allow", overrideBrowserWindowOptions: { webPreferences: {
-        partition: p.partition, nodeIntegration: false, contextIsolation: true, sandbox: true,
-      } } };
+      } catch {
+        return { action: "deny" };
+      }
+      return {
+        action: "allow",
+        overrideBrowserWindowOptions: {
+          webPreferences: {
+            partition: p.partition,
+            nodeIntegration: false,
+            contextIsolation: true,
+            sandbox: true,
+          },
+        },
+      };
     });
     w.webContents.on("did-create-window", (child) => {
       logins.add(child);
-      child.on("closed", () => { logins.delete(child); refresh(); });
+      child.on("closed", () => {
+        logins.delete(child);
+        refresh();
+      });
       child.webContents.on("will-navigate", (event, url) => {
-        try { if (new URL(url).protocol !== "https:") event.preventDefault(); }
-        catch { event.preventDefault(); }
+        try {
+          if (new URL(url).protocol !== "https:") event.preventDefault();
+        } catch {
+          event.preventDefault();
+        }
       });
     });
     w.webContents.on("will-navigate", (event, url) => {
@@ -238,11 +313,12 @@ async function signIn(p) {
       logins.delete(w);
       refresh();
     });
-    await w.loadURL("https://claude.ai/login");
+    await w.loadURL(CLAUDE_USAGE_PAGE);
   }
 }
 app.whenReady().then(async () => {
-  if (process.platform === "win32") app.setAppUserModelId("com.intrawy.aiusagemonitor");
+  if (process.platform === "win32")
+    app.setAppUserModelId("com.intrawy.aiusagemonitor");
   store = path.join(app.getPath("userData"), "preferences.json");
   try {
     const s = JSON.parse(await readFile(store, "utf8"));
@@ -254,7 +330,10 @@ app.whenReady().then(async () => {
   } catch {}
   if (!profiles.some((p) => p.id === "codex-local"))
     profiles.unshift({ id: "codex-local", provider: "Codex" });
+  if (!profiles.some((p) => p.id === "claude-local"))
+    profiles.unshift({ id: "claude-local", provider: "Claude", kind: "cli" });
   win = new BrowserWindow({
+    icon: path.join(dir, "assets", "app.ico"),
     width: settings.mode === "compact" ? 470 : 800,
     height: 800,
     minWidth: 430,

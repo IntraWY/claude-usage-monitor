@@ -35,7 +35,7 @@ function render() {
     ? state.accounts
         .map(
           (a) =>
-            `<article class="card ${a.provider === "Claude" ? "claude" : ""}"><div class="account"><span class="brand" title="ภาพร่างแทนโลโก้">${a.provider === "Claude" ? "C" : "O"}</span><div class="identity"><b>${esc(a.provider)}</b><small>${esc(a.email || "ยังยืนยันอีเมลไม่ได้")}</small><small>${esc(a.channels.join(" · "))}${a.plan ? " · " + esc(a.plan) : ""}</small></div><span class="mascot">•ᴗ•</span></div>${
+            `<article class="card ${a.provider === "Claude" ? "claude" : ""}"><div class="account"><span class="brand" title="โลโก้แบรนด์"><img src="assets/${a.provider === "Claude" ? "anthropic" : "openai"}.svg" alt="${esc(a.provider)}"></span><div class="identity"><b>${esc(a.provider)}</b><small>${esc(a.email || "ยังยืนยันอีเมลไม่ได้")}</small><small>${esc(a.channels.join(" · "))}${a.plan ? " · " + esc(a.plan) : ""}</small></div><span class="mascot">•ᴗ•</span></div>${
               a.state === "connected"
                 ? a.quotas
                     .map((q) => {
@@ -46,16 +46,16 @@ function render() {
                           reset: false,
                         },
                         pct =
-                          q.used === null
+                          q.active === false || q.used === null
                             ? null
                             : s.remaining
                               ? 100 - q.used
                               : q.used;
-                      return `<section class="quota"><div class="quota-top"><span>${esc(q.label)}</span><b>${pct === null ? "ไม่ทราบ" : `${pct}% ${s.remaining ? "เหลือ" : "ใช้แล้ว"}`}</b></div>${pct === null ? "" : `<progress max="100" value="${pct}" aria-label="${esc(q.label)}"></progress>`}<div class="reset">${esc(resetText(q.resetAt))}</div><div class="details"><small>${esc(q.product)}${q.model ? " · " + esc(q.model) : " · โควตารวม/ไม่ระบุโมเดล"}</small><label><input type="checkbox" data-key="${esc(key)}" data-field="enabled" ${cfg.enabled ? "checked" : ""}> เตือนเมื่อใช้ถึง <input type="number" min="1" max="100" value="${cfg.threshold}" data-key="${esc(key)}" data-field="threshold"> %</label><label><input type="checkbox" data-key="${esc(key)}" data-field="reset" ${cfg.reset ? "checked" : ""}> เตือนเมื่อรีเซ็ต</label></div></section>`;
+                      return `<section class="quota"><div class="quota-top"><span>${esc(q.label)}</span><b>${q.active === false ? "ไม่พร้อมใช้" : pct === null ? "ไม่ทราบ" : `${pct}% ${s.remaining ? "เหลือ" : "ใช้แล้ว"}`}</b></div>${pct === null ? "" : `<progress max="100" value="${pct}" aria-label="${esc(q.label)}"></progress>`}<div class="reset">${esc(resetText(q.resetAt))}</div><div class="details"><small>${esc(q.product)}${q.model ? " · " + esc(q.model) : " · โควตารวม/ไม่ระบุโมเดล"}</small><label><input type="checkbox" data-key="${esc(key)}" data-field="enabled" ${cfg.enabled ? "checked" : ""}> เตือนเมื่อใช้ถึง <input type="number" min="1" max="100" value="${cfg.threshold}" data-key="${esc(key)}" data-field="threshold"> %</label><label><input type="checkbox" data-key="${esc(key)}" data-field="reset" ${cfg.reset ? "checked" : ""}> เตือนเมื่อรีเซ็ต</label></div></section>`;
                     })
                     .join("")
                 : `<div class="error">${a.state === "signed-out" ? "ยังไม่ได้เข้าสู่ระบบ" : "อ่านข้อมูลไม่ได้"}<br>${esc(a.message || "รอเชื่อมต่อใหม่")}<br><button data-reconnect="${esc(a.id)}">เชื่อมต่อใหม่</button></div>`
-            }${a.provider === "Claude" && !a.quotas.some((q) => q.id.toLowerCase().includes("fable")) ? "<small>Fable: ยังไม่พบข้อมูลที่ยืนยันได้</small>" : ""}<div class="details">${a.models.length ? a.models.map((m) => `<span class="model">${esc(a.provider)} · ${esc(m.name)}</span>`).join("") : "รายชื่อโมเดล: ยังอ่านไม่ได้"}${a.message ? '<p class="note">' + esc(a.message) + "</p>" : ""}</div><small>${a.observedAt ? "อัปเดต " + esc(new Date(a.observedAt).toLocaleTimeString("th-TH", { timeZone: "Asia/Bangkok" })) : "ยังไม่มีข้อมูล usage"}</small></article>`,
+            }${a.provider === "Claude" && !a.quotas.some((q) => (q.model || q.label || q.id).toLowerCase().includes("fable")) ? "<small>Fable: ยังไม่พบข้อมูลที่ยืนยันได้</small>" : ""}<div class="details">${a.models.length ? a.models.map((m) => `<span class="model"><img src="assets/${a.provider === "Claude" ? "anthropic" : "openai"}.svg" alt="${esc(a.provider)}"> ${esc(m.name)}</span>`).join("") : "รายชื่อโมเดล: ยังอ่านไม่ได้"}${a.message ? '<p class="note">' + esc(a.message) + "</p>" : ""}</div><small>${a.observedAt ? "อัปเดต " + esc(new Date(a.observedAt).toLocaleTimeString("th-TH", { timeZone: "Asia/Bangkok" })) : "ยังไม่มีข้อมูล usage"}</small></article>`,
         )
         .join("")
     : '<div class="error">กำลังตรวจหาบัญชี…</div>';

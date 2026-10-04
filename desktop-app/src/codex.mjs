@@ -10,21 +10,36 @@ export class CodexClient {
   async start() {
     if (this.ready) return;
     if (this.starting) return this.starting;
-    this.starting = this.connect().then(() => { this.ready = true; }).finally(() => { this.starting = null; });
+    this.starting = this.connect()
+      .then(() => {
+        this.ready = true;
+      })
+      .finally(() => {
+        this.starting = null;
+      });
     return this.starting;
   }
   async connect() {
     const windows = process.platform === "win32";
     // The official npm installation supplies codex.cmd on Windows.
     // This shell command is constant; no user data is interpolated.
-    this.process = spawn(windows ? "cmd.exe" : "codex", windows ? ["/d", "/s", "/c", "codex app-server"] : ["app-server"], {
-      env: { ...process.env, ...(this.home ? { CODEX_HOME: this.home } : {}) },
-      windowsHide: true,
-      detached: process.platform !== "win32",
-      stdio: ["pipe", "pipe", "pipe"],
-    });
+    this.process = spawn(
+      windows ? "cmd.exe" : "codex",
+      windows ? ["/d", "/s", "/c", "codex app-server"] : ["app-server"],
+      {
+        env: {
+          ...process.env,
+          ...(this.home ? { CODEX_HOME: this.home } : {}),
+        },
+        windowsHide: true,
+        detached: process.platform !== "win32",
+        stdio: ["pipe", "pipe", "pipe"],
+      },
+    );
     this.process.stderr.on("data", () => {});
-    this.process.stdin.on("error", () => this.fail("การเชื่อมต่อ Codex หยุดทำงาน"));
+    this.process.stdin.on("error", () =>
+      this.fail("การเชื่อมต่อ Codex หยุดทำงาน"),
+    );
     this.process.on("error", () =>
       this.fail("ไม่พบ Codex CLI — ติดตั้ง Codex และเพิ่มลง PATH"),
     );

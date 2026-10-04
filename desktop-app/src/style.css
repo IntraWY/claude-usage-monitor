@@ -193,3 +193,14 @@ footer {
   max-width: 100%;
   overflow-wrap: anywhere;
 }
+
+.brand img {
+  width: 23px;
+  height: 23px;
+}
+.model img {
+  width: 14px;
+  height: 14px;
+  vertical-align: middle;
+  margin-right: 4px;
+}
