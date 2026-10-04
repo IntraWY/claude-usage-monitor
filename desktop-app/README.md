@@ -12,7 +12,7 @@ npm start
 npm run portable:win
 ```
 
-The single-file executable is `dist/AI Usage Monitor 0.2.0.exe`. For an installer built on Windows use `npm run installer:win`; ZIP packaging remains available with `npm run package:win`. The development executable is unsigned. Codex accounts require a current official Codex CLI in PATH. Claude web profiles work independently of that CLI.
+The single-file executable is `dist/AI Usage Monitor 0.2.1.exe`. For an installer built on Windows use `npm run installer:win`; ZIP packaging remains available with `npm run package:win`. The development executable is unsigned. Codex accounts require a current official Codex CLI in PATH. Claude web profiles work independently of that CLI.
 
 ## Accounts and quotas
 
@@ -25,7 +25,7 @@ The single-file executable is `dist/AI Usage Monitor 0.2.0.exe`. For an installe
 
 ## Validation
 
-Ten domain/connector tests pass on the cloud machine. Renderer checks pass for both modes, percentage conversion, per-quota preferences, escaped labels and pin/exit IPC. OAuth tests use artificial credentials and injected transports, never personal accounts. An isolated real Codex app-server startup/account-read check passed.
+Seventeen automated tests pass on the cloud machine; the native Windows test is skipped here. Renderer checks pass for both modes, percentage conversion, per-quota preferences, escaped labels and pin/exit IPC. OAuth tests use artificial credentials and injected transports, never personal accounts. An isolated real Codex app-server startup/account-read check passed.
 
 `.github/workflows/windows-desktop.yml` runs on Windows: dependency install, domain tests, native Electron window/pin/preferences-restart/exit test, portable build and artifact upload. Native Windows and real account sign-in checks cannot be claimed as passed until the runner/user reports results.
 
