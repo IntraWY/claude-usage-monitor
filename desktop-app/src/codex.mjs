@@ -1,7 +1,9 @@
 import { spawn } from "node:child_process";
 import { createInterface } from "node:readline";
 export class CodexClient {
-  constructor(home, onEvent = () => {}) {
+  constructor(home, onEvent = () => {}, { spawnProcess = spawn, timeout = 20000 } = {}) {
+    this.spawnProcess = spawnProcess;
+    this.timeout = timeout;
     this.home = home;
     this.onEvent = onEvent;
     this.seq = 0;
@@ -14,6 +16,10 @@ export class CodexClient {
       .then(() => {
         this.ready = true;
       })
+      .catch((error) => {
+        this.stop();
+        throw error;
+      })
       .finally(() => {
         this.starting = null;
       });
@@ -23,7 +29,7 @@ export class CodexClient {
     const windows = process.platform === "win32";
     // The official npm installation supplies codex.cmd on Windows.
     // This shell command is constant; no user data is interpolated.
-    this.process = spawn(
+    const child = this.process = this.spawnProcess(
       windows ? "cmd.exe" : "codex",
       windows ? ["/d", "/s", "/c", "codex app-server"] : ["app-server"],
       {
@@ -37,18 +43,20 @@ export class CodexClient {
       },
     );
     this.process.stderr.on("data", () => {});
-    this.process.stdin.on("error", () =>
-      this.fail("การเชื่อมต่อ Codex หยุดทำงาน"),
-    );
-    this.process.on("error", () =>
-      this.fail("ไม่พบ Codex CLI — ติดตั้ง Codex และเพิ่มลง PATH"),
-    );
-    this.process.on("exit", () => {
+    child.stdin.on("error", () => {
+      if (this.process === child) this.fail("การเชื่อมต่อ Codex หยุดทำงาน");
+    });
+    child.on("error", () => {
+      if (this.process === child) this.fail("ไม่พบ Codex CLI — ติดตั้ง Codex และเพิ่มลง PATH");
+    });
+    child.on("exit", () => {
+      if (this.process !== child) return;
       this.ready = false;
       this.process = null;
       this.fail("Codex app-server หยุดทำงาน");
     });
     createInterface({ input: this.process.stdout }).on("line", (line) => {
+      if (this.process !== child) return;
       let msg;
       try {
         msg = JSON.parse(line);
@@ -77,7 +85,7 @@ export class CodexClient {
       const timer = setTimeout(() => {
         this.pending.delete(id);
         reject(new Error("Codex ไม่ตอบกลับภายในเวลาที่กำหนด"));
-      }, 20000);
+      }, this.timeout);
       this.pending.set(id, { resolve, reject, timer });
       if (!this.process?.stdin?.writable) {
         clearTimeout(timer);
@@ -102,6 +110,7 @@ export class CodexClient {
     this.process = null;
     if (child) {
       child.stdin.destroy();
+      if (!Number.isInteger(child.pid)) return;
       if (process.platform === "win32") {
         spawn("taskkill", ["/PID", String(child.pid), "/T", "/F"], {
           windowsHide: true,

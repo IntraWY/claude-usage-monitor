@@ -14,7 +14,7 @@ Brand SVG assets are included with Simple Icons attribution. Mascot app icon and
 
 ## Evidence
 
-Ten domain/connector tests pass. A real-CSP Chromium renderer test passes with loaded brand assets, Fable row, percentage switch, retained alert preferences and safe model labels. One native Windows test is skipped on Linux and is configured to run on the Windows CI runner; it checks native pinning, persisted preferences after restart and immediate exit.
+Sixteen domain/connector/extension/endpoint tests pass. A real-CSP Chromium renderer test passes with loaded brand assets, Fable row, percentage switch, retained alert preferences and safe model labels. One native Windows test is skipped on Linux and is configured to run on the Windows CI runner; it checks native pinning, persisted preferences after restart and immediate exit.
 
 Public reference code verified the Fable display-name example and schemas: CodexBar ClaudeOAuthUsageFetcher, ClaudeScopedWeeklyLimitMapper and ClaudeWebAPIFetcher. Implemented from schema evidence; no third-party credential refresh/storage logic was copied. This is evidence of existing undocumented interfaces, not provider stability guarantees.
 

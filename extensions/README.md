@@ -7,3 +7,5 @@
 
 โหลดแต่ละโฟลเดอร์ผ่าน Chrome → Extensions → Developer mode → Load unpacked
 ชื่อไฟล์ภายในและเส้นทางที่ manifest อ้างอิงยังเหมือนเดิม การย้ายโฟลเดอร์ต้องเลือก Load unpacked จากตำแหน่งใหม่
+
+Chrome extension ไม่รองรับการปักหมุดหน้าต่างแบบ native; ปุ่ม Pin ของ usage-monitor ถูกปิดไว้ โปรแกรม Windows รองรับ Always on top ผ่าน Electron

@@ -3,6 +3,7 @@
 import { Redis } from '@upstash/redis';
 import { Client as QStash } from '@upstash/qstash';
 import crypto from 'crypto';
+import { isValidPushEndpoint } from '../lib/push-endpoint.js';
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL,
@@ -25,21 +26,6 @@ function setCors(res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST,DELETE,OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-}
-
-// Validate push endpoint origin — prevent SSRF via webpush.sendNotification
-const ALLOWED_PUSH_ORIGINS = [
-  'https://fcm.googleapis.com',
-  'https://updates.push.services.mozilla.com',
-  'https://web.push.apple.com',
-  'https://push.apple.com',
-];
-
-function isValidPushEndpoint(endpoint) {
-  try {
-    const { origin } = new URL(endpoint);
-    return ALLOWED_PUSH_ORIGINS.some(o => origin === o || origin.endsWith('.' + new URL(o).hostname));
-  } catch { return false; }
 }
 
 export default async function handler(req, res) {

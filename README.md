@@ -16,7 +16,7 @@ npm run portable:win
 
 ไฟล์ `.exe` จะอยู่ใน `desktop-app/dist/` และไม่เก็บใน Git ดาวน์โหลด build จาก [Windows desktop Actions](https://github.com/IntraWY/claude-usage-monitor/actions/workflows/windows-desktop.yml) เมื่อ workflow มีผลสำเร็จ
 
-ดู [ข้อกำหนด](docs/requirements.md) และ [สถานะ/ข้อจำกัด](docs/status.md) ก่อนใช้ รุ่นทดลองยังต้องตรวจ Sign in และ usage กับบัญชีจริงบน Windows
+ดู [ข้อกำหนด](docs/requirements.md) และ [สถานะ/ข้อจำกัด](docs/status.md) พร้อม [ผล code review](docs/code-review.md) ก่อนใช้ รุ่นทดลองยังต้องตรวจ Sign in และ usage กับบัญชีจริงบน Windows
 
 ## โครงสร้าง repository
 
@@ -27,7 +27,7 @@ npm run portable:win
 | `extensions/usage-monitor/` | Chrome extension เดิมสำหรับอ่าน Claude usage |
 | `extensions/session-optimizer/` | Chrome extension เดิมสำหรับวางแผน session |
 | `index.html`, `sw.js`, `manifest.webmanifest`, `icons/` | เว็บ PWA เดิม คงเส้นทาง root ไว้ |
-| `api/`, `.env.example`, `package.json` | serverless push API และ dependencies ของเว็บเดิม |
+| `api/`, `lib/`, `.env.example`, `package.json` | serverless push API และ dependencies ของเว็บเดิม |
 | `docs/` | ข้อกำหนดและสถานะปัจจุบัน; เอกสารออกแบบเว็บเดิมอยู่ใน `docs/legacy/` |
 | `.github/workflows/` | ตรวจและ build โปรแกรมบน Windows |
 

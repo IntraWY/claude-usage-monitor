@@ -72,14 +72,14 @@ export function claudeQuotas(data) {
   const seen = new Set();
   const scoped = (Array.isArray(data?.limits) ? data.limits : []).flatMap(
     (v) => {
-      const model = v.scope?.model,
-        name = model?.display_name?.trim();
+      const model = v?.scope?.model,
+        name = typeof model?.display_name === "string" ? model.display_name.trim() : null;
       if (
-        v.group !== "weekly" ||
+        v?.group !== "weekly" ||
         v.kind !== "weekly_scoped" ||
         !name ||
         name.toLowerCase() === "all models" ||
-        model?.id?.endsWith("all-models")
+        (typeof model?.id === "string" && model.id.endsWith("all-models"))
       )
         return [];
       const id = "scoped:" + String(model.id || name);
@@ -106,6 +106,7 @@ export function claudeQuotas(data) {
   ];
 }
 export function validSettings(s) {
+  s = s && typeof s === "object" ? s : {};
   return {
     mode: s.mode === "detail" ? "detail" : "compact",
     remaining: s.remaining === true,
@@ -180,4 +181,27 @@ export class AlertEngine {
     }
     return events;
   }
+}
+
+export function retryAt(value, now = Date.now()) {
+  const seconds = typeof value === "string" && value.trim() !== "" ? Number(value) : NaN;
+  const delay = Number.isFinite(seconds) ? seconds * 1000 : Date.parse(value) - now;
+  return now + Math.max(60000, Number.isFinite(delay) ? delay : 300000);
+}
+
+// Same verified identity: union channels/catalogue, never add shared quota percentages.
+export function mergeAccount(previous, current) {
+  if (!previous) return current;
+  const preferred = current.state === "connected" ? current : previous;
+  const other = preferred === current ? previous : current;
+  const union = (a, b) => [...new Map([...b, ...a].map((item) => [item.id, item])).values()];
+  return {
+    ...preferred,
+    email: preferred.email || other.email,
+    plan: preferred.plan || other.plan,
+    channels: [...new Set([...previous.channels, ...current.channels])],
+    sourceProfiles: [...new Set([...previous.sourceProfiles, ...current.sourceProfiles])],
+    quotas: union(preferred.quotas, other.quotas),
+    models: union(preferred.models, other.models),
+  };
 }

@@ -283,24 +283,11 @@ async function load(force = false) {
   }
 }
 
-// === Always on Top (Pin) toggle ===
+// Chrome cannot pin native windows; the desktop app provides native pinning.
 const pinBtn = document.getElementById('pin-btn');
-
-function applyPin(active) {
-  pinBtn.classList.toggle('active', active);
-  pinBtn.title = active ? 'Always on top: เปิดอยู่' : 'Always on top: ปิดอยู่';
-  chrome.runtime.sendMessage({ type: 'set_always_on_top', value: active });
-}
-
-let pinActive = false;
-try { pinActive = localStorage.getItem('pinActive') === 'true'; } catch (_) {}
-applyPin(pinActive);
-
-pinBtn.addEventListener('click', () => {
-  pinActive = !pinActive;
-  applyPin(pinActive);
-  try { localStorage.setItem('pinActive', String(pinActive)); } catch (_) {}
-});
+pinBtn.disabled = true;
+pinBtn.classList.remove('active');
+pinBtn.title = 'Chrome ไม่รองรับ Always on top — ใช้โปรแกรม Windows เพื่อปักหมุด';
 
 // === Theme toggle ===
 const themeBtn = document.getElementById('theme-btn');

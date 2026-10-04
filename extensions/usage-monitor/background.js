@@ -1,25 +1,13 @@
 let popupWindowId = null;
-let alwaysOnTop = false;
 
 // [H5] restore state หลัง service worker restart — ใช้ storage.session
 // (หายเมื่อปิด browser ซึ่งตรงกับ onRemoved semantics)
-chrome.storage.session.get(['popupWindowId', 'alwaysOnTop']).then(async (s) => {
+chrome.storage.session.get(['popupWindowId']).then(async (s) => {
   if (typeof s.popupWindowId === 'number') popupWindowId = s.popupWindowId;
-  if (typeof s.alwaysOnTop === 'boolean') alwaysOnTop = s.alwaysOnTop;
-  // re-apply native alwaysOnTop หลัง SW restart
-  if (popupWindowId !== null && alwaysOnTop) {
-    try {
-      await chrome.windows.update(popupWindowId, { alwaysOnTop: true });
-    } catch (_) {
-      popupWindowId = null;
-      alwaysOnTop = false;
-      persistState();
-    }
-  }
 }).catch(() => {});
 
 function persistState() {
-  chrome.storage.session.set({ popupWindowId, alwaysOnTop }).catch(() => {});
+  chrome.storage.session.set({ popupWindowId }).catch(() => {});
 }
 
 // คลิกไอคอน → เปิด floating window (ไม่ปิดเมื่อคลิกที่อื่น)
@@ -34,7 +22,6 @@ chrome.action.onClicked.addListener(async () => {
     } catch (_) {
       // window ไม่อยู่แล้ว (closed externally) → เคลียร์ state ค้างและสร้างใหม่
       popupWindowId = null;
-      alwaysOnTop = false;
       persistState();
     }
   }
@@ -62,7 +49,6 @@ chrome.action.onClicked.addListener(async () => {
 chrome.windows.onRemoved.addListener((windowId) => {
   if (windowId === popupWindowId) {
     popupWindowId = null;
-    alwaysOnTop = false;
     persistState();
   }
 });
@@ -70,18 +56,9 @@ chrome.windows.onRemoved.addListener((windowId) => {
 // รับ message จาก popup แล้ว fetch จาก claude.ai
 chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
   if (msg.type === 'set_always_on_top') {
-    alwaysOnTop = msg.value;
-    // restore popupWindowId หลัง service worker restart (sender มี windowId ของ popup window)
-    if (_sender.tab && _sender.tab.windowId != null) {
-      popupWindowId = _sender.tab.windowId;
-    }
-    // ใช้ native alwaysOnTop แทน focus-stealing
-    if (popupWindowId !== null) {
-      chrome.windows.update(popupWindowId, { alwaysOnTop: msg.value }).catch(() => {});
-    }
-    persistState();
-    sendResponse({ ok: true });
-    return true;
+    // Chrome windows.update has no writable alwaysOnTop property.
+    sendResponse({ ok: false, error: 'unsupported_always_on_top' });
+    return false;
   }
 
   if (msg.type !== 'fetch_usage') return false;
@@ -99,8 +76,6 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
         return;
       }
 
-      const cookieHeader = allCookies.map(c => `${c.name}=${c.value}`).join('; ');
-
       // [H1] fetch timeout 15s กัน popup ค้าง "กำลังโหลด..." ถ้า claude.ai ไม่ตอบ
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 15000);
@@ -108,12 +83,8 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
       try {
         const res = await fetch(`https://claude.ai/api/organizations/${orgId}/usage`, {
           signal: controller.signal,
-          headers: {
-            'Cookie': cookieHeader,
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-            'Referer': 'https://claude.ai/',
-            'Origin': 'https://claude.ai',
-          }
+          credentials: 'include',
+          redirect: 'error',
         });
         const responseTimeMs = Date.now() - t0;
 

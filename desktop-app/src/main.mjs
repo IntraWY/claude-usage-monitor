@@ -21,6 +21,8 @@ import {
   claudeQuotas,
   validSettings,
   AlertEngine,
+  retryAt,
+  mergeAccount,
 } from "./domain.mjs";
 const dir = path.dirname(fileURLToPath(import.meta.url));
 if (process.env.AI_USAGE_USER_DATA_DIR)
@@ -163,15 +165,7 @@ async function loadAccount(p) {
         { signal: AbortSignal.timeout(20000), credentials: "include" },
       );
       if (response.status === 429) {
-        const value = response.headers.get("retry-after");
-        const delay =
-          value && Number.isFinite(Number(value))
-            ? Number(value) * 1000
-            : Date.parse(value) - Date.now();
-        retries.set(
-          p.id,
-          Date.now() + Math.max(60000, Number.isFinite(delay) ? delay : 300000),
-        );
+        retries.set(p.id, retryAt(response.headers.get("retry-after")));
       }
       if (!response.ok)
         throw new Error(
@@ -204,12 +198,7 @@ async function loadAccount(p) {
   } catch (e) {
     a.message = e.message;
     if (e.status === 429) {
-      const wait = Number(e.retryAfter);
-      retries.set(
-        p.id,
-        Date.now() +
-          Math.max(60000, Number.isFinite(wait) ? wait * 1000 : 300000),
-      );
+      retries.set(p.id, retryAt(e.retryAfter));
     }
     a.state = "unreadable";
   }
@@ -223,25 +212,23 @@ async function refresh() {
     const next = new Map();
     for (const p of profiles) {
       if (closing) break;
-      const a = await loadAccount(p);
+      let a = await loadAccount(p);
       a.sourceProfiles = [p.id];
       if (a.identity) {
         a.id =
           a.provider === "Codex"
             ? `${a.provider}:${a.identity}`
             : `${a.provider}:${a.identity}:${a.workspace || ""}`;
-        const previous = next.get(a.id);
-        if (previous) {
-          a.channels = [...new Set([...previous.channels, ...a.channels])];
-          a.sourceProfiles = [...previous.sourceProfiles, p.id];
-        }
+        a = mergeAccount(next.get(a.id), a);
       }
       next.set(a.id, a);
-      for (const event of alerts.evaluate(a, settings))
-        if (Notification.isSupported()) new Notification(event).show();
     }
     accounts.clear();
-    for (const [id, a] of next) accounts.set(id, a);
+    for (const [id, a] of next) {
+      accounts.set(id, a);
+      if (!closing) for (const event of alerts.evaluate(a, settings))
+        if (Notification.isSupported()) new Notification(event).show();
+    }
   } finally {
     busy = false;
     broadcast();

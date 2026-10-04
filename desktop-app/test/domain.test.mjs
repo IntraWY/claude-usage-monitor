@@ -5,6 +5,8 @@ import {
   claudeQuotas,
   AlertEngine,
   validSettings,
+  retryAt,
+  mergeAccount,
 } from "../src/domain.mjs";
 test("Codex multi-bucket preserves model aliases and does not double-count legacy view", () => {
   const q = codexQuotas({
@@ -67,4 +69,30 @@ test("settings reject malformed thresholds and clamp intervals", () => {
   });
   assert.equal(s.interval, 1);
   assert.equal(Object.keys(s.alerts).length, 1);
+});
+
+test("Retry-After HTTP dates and absent headers retain the service backoff", () => {
+  const now = Date.parse("2026-10-04T00:00:00Z");
+  assert.equal(retryAt("Sun, 04 Oct 2026 00:10:00 GMT", now), now + 600000);
+  assert.equal(retryAt("120", now), now + 120000);
+  for (const value of [null, "", "bad"]) assert.equal(retryAt(value, now), now + 300000);
+});
+test("Malformed optional Claude limits do not discard valid 5h and Fable usage", () => {
+  const q = claudeQuotas({ five_hour: { utilization: 12 }, limits: [null, {},
+    {scope: {model: {display_name: 42}}},
+    {kind: "weekly_scoped", group: "weekly", percent: 23, scope: {model: {id: 42, display_name: "Fable"}}}
+  ]});
+  assert.deepEqual(q.map(x => x.used), [12, 23]);
+  assert.equal(validSettings(null).interval, 5);
+});
+test("Merged channels preserve distinct models/quotas without adding shared percentages", () => {
+  const a = { id: "user", state: "connected", channels: ["CLI"], sourceProfiles: ["local"], email: "a@example.com",
+    quotas: [{id: "5h", used: 12}, {id: "weekly", used: 22}], models: [{id: "model-1"}] };
+  const b = {...a, channels: ["web"], sourceProfiles: ["web"], email: null,
+    quotas: [{id: "5h", used: 13}, {id: "fable", used: 30}], models: [{id: "model-2"}]};
+  const merged = mergeAccount(a, b);
+  assert.equal(merged.email, a.email);
+  assert.deepEqual(merged.channels, ["CLI", "web"]);
+  assert.deepEqual(merged.quotas.map(q => [q.id, q.used]), [["5h",13],["weekly",22],["fable",30]]);
+  assert.equal(merged.models.length, 2);
 });
