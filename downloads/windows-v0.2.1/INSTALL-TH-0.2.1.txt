@@ -1,0 +1,13 @@
+AI Usage Monitor 0.2.1 — Portable สำหรับ Windows 11 x64
+
+ดับเบิลคลิก AI Usage Monitor 0.2.1.exe เพื่อเปิด ไม่ต้องติดตั้ง Node.js หรือแตก ZIP
+รุ่นนี้รวมการแก้บั๊กจาก code review วันที่ 2026-10-04
+
+Claude: กดเพิ่มบัญชี Claude แล้วเข้าสู่ระบบในหน้าต่างของแอป
+Codex: ต้องติดตั้ง Codex CLI รุ่นปัจจุบันไว้ใน PATH จากนั้นกดเพิ่มบัญชี Codex
+Codex CLI เป็นข้อกำหนดของการเชื่อมต่อ Codex แม้ใช้ไฟล์ portable
+
+กด X เพื่อออกจากโปรแกรมทันที ไม่มี autostart หรือบริการ tray
+โปรแกรมยังไม่ได้เซ็นรับรอง และยังต้องตรวจ sign-in/usage กับบัญชีจริงบน Windows
+
+ซอร์ส: https://github.com/IntraWY/claude-usage-monitor

@@ -4,9 +4,9 @@
 
 ## โปรแกรม Windows — งานหลัก
 
-[ดาวน์โหลด Portable 0.2.1 สำหรับ Windows 11 x64](https://github.com/IntraWY/claude-usage-monitor/raw/refs/heads/downloads/windows-v0.2.1/AI%20Usage%20Monitor%200.2.1.exe) — ดับเบิลคลิกเปิดได้เลย ไม่ต้องติดตั้ง Node.js รุ่นนี้ยังไม่ได้เซ็นรับรอง และการเชื่อมต่อ Codex ต้องมี Codex CLI ใน PATH
+[ดาวน์โหลด Portable 0.2.1 สำหรับ Windows 11 x64](https://github.com/IntraWY/claude-usage-monitor/raw/refs/heads/master/downloads/windows-v0.2.1/AI%20Usage%20Monitor%200.2.1.exe) — ดับเบิลคลิกเปิดได้เลย ไม่ต้องติดตั้ง Node.js รุ่นนี้ยังไม่ได้เซ็นรับรอง และการเชื่อมต่อ Codex ต้องมี Codex CLI ใน PATH
 
-[ไฟล์ SHA256 และคำแนะนำ](https://github.com/IntraWY/claude-usage-monitor/tree/downloads/windows-v0.2.1) อยู่ใน branch ดาวน์โหลดแยกจากซอร์ส
+[ไฟล์ SHA256 และคำแนะนำ](https://github.com/IntraWY/claude-usage-monitor/tree/master/downloads/windows-v0.2.1) อยู่ใน `downloads/windows-v0.2.1/`
 
 ซอร์สโค้ดอยู่ใน [`desktop-app/`](desktop-app/README.md)
 
