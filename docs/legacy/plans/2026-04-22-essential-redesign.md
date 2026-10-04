@@ -15,17 +15,17 @@
 | File | Change |
 |---|---|
 | `index.html` | Full rewrite — 2 cards, bug fixes, new JS |
-| `claude-extension/background.js` | Edit — add try/catch to `refreshAlarms` |
-| `claude-extension/popup.js` | Edit — fix `tickCountdown` perf + add gear toggle |
-| `claude-extension/popup.html` | Full rewrite — 2 tabs + gear icon + settings panel |
-| `claude-extension/popup.css` | Edit — add gear button + settings panel styles |
+| `extensions/session-optimizer/background.js` | Edit — add try/catch to `refreshAlarms` |
+| `extensions/session-optimizer/popup.js` | Edit — fix `tickCountdown` perf + add gear toggle |
+| `extensions/session-optimizer/popup.html` | Full rewrite — 2 tabs + gear icon + settings panel |
+| `extensions/session-optimizer/popup.css` | Edit — add gear button + settings panel styles |
 
 ---
 
 ## Task 1: Fix `background.js` — silent failure in `refreshAlarms`
 
 **Files:**
-- Modify: `claude-extension/background.js:52-90`
+- Modify: `extensions/session-optimizer/background.js:52-90`
 
 - [ ] **Step 1: Wrap `refreshAlarms` body in try/catch**
 
@@ -76,12 +76,12 @@ async function refreshAlarms() {
 
 - [ ] **Step 2: Verify file looks correct**
 
-Open `claude-extension/background.js` and confirm the function starts with `try {` and ends with `} catch (err) { console.error(...) }`.
+Open `extensions/session-optimizer/background.js` and confirm the function starts with `try {` and ends with `} catch (err) { console.error(...) }`.
 
 - [ ] **Step 3: Commit**
 
 ```bash
-git add "claude-extension/background.js"
+git add "extensions/session-optimizer/background.js"
 git commit -m "fix: add error handling to refreshAlarms in background.js"
 ```
 
@@ -90,8 +90,8 @@ git commit -m "fix: add error handling to refreshAlarms in background.js"
 ## Task 2: Fix `popup.js` — `tickCountdown` rebuilds DOM every second
 
 **Files:**
-- Modify: `claude-extension/popup.js:14-18` (add `lastNextIdx` state variable)
-- Modify: `claude-extension/popup.js:272-313` (the `tickCountdown` function)
+- Modify: `extensions/session-optimizer/popup.js:14-18` (add `lastNextIdx` state variable)
+- Modify: `extensions/session-optimizer/popup.js:272-313` (the `tickCountdown` function)
 
 - [ ] **Step 1: Add `lastNextIdx` state variable**
 
@@ -186,7 +186,7 @@ document.getElementById('gear-btn').addEventListener('click', toggleSettings);
 - [ ] **Step 6: Commit**
 
 ```bash
-git add "claude-extension/popup.js"
+git add "extensions/session-optimizer/popup.js"
 git commit -m "perf: skip DOM re-render in tickCountdown when nextIdx unchanged; add gear toggle"
 ```
 
@@ -195,7 +195,7 @@ git commit -m "perf: skip DOM re-render in tickCountdown when nextIdx unchanged;
 ## Task 3: Rewrite `popup.html` — 2 tabs + gear icon + inline settings panel
 
 **Files:**
-- Rewrite: `claude-extension/popup.html`
+- Rewrite: `extensions/session-optimizer/popup.html`
 
 - [ ] **Step 1: Replace `popup.html` with the new 2-tab structure**
 
@@ -366,7 +366,7 @@ Confirm `popup.html` has exactly 2 `.tab` buttons (`reset`, `schedule`) and a `#
 - [ ] **Step 3: Commit**
 
 ```bash
-git add "claude-extension/popup.html"
+git add "extensions/session-optimizer/popup.html"
 git commit -m "feat: redesign extension popup to 2 tabs + gear settings panel"
 ```
 
@@ -375,7 +375,7 @@ git commit -m "feat: redesign extension popup to 2 tabs + gear settings panel"
 ## Task 4: Update `popup.css` — add gear button + settings panel styles
 
 **Files:**
-- Modify: `claude-extension/popup.css`
+- Modify: `extensions/session-optimizer/popup.css`
 
 - [ ] **Step 1: Update `.header` to accommodate center + gear layout**
 
@@ -448,7 +448,7 @@ Load the extension in Chrome (`chrome://extensions` → Load unpacked). Open the
 - [ ] **Step 5: Commit**
 
 ```bash
-git add "claude-extension/popup.css"
+git add "extensions/session-optimizer/popup.css"
 git commit -m "feat: add gear button and settings panel styles to extension popup"
 ```
 
@@ -1294,7 +1294,7 @@ git commit -m "feat: redesign web page to 2-card layout; fix timezone, Buddhist 
 
 - [ ] **Step 1: Load extension and run end-to-end check**
 
-In Chrome go to `chrome://extensions` → Load unpacked → select `claude-extension/` folder.
+In Chrome go to `chrome://extensions` → Load unpacked → select `extensions/session-optimizer/` folder.
 
 Verify extension:
 1. Popup opens — header shows logo | clock | gear icon ⚙️

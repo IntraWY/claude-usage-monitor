@@ -70,7 +70,7 @@ Bottom section (shown only after calcReset()):
 
 ---
 
-## Extension (`claude-extension/`)
+## Extension (`extensions/session-optimizer/`)
 
 ### Before → After
 

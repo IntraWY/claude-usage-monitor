@@ -2,3 +2,11 @@
 node_modules/
 .env
 .env.local
+
+# Local tooling and captured sessions
+.playwright-mcp/
+.superpowers/
+playwright-report/
+test-results/
+kimi-auth.json
+kimi-debug.*
