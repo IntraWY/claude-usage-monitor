@@ -108,7 +108,7 @@ export function claudeQuotas(data) {
 export function validSettings(s) {
   s = s && typeof s === "object" ? s : {};
   return {
-    mode: s.mode === "detail" ? "detail" : "compact",
+    mode: "compact",
     remaining: s.remaining === true,
     pin: s.pin === true,
     interval: Number.isFinite(s.interval)

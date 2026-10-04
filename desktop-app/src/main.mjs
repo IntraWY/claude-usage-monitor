@@ -5,6 +5,7 @@ import {
   Notification,
   shell,
   session,
+  clipboard,
 } from "electron";
 import { readFile, writeFile, mkdir, rename } from "node:fs/promises";
 import path from "node:path";
@@ -22,8 +23,8 @@ import {
   validSettings,
   AlertEngine,
   retryAt,
-  mergeAccount,
 } from "./domain.mjs";
+import { archiveAccount, restoreAccount, defaultProfiles, archivedAccounts, aggregateAccounts } from "./profiles.mjs";
 const dir = path.dirname(fileURLToPath(import.meta.url));
 if (process.env.AI_USAGE_USER_DATA_DIR)
   app.setPath("userData", path.resolve(process.env.AI_USAGE_USER_DATA_DIR));
@@ -31,25 +32,38 @@ let win,
   timer,
   store,
   busy = false,
+  refreshQueued = false,
   closing = false;
 const clients = new Map(),
   accounts = new Map(),
   logins = new Set(),
+  loginProfiles = new WeakMap(),
   alerts = new AlertEngine();
 const retries = new Map();
 let writes = Promise.resolve();
 let settings = validSettings({}),
-  profiles = [];
-const snapshot = () => ({ settings, accounts: [...accounts.values()], busy });
-async function persist() {
-  const contents = JSON.stringify({ settings, profiles }, null, 2);
-  writes = writes
-    .catch(() => {})
-    .then(async () => {
-      await writeFile(store + ".tmp", contents);
-      await rename(store + ".tmp", store);
-    });
+  profiles = [],
+  removedProfiles = [];
+const snapshot = () => ({ settings, accounts: [...accounts.values()], removedAccounts: archivedAccounts(removedProfiles), busy });
+async function persist(change = () => ({})) {
+  let committed;
+  writes = writes.catch(() => {}).then(async () => {
+    const plan = change();
+    const next = {
+      settings: plan.settings || settings,
+      profiles: plan.profiles || profiles,
+      removedProfiles: plan.removedProfiles || removedProfiles,
+    };
+    await writeFile(store + ".tmp", JSON.stringify(next, null, 2));
+    await rename(store + ".tmp", store);
+    // Apply only after disk commit: failures leave the live account list intact.
+    settings = next.settings;
+    profiles = next.profiles;
+    removedProfiles = next.removedProfiles;
+    committed = plan;
+  });
   await writes;
+  return committed;
 }
 function broadcast() {
   if (!closing) win?.webContents.send("updated", snapshot());
@@ -57,10 +71,6 @@ function broadcast() {
 function schedule() {
   clearInterval(timer);
   timer = setInterval(() => refresh(), settings.interval * 60000);
-}
-function dimensions() {
-  win?.setMinimumSize(settings.mode === "compact" ? 430 : 720, 400);
-  win?.setSize(settings.mode === "compact" ? 470 : 800, 800);
 }
 async function codex(profile) {
   let client = clients.get(profile.id);
@@ -95,6 +105,7 @@ async function loadAccount(p) {
     quotas: [],
     models: [],
     observedAt: null,
+    cliLoginRequired: p.provider === "Claude" && p.kind === "cli",
   };
   try {
     if ((retries.get(p.id) || 0) > Date.now())
@@ -205,24 +216,21 @@ async function loadAccount(p) {
   return a;
 }
 async function refresh() {
-  if (busy || closing) return snapshot();
+  if (closing) return snapshot();
+  if (busy) { refreshQueued = true; return snapshot(); }
   busy = true;
   broadcast();
   try {
-    const next = new Map();
-    for (const p of profiles) {
+    const results = [];
+    for (const p of [...profiles]) {
       if (closing) break;
-      let a = await loadAccount(p);
+      const a = await loadAccount(p);
       a.sourceProfiles = [p.id];
-      if (a.identity) {
-        a.id =
-          a.provider === "Codex"
-            ? `${a.provider}:${a.identity}`
-            : `${a.provider}:${a.identity}:${a.workspace || ""}`;
-        a = mergeAccount(next.get(a.id), a);
-      }
-      next.set(a.id, a);
+      results.push([p.id, a]);
     }
+    // A deletion may happen while a provider request is in flight.
+    // Aggregate only profiles that are still being monitored after all awaits.
+    const next = aggregateAccounts(results, profiles);
     accounts.clear();
     for (const [id, a] of next) {
       accounts.set(id, a);
@@ -232,6 +240,7 @@ async function refresh() {
   } finally {
     busy = false;
     broadcast();
+    if (refreshQueued && !closing) { refreshQueued = false; setImmediate(() => refresh()); }
   }
   return snapshot();
 }
@@ -257,6 +266,7 @@ async function signIn(p) {
       },
     });
     logins.add(w);
+    loginProfiles.set(w, p.id);
     w.webContents.setWindowOpenHandler(({ url }) => {
       try {
         if (new URL(url).protocol !== "https:") return { action: "deny" };
@@ -277,6 +287,7 @@ async function signIn(p) {
     });
     w.webContents.on("did-create-window", (child) => {
       logins.add(child);
+      loginProfiles.set(child, p.id);
       child.on("closed", () => {
         logins.delete(child);
         refresh();
@@ -310,19 +321,17 @@ app.whenReady().then(async () => {
   try {
     const s = JSON.parse(await readFile(store, "utf8"));
     settings = validSettings(s.settings || {});
-    profiles = (s.profiles || []).filter(
-      (p) =>
-        ["Codex", "Claude"].includes(p.provider) && typeof p.id === "string",
+    const stored = (p) => p && ["Codex", "Claude"].includes(p.provider) && typeof p.id === "string";
+    removedProfiles = (Array.isArray(s.removedProfiles) ? s.removedProfiles : []).filter(p => stored(p) && typeof p.removedAccountId === "string");
+    profiles = (Array.isArray(s.profiles) ? s.profiles : []).filter(
+      stored,
     );
   } catch {}
-  if (!profiles.some((p) => p.id === "codex-local"))
-    profiles.unshift({ id: "codex-local", provider: "Codex" });
-  if (!profiles.some((p) => p.id === "claude-local"))
-    profiles.unshift({ id: "claude-local", provider: "Claude", kind: "cli" });
+  profiles = defaultProfiles(profiles, removedProfiles);
   win = new BrowserWindow({
     icon: path.join(dir, "assets", "app.ico"),
-    width: settings.mode === "compact" ? 470 : 800,
-    height: 800,
+    width: 470,
+    height: 680,
     minWidth: 430,
     minHeight: 400,
     backgroundColor: "#fafbfc",
@@ -341,11 +350,9 @@ app.whenReady().then(async () => {
   ipcMain.handle("read", () => snapshot());
   ipcMain.handle("refresh", () => refresh());
   ipcMain.handle("save", async (_, s) => {
-    settings = validSettings(s);
+    await persist(() => ({ settings: validSettings(s) }));
     win.setAlwaysOnTop(settings.pin);
-    dimensions();
     schedule();
-    await persist();
     return snapshot();
   });
   ipcMain.handle("add", async (_, provider) => {
@@ -357,13 +364,31 @@ app.whenReady().then(async () => {
       p.home = path.join(app.getPath("userData"), "codex-profiles", id);
       await mkdir(p.home, { recursive: true });
     } else p.partition = `persist:claude-${id}`;
-    profiles.push(p);
-    await persist();
+    await persist(() => ({ profiles: [...profiles, p] }));
     try {
       await signIn(p);
     } finally {
       await refresh();
     }
+    return snapshot();
+  });
+  ipcMain.handle("copy-cli-login", () => { clipboard.writeText("claude auth login"); });
+  ipcMain.handle("remove", async (_, id) => {
+    const plan = await persist(() => archiveAccount(profiles, removedProfiles, accounts.get(id)));
+    accounts.delete(id);
+    for (const p of plan.removed) {
+      clients.get(p.id)?.stop();
+      clients.delete(p.id);
+      retries.delete(p.id);
+      for (const w of logins) if (loginProfiles.get(w) === p.id && !w.isDestroyed()) w.destroy();
+    }
+    broadcast();
+    return snapshot();
+  });
+  ipcMain.handle("restore", async (_, id) => {
+    await persist(() => restoreAccount(profiles, removedProfiles, id));
+    await refresh();
+    broadcast();
     return snapshot();
   });
   ipcMain.handle("reconnect", async (_, id) => {

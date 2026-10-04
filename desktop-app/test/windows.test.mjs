@@ -39,10 +39,15 @@ test(
         ),
         true,
       );
-      await page.click("#detail");
-      await page.waitForFunction(
-        () => !document.body.classList.contains("compact"),
-      );
+      await page.click("#settings");
+      await page.locator("#interval").fill("9");
+      await page.locator("#interval").dispatchEvent("change");
+      await page.waitForFunction(async () => (await window.usage.read()).settings.interval === 9);
+      await page.click("[data-close-dialog]");
+      await page.waitForFunction(async () => (await window.usage.read()).accounts.some(a => a.id === "claude-local"));
+      await page.click('[data-remove="claude-local"]');
+      await page.click("#confirm-delete");
+      await page.waitForFunction(async () => (await window.usage.read()).removedAccounts.some(a => a.id === "claude-local"));
       const closed = app.waitForEvent("close");
       await page.click("#close");
       await closed;
@@ -53,12 +58,15 @@ test(
           document.querySelector("#pin").getAttribute("aria-pressed") ===
           "true",
       );
-      assert.equal(
-        await page
-          .locator("body")
-          .evaluate((el) => el.classList.contains("compact")),
-        false,
-      );
+      await page.click("#settings");
+      assert.equal(await page.locator("#interval").inputValue(), "9");
+      assert.equal(await page.locator("#detail").count(), 0);
+      await page.waitForFunction(async () => !(await window.usage.read()).busy);
+      const snapshot = await page.evaluate(() => window.usage.read());
+      assert.ok(snapshot.removedAccounts.some(a => a.id === "claude-local"));
+      assert.ok(!snapshot.accounts.some(a => a.id === "claude-local"));
+      await page.click('[data-restore="claude-local"]');
+      await page.waitForFunction(async () => (await window.usage.read()).accounts.some(a => a.id === "claude-local"));
     } finally {
       if (app) await app.close().catch(() => {});
       await rm(dir, { recursive: true, force: true });

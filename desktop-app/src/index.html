@@ -3,35 +3,39 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'none'"
-    />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'none'" />
     <title>AI Usage Monitor</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <header>
-      <strong>AI Usage · ♡</strong
-      ><button id="pin" aria-label="ปักหน้าต่าง" aria-pressed="false">📌</button
-      ><button id="close" aria-label="ออกจากโปรแกรม">×</button>
+      <strong>AI Usage · ♡</strong>
+      <button id="settings" aria-label="ตั้งค่าโปรแกรม">⚙</button>
+      <button id="pin" aria-label="ปักหน้าต่าง" aria-pressed="false">📌</button>
+      <button id="close" aria-label="ออกจากโปรแกรม">×</button>
     </header>
-    <nav>
-      <button id="compact">Compact</button><button id="detail">Detail</button
-      ><span class="spacer"></span><button id="used">ใช้แล้ว</button
-      ><button id="remaining">เหลือ</button>
+    <nav aria-label="แสดงเปอร์เซ็นต์">
+      <span id="account-count" class="spacer"></span>
+      <button id="used">ใช้แล้ว</button><button id="remaining">เหลือ</button>
     </nav>
     <main id="cards"></main>
     <footer>
-      <label
-        >อัปเดตทุก
-        <input id="interval" type="number" min="1" max="1440" value="5" />
-        นาที</label
-      ><button id="refresh">↻ รีเฟรช</button><button id="codex">+ Codex</button
-      ><button id="claude">+ Claude</button>
+      <button id="refresh">↻ รีเฟรช</button><span class="spacer"></span>
+      <button id="codex">+ Codex</button><button id="claude">+ Claude</button>
     </footer>
-    <p class="note">โลโก้แบรนด์ + มาสคอต · แสดงข้อมูลจากบัญชีที่เชื่อมต่อ</p>
-    <div id="notice" role="status"></div>
+    <div id="notice" role="status" aria-live="polite"></div>
+    <dialog id="preferences" aria-labelledby="preferences-title">
+      <div class="dialog-head"><h2 id="preferences-title">ตั้งค่า</h2><button data-close-dialog aria-label="ปิดการตั้งค่า">×</button></div>
+      <section id="global-preferences"><label>อัปเดตทุก <input id="interval" type="number" min="1" max="1440" value="5" /> นาที</label><div id="removed-accounts"></div></section>
+      <section id="account-preferences"></section>
+      <p id="preferences-notice" role="status"></p>
+    </dialog>
+    <dialog id="delete-account" aria-labelledby="delete-title">
+      <h2 id="delete-title">ลบบัญชีจากหน้ารวม?</h2>
+      <p id="delete-name"></p><p id="delete-description" class="note"></p>
+      <p id="delete-notice" role="status"></p>
+      <div class="dialog-actions"><button data-cancel-delete>ยกเลิก</button><button id="confirm-delete" class="danger">ลบบัญชี</button></div>
+    </dialog>
     <script src="renderer.js"></script>
   </body>
 </html>

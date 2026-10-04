@@ -1,8 +1,8 @@
-# Desktop implementation status — 0.2.1
+# Desktop implementation status — 0.3.0
 
 ## Implemented
 
-Windows Electron application: Compact/Detail, per-account email/channel cards, used/remaining, native pinning, refresh interval, per-quota threshold/reset alerts, immediate close-to-exit and portable EXE packaging.
+Windows Electron application: compact overview with on-demand settings, per-account email/channel cards, used/remaining, native pinning, refresh interval, per-quota threshold/reset alerts, immediate close-to-exit and portable EXE packaging.
 
 Codex CLI account discovery, isolated additional login profiles, account/rateLimits/read and paginated model/list are implemented. Only provider-issued identities merge accounts; legacy aggregates are not counted twice.
 
@@ -14,7 +14,7 @@ Brand SVG assets are included with Simple Icons attribution. Mascot app icon and
 
 ## Evidence
 
-Sixteen domain/connector/extension/endpoint tests pass. A real-CSP Chromium renderer test passes with loaded brand assets, Fable row, percentage switch, retained alert preferences and safe model labels. One native Windows test is skipped on Linux and is configured to run on the Windows CI runner; it checks native pinning, persisted preferences after restart and immediate exit.
+Nineteen domain/connector/profile/extension/endpoint tests pass. A real-CSP Chromium renderer test passes with loaded brand assets, Fable row, percentage switch, retained alert preferences and safe model labels. One native Windows test is skipped on Linux and is configured to run on the Windows CI runner; it checks native pinning, persisted preferences and removed-account suppression after restart, restoration and immediate exit.
 
 Public reference code verified the Fable display-name example and schemas: CodexBar ClaudeOAuthUsageFetcher, ClaudeScopedWeeklyLimitMapper and ClaudeWebAPIFetcher. Implemented from schema evidence; no third-party credential refresh/storage logic was copied. This is evidence of existing undocumented interfaces, not provider stability guarantees.
 
@@ -26,3 +26,7 @@ Public reference code verified the Fable display-name example and schemas: Codex
 - Existing external Chrome sessions cannot be auto-imported; the app supports its own web sessions and locally detected CLI accounts. No encrypted browser cookie extraction is attempted.
 - Claude complete model catalogue is not established; only models named by quota data are shown.
 - Distribution remains unsigned. No signing credential has been requested or invented.
+
+## 0.3.0 minimal interface
+
+Removed Detail mode, migrated old mode preferences to the compact window, and moved model catalogue/alerts into on-demand account settings. Added remove/restore with retained sessions and local-account suppression across restarts, an empty state, latest-observation status and a Claude CLI login command copy button. In-flight refresh results for removed profiles are excluded before aggregation/alerts. Preference mutations are serialized and applied after disk commit. Profile/renderer regression tests pass; native removal persistence is included in the Windows test and remains unverified on Linux.

@@ -28,3 +28,9 @@ Desktop build tools contained high-severity GHSA-ch52-4w7c-c8xp in http-cache-se
 - Live Codex/Claude sign-in, provider schema stability, Windows notifications/native process cleanup and deployed Redis/QStash/Web Push remain unverified in this environment.
 - Existing downloaded 0.2.0 executables predate these source fixes; obtain a new build from the updated Windows workflow after it succeeds. Native CI success has not been verified here.
 - Legacy Chrome pinning is unavailable; native pinning remains implemented in the desktop app.
+
+## Follow-up — 0.3.0
+
+Removed Detail mode and fixed masked CLI reconnect guidance. Added archive/restore for account profiles with retained sessions/alerts, suppressed archived local account discovery on restart, and excluded removed-profile responses before aggregation/notifications. Preference writes are serialized and live mutations apply only after disk commit. The renderer confirms deletion, keeps the modal/account on errors, supports restore and copies a constant CLI login command. Overview screenshot uses a synthetic account, not live data.
+
+Twenty tests pass, including three profile regressions and the expanded real-CSP renderer scenario at 470px width. Native Windows persistence/removal/restore checks are configured but skipped on Linux. Existing 0.2.1 downloads remain historical; use the 0.3.0 portable for these changes.

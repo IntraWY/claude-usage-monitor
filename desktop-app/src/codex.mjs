@@ -75,7 +75,7 @@ export class CodexClient {
       } else if (msg.method) this.onEvent(msg);
     });
     await this.request("initialize", {
-      clientInfo: { name: "ai_usage_monitor", version: "0.1.0" },
+      clientInfo: { name: "ai_usage_monitor", version: "0.3.0" },
     });
     this.process.stdin.write(JSON.stringify({ method: "initialized" }) + "\n");
   }

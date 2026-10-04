@@ -23,10 +23,11 @@ button {
 }
 button:disabled {
   opacity: 0.5;
-  cursor: wait;
+  cursor: default;
 }
 button:focus-visible,
-input:focus-visible {
+input:focus-visible,
+summary:focus-visible {
   outline: 3px solid #aebfe9;
 }
 button[aria-pressed="true"] {
@@ -140,14 +141,6 @@ progress::-webkit-progress-value {
   color: #79808c;
   margin-top: 4px;
 }
-.details {
-  margin-top: 14px;
-  padding-top: 10px;
-  border-top: 1px dashed #e1e4e8;
-}
-.compact .details {
-  display: none;
-}
 label {
   display: block;
   margin: 8px 0;
@@ -204,3 +197,27 @@ footer {
   vertical-align: middle;
   margin-right: 4px;
 }
+
+.account-actions { display: flex; gap: 5px; }
+.account-actions button { padding: 5px 7px; font-size: 12px; }
+.account-meta { display: flex; justify-content: space-between; gap: 10px; align-items: center; }
+.status-dot { color: #65866f; }
+.quota-name { display: inline-flex; gap: 5px; align-items: center; }
+.quota-name img { width: 12px; height: 12px; }
+.empty { padding: 26px 16px; text-align: center; border: 1px dashed #dce1e7; border-radius: 16px; }
+.empty p { color: #77808e; font-size: 12px; }
+dialog { width: calc(100% - 36px); max-width: 440px; max-height: 85vh; border: 1px solid #e0e4e9; border-radius: 18px; padding: 20px; background: #fafbfc; color: inherit; }
+dialog::backdrop { background: #30343b55; }
+h2 { font-size: 16px; margin: 0; }
+.dialog-head, .dialog-actions { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.dialog-actions { justify-content: flex-end; margin-top: 18px; }
+.dialog-head { margin-bottom: 16px; }
+.danger { color: #9a5050; border-color: #e4c9c9; }
+dialog .note { padding: 0; }
+.alert-setting { padding: 10px 0; border-bottom: 1px solid #e1e4e8; }
+.alert-setting strong { font-size: 13px; }
+#preferences-notice, #delete-notice { color: #956c39; font-size: 12px; }
+#removed-accounts { border-top: 1px solid #e1e4e8; margin-top: 15px; padding-top: 10px; }
+.restore-row { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-top: 8px; overflow-wrap: anywhere; }
+.catalogue { margin-top: 16px; }
+.catalogue summary { cursor: pointer; font-size: 12px; color: #77808e; }

@@ -1,6 +1,6 @@
 # AI Usage Monitor — Windows 11 development beta
 
-Electron application with Compact/Detail, multiple account cards, brand logos and mascots, used/remaining switch, configurable refresh and per-quota alerts. Closing exits immediately; no background tray service or autostart.
+Electron application with a compact overview and on-demand settings, multiple account cards, brand logos and mascots, used/remaining switch, configurable refresh and per-quota alerts. Closing exits immediately; no background tray service or autostart.
 
 ## Run / build
 
@@ -12,7 +12,7 @@ npm start
 npm run portable:win
 ```
 
-The single-file executable is `dist/AI Usage Monitor 0.2.1.exe`. For an installer built on Windows use `npm run installer:win`; ZIP packaging remains available with `npm run package:win`. The development executable is unsigned. Codex accounts require a current official Codex CLI in PATH. Claude web profiles work independently of that CLI.
+The single-file executable is `dist/AI Usage Monitor 0.3.0.exe`. For an installer built on Windows use `npm run installer:win`; ZIP packaging remains available with `npm run package:win`. The development executable is unsigned. Codex accounts require a current official Codex CLI in PATH. Claude web profiles work independently of that CLI.
 
 ## Accounts and quotas
 
@@ -25,7 +25,7 @@ The single-file executable is `dist/AI Usage Monitor 0.2.1.exe`. For an installe
 
 ## Validation
 
-Seventeen automated tests pass on the cloud machine; the native Windows test is skipped here. Renderer checks pass for both modes, percentage conversion, per-quota preferences, escaped labels and pin/exit IPC. OAuth tests use artificial credentials and injected transports, never personal accounts. An isolated real Codex app-server startup/account-read check passed.
+Twenty automated tests pass on the cloud machine; the native Windows test is skipped here. Renderer checks cover the overview/settings, percentage conversion, retained per-quota preferences, delete/cancel/restore, CLI copy guidance and safe error/model labels. OAuth tests use artificial credentials and injected transports, never personal accounts. An isolated real Codex app-server startup/account-read check passed.
 
 `.github/workflows/windows-desktop.yml` runs on Windows: dependency install, domain tests, native Electron window/pin/preferences-restart/exit test, portable build and artifact upload. Native Windows and real account sign-in checks cannot be claimed as passed until the runner/user reports results.
 
@@ -36,3 +36,7 @@ Claude schema evidence: public CodexBar `ClaudeOAuthUsageFetcher`, `ClaudeScoped
 Brand icons are Simple Icons CC0 assets with attribution in `src/assets/ATTRIBUTION.txt`; brand marks remain trademarks. Mascot icon/face artwork is original.
 
 Remaining validation: live sign-in/quotas, Windows notifications and credential retention. Missing data is never replaced with fake numbers. Complete Claude model catalog, arbitrary external-browser auto-detection and a signed public distribution remain unsupported.
+
+## Minimal overview and account removal — 0.3.0
+
+The Detail mode has been removed. Keep 5h, Weekly and scoped model quotas visible in the overview. Per-account gear opens alert settings and a collapsed model catalogue; global gear opens refresh interval and removed accounts. Delete confirms removal of every linked channel, stops monitoring and retains login data. Restore reuses the same home/partition and existing alert settings. Removed local accounts are not automatically re-added on restart. CLI cards provide a copy button for `claude auth login` instead of pretending to sign in through a web reconnect button.

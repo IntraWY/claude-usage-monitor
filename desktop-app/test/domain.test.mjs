@@ -68,6 +68,7 @@ test("settings reject malformed thresholds and clamp intervals", () => {
     alerts: { bad: { threshold: 101 }, ok: { threshold: 95, enabled: true } },
   });
   assert.equal(s.interval, 1);
+  assert.equal(validSettings({mode: "detail"}).mode, "compact");
   assert.equal(Object.keys(s.alerts).length, 1);
 });
 

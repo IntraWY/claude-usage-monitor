@@ -1,12 +1,12 @@
 # AI Usage Monitor
 
-โปรแกรม Windows 11 สำหรับดูโควตา Codex และ Claude: โหมด Compact/Detail, หลายบัญชี, สลับใช้แล้ว/เหลือ, โควตา 5h/Weekly/Fable ที่แหล่งข้อมูลส่งกลับมา และการแจ้งเตือนแยกบัญชี
+โปรแกรม Windows 11 สำหรับดูโควตา Codex และ Claude: หน้ารวมแบบกะทัดรัดและแผงตั้งค่าที่เปิดเมื่อใช้งาน, หลายบัญชี, สลับใช้แล้ว/เหลือ, โควตา 5h/Weekly/Fable ที่แหล่งข้อมูลส่งกลับมา และการแจ้งเตือนแยกบัญชี
 
 ## โปรแกรม Windows — งานหลัก
 
-[ดาวน์โหลด Portable 0.2.1 สำหรับ Windows 11 x64](https://github.com/IntraWY/claude-usage-monitor/raw/refs/heads/master/downloads/windows-v0.2.1/AI%20Usage%20Monitor%200.2.1.exe) — ดับเบิลคลิกเปิดได้เลย ไม่ต้องติดตั้ง Node.js รุ่นนี้ยังไม่ได้เซ็นรับรอง และการเชื่อมต่อ Codex ต้องมี Codex CLI ใน PATH
+[ดาวน์โหลด Portable 0.3.0 สำหรับ Windows 11 x64](https://github.com/IntraWY/claude-usage-monitor/raw/refs/heads/master/downloads/windows-v0.3.0/AI%20Usage%20Monitor%200.3.0.exe) — ดับเบิลคลิกเปิดได้เลย ไม่ต้องติดตั้ง Node.js รุ่นนี้ยังไม่ได้เซ็นรับรอง และการเชื่อมต่อ Codex ต้องมี Codex CLI ใน PATH
 
-[ไฟล์ SHA256 และคำแนะนำ](https://github.com/IntraWY/claude-usage-monitor/tree/master/downloads/windows-v0.2.1) อยู่ใน `downloads/windows-v0.2.1/`
+[ไฟล์ SHA256 และคำแนะนำ](https://github.com/IntraWY/claude-usage-monitor/tree/master/downloads/windows-v0.3.0) อยู่ใน `downloads/windows-v0.3.0/`
 
 ซอร์สโค้ดอยู่ใน [`desktop-app/`](desktop-app/README.md)
 
@@ -18,15 +18,22 @@ npm start
 npm run portable:win
 ```
 
-ไฟล์ `.exe` จะอยู่ใน `desktop-app/dist/` และไม่เก็บใน Git ดาวน์โหลด build จาก [Windows desktop Actions](https://github.com/IntraWY/claude-usage-monitor/actions/workflows/windows-desktop.yml) เมื่อ workflow มีผลสำเร็จ
+ไฟล์ build ใน `desktop-app/dist/` ถูก ignore; ฉบับดาวน์โหลดเก็บใน `downloads/` หรือดาวน์โหลด build จาก [Windows desktop Actions](https://github.com/IntraWY/claude-usage-monitor/actions/workflows/windows-desktop.yml) เมื่อ workflow มีผลสำเร็จ
 
 ดู [ข้อกำหนด](docs/requirements.md) และ [สถานะ/ข้อจำกัด](docs/status.md) พร้อม [ผล code review](docs/code-review.md) ก่อนใช้ รุ่นทดลองยังต้องตรวจ Sign in และ usage กับบัญชีจริงบน Windows
+
+## หน้าต่างรุ่น 0.3.0
+
+![หน้ารวมแบบกะทัดรัด](docs/images/minimal-0.3.0.png)
+
+ภาพจากบัญชีจำลองในการทดสอบ UI; ปุ่มลบหยุดติดตามและเก็บการเข้าสู่ระบบไว้ คืนบัญชีได้จาก ⚙ ของโปรแกรม ส่วน ⚙ ในการ์ดใช้ตั้งแจ้งเตือนและดูโมเดล ไม่มีโหมด Detail แล้ว
 
 ## โครงสร้าง repository
 
 | ตำแหน่ง | หน้าที่ |
 | --- | --- |
 | `desktop-app/src/` | โปรแกรม Windows และตัวเชื่อมต่อบัญชี |
+| `downloads/` | Portable EXE พร้อม SHA256 และคำแนะนำ แยกตามรุ่น |
 | `desktop-app/test/` | ทดสอบโควตา, Fable, หน้าจอ และหน้าต่าง Windows |
 | `extensions/usage-monitor/` | Chrome extension เดิมสำหรับอ่าน Claude usage |
 | `extensions/session-optimizer/` | Chrome extension เดิมสำหรับวางแผน session |
